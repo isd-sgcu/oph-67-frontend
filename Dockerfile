@@ -27,7 +27,7 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/pnpm-lock.yaml ./pnpm-lock.yaml
 
-RUN pnpm install --prod
+RUN pnpm install --prod --ignore-scripts
 
 EXPOSE 3000
 
