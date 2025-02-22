@@ -1,7 +1,9 @@
+import Navbar from '@/components/homepage/navbar'
+
 const Home: React.FC = () => {
   return (
     <div>
-      <h1>Hello World</h1>
+      <Navbar />
     </div>
   )
 }
