@@ -8,7 +8,11 @@ export const metadata: Metadata = {
 const Layout: React.FC<Readonly<{ children: React.ReactNode }>> = ({
   children,
 }) => {
-  return <div className='max-w-[375px]'>{children}</div>
+  return (
+    <div className='relative mx-auto min-h-screen max-w-md shadow'>
+      {children}
+    </div>
+  )
 }
 
 export default Layout
