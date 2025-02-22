@@ -9,7 +9,7 @@ const Layout: React.FC<Readonly<{ children: React.ReactNode }>> = ({
   children,
 }) => {
   return (
-    <div className='relative mx-auto min-h-screen max-w-md shadow'>
+    <div className='relative mx-auto min-h-screen max-w-md font-anuphan shadow'>
       {children}
     </div>
   )
