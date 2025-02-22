@@ -1,6 +1,6 @@
 import './globals.css'
-import { cn } from '@/lib/cn'
-import { anuphan, cloudSoft } from '@/lib/fonts'
+import { cn } from '../lib/cn'
+import { anuphan, cloudSoft } from '../lib/fonts'
 
 const RootLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({
   children,
