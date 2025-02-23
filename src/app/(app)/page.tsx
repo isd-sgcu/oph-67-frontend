@@ -3,9 +3,9 @@ import Timer from '@/components/homepage/timer'
 
 const Home: React.FC = () => {
   return (
-    <div className='relative'>
+    <div>
       <Navbar />
-      <div className='relative flex flex-col justify-center'>
+      <div className='flex flex-col justify-center'>
         <Timer />
       </div>
     </div>
