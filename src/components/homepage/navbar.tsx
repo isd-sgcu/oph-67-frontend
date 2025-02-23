@@ -22,7 +22,7 @@ const Navbar: React.FC = () => {
   ]
 
   return (
-    <div className='relative'>
+    <div>
       <header className='z-10 flex w-full flex-col'>
         {/* Burger's Content */}
         <div
