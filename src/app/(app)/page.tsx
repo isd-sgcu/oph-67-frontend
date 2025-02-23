@@ -1,7 +1,13 @@
+import Navbar from '@/components/homepage/navbar'
+import Timer from '@/components/homepage/timer'
+
 const Home: React.FC = () => {
   return (
     <div>
-      <h1>Hello World</h1>
+      <Navbar />
+      <div className='flex flex-col justify-center'>
+        <Timer />
+      </div>
     </div>
   )
 }
