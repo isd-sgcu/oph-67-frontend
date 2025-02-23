@@ -7,6 +7,7 @@ const config: Config = {
       fontFamily: {
         anuphan: ['var(--font-anuphan)'],
         'cloud-soft': ['var(--font-cloud-soft)'],
+        mitr: ['var(--font-mitr)'],
       },
     },
   },
