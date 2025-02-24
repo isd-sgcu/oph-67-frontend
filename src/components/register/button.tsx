@@ -12,7 +12,7 @@ const buttonVariants = cva(
         filled:
           'bg-[#076855] text-white hover:opacity-80 focus-visible:ring-[#064E41]',
         outline: '',
-        disabled: 'bg-disabled text-white',
+        disabled: 'bg-slate-200 text-white',
         ghost: 'hover:bg-[#064E41]',
       },
       size: {

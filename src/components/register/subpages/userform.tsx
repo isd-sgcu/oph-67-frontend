@@ -36,8 +36,12 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
       </div>
       <div>{form.getValues('name')}</div>
       <div className='bg-slate-300'>
-        <Button className='text-lg' variant='filled' onClick={onNext}>
-          ต่อไป
+        <Button
+          className='font-cloud-soft text-2xl font-medium'
+          variant='filled'
+          onClick={onNext}
+        >
+          ลงทะเบียน
         </Button>
       </div>
     </div>

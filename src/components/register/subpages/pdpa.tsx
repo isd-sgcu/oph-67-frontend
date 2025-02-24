@@ -28,7 +28,7 @@ const Pdpa: React.FC<PdpaProps> = ({
 
   return (
     <div>
-      <div className='space-y-8 py-8'>
+      <div className='flex flex-col gap-6 px-5 py-8'>
         <Policy
           SetIsAccepted={setIsTerm}
           consent={termAndCondition.consent}
@@ -47,11 +47,11 @@ const Pdpa: React.FC<PdpaProps> = ({
 
         <div className='text-center'>
           <Button
-            className='text-lg'
+            className='font-cloud-soft text-2xl font-medium'
             variant={isValid ? 'filled' : 'disabled'}
             onClick={onNext}
           >
-            ต่อไป
+            ยินยอม
           </Button>
         </div>
       </div>

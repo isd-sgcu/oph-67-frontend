@@ -4,13 +4,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { type ReactNode, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import Footer from '@/components/homepage/footer'
 import Navbar from '@/components/homepage/navbar'
 import { type RegisterForm, RegisterSchema } from '@/schema/register'
 
 import Pdpa from '../../../components/register/subpages/pdpa'
 import Success from '../../../components/register/subpages/success'
 import UserForm from '../../../components/register/subpages/userform'
-
 
 const Register: React.FC = () => {
   const [step, setStep] = useState(1)
@@ -47,6 +47,7 @@ const Register: React.FC = () => {
     <div>
       <Navbar />
       {getPage()}
+      <Footer />
     </div>
   )
 }

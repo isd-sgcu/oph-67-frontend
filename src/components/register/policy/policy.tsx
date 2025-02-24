@@ -1,3 +1,5 @@
+import ReactMarkdown from 'react-markdown'
+
 import CheckBox from './checkbox'
 
 interface PolicyProps {
@@ -19,9 +21,9 @@ const Policy: React.FC<PolicyProps> = ({
     <div className='space-y-3'>
       <div className='text-lg font-[700]'>{topic}</div>
       <div className='border-dark-gray h-64 overflow-y-auto rounded-md border-2 p-2 text-base'>
-        {content}
+        <ReactMarkdown>{content}</ReactMarkdown>
       </div>
-      <div className='flex'>
+      <div className='flex items-center gap-2'>
         <CheckBox isChecked={isAccepted} setIsChecked={SetIsAccepted} />
         <div>{consent}</div>
       </div>
