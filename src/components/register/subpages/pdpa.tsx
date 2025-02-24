@@ -45,7 +45,7 @@ const Pdpa: React.FC<PdpaProps> = ({
           topic={PDPA.topic}
         />
 
-        <div className='bg-slate-300 text-center'>
+        <div className='text-center'>
           <Button
             className='text-lg'
             variant={isValid ? 'filled' : 'disabled'}
