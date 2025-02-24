@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
-import { timer } from '@/utils/timer' // Import helper function
+import { timer } from '@/utils/timer'
 
 const Timer: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState(timer())
