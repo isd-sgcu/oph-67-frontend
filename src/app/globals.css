@@ -65,4 +65,18 @@
   body {
     @apply bg-background text-foreground;
   }
+  .auto-number {
+    @apply relative;
+    counter-reset: section; /* Initialize counter */
+  }
+
+  .auto-number > * {
+    @apply pl-4; /* Add space for the number */
+    counter-increment: section; /* Increase counter */
+  }
+
+  .auto-number > *::before {
+    content: counter(section) '. ';
+    @apply absolute left-0 font-light text-primary-green; /* Style the number */
+  }
 }

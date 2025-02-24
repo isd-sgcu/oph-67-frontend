@@ -16,6 +16,10 @@ const config: Config = {
         sm: 'calc(var(--radius) - 4px)',
       },
       colors: {
+        'primary-green': '#064E41',
+        'button-green': '#076855',
+        'dark-pink': '#DD579B',
+        'light-pink': '#FAE9F3',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
