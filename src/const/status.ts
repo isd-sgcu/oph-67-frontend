@@ -18,7 +18,7 @@ export const statusMap = {
   bachelor: 'ปริญญาตรี',
   masterDoctorate: 'ปริญญาโท / ปริญญาเอก',
   guardian: 'ผู้ปกครอง',
-  other: 'อื่น ๆ โปรดระบุ',
+  other: 'อื่น ๆ',
 }
 
 export type Status = (typeof status)[number]

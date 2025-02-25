@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 import { faculties } from '@/const/faculties'
+import { news } from '@/const/news'
 import { provinces } from '@/const/province'
 import { status } from '@/const/status'
 
@@ -24,6 +25,7 @@ export const RegisterSchema = z.object({
   faculty1: z.enum(faculties, {
     message: 'เลือกคณะที่สนใจอันดับ 1',
   }),
+  news: z.array(z.enum(news)).optional(),
   faculty2: z.enum(faculties, {
     message: 'เลือกคณะที่สนใจอันดับ 2',
   }),
