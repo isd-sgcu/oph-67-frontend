@@ -18,14 +18,17 @@ const Policy: React.FC<PolicyProps> = ({
   SetIsAccepted,
 }) => {
   return (
-    <div className='space-y-3'>
-      <div className='text-lg font-[700]'>{topic}</div>
-      <div className='border-dark-gray h-64 overflow-y-auto rounded-md border-2 p-2 text-base'>
+    <div className='space-y-3 font-anuphan'>
+      <div className='text-base font-bold text-[#064E41]'>{topic}</div>
+      <div className='border-dark-gray h-64 overflow-y-auto rounded-md border-2 p-2 text-sm font-light'>
         <ReactMarkdown>{content}</ReactMarkdown>
       </div>
-      <div className='flex items-center gap-2'>
+      <div className='flex items-center gap-2 text-xs font-normal'>
         <CheckBox isChecked={isAccepted} setIsChecked={SetIsAccepted} />
-        <div>{consent}</div>
+        <div>
+          {consent}
+          <span className='text-[#FF0000]'>*</span>
+        </div>
       </div>
     </div>
   )
