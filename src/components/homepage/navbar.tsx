@@ -13,12 +13,12 @@ const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   const menuItems: MenuItem[] = [
-    { title: 'Navigator', link: '/' },
-    { title: 'Event', link: '/' },
-    { title: 'Faculties', link: '/' },
-    { title: 'Workshop', link: '/' },
-    { title: 'Pick Your Flower', link: '/' },
-    { title: 'Account', link: '/' },
+    { title: 'Navigator', link: '/navigator' },
+    { title: 'Event', link: '/event' },
+    { title: 'Faculties', link: '/faculties' },
+    { title: 'Workshop', link: '/workshop' },
+    { title: 'Pick Your Flower', link: '/pick_your_flower' },
+    { title: 'Account', link: '/account' },
   ]
 
   return (
@@ -49,7 +49,7 @@ const Navbar: React.FC = () => {
             {menuItems.map((item) => (
               <Link
                 key={item.title}
-                className="w-full cursor-pointer py-[36px] pl-[41px] text-xl font-semibold text-white hover:bg-[#064E41]"
+                className='w-full cursor-pointer py-[36px] pl-[41px] text-xl font-semibold text-white hover:bg-[#064E41]'
                 href={item.link}
                 onClick={() => setIsOpen(!isOpen)}
               >
@@ -59,7 +59,7 @@ const Navbar: React.FC = () => {
           </ul>
         </div>
 
-        <div className='flex h-[72px] w-full items-center justify-between bg-[#064E41] px-2 py-1'>
+        <div className='flex h-[72px] w-full items-center justify-between bg-[#064E41] py-1 pl-2 pr-4'>
           {/* Logo is at the left */}
           <Image
             alt='logo'

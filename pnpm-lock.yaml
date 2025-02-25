@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@fontsource/mitr':
+        specifier: ^5.1.1
+        version: 5.1.1
+      '@next/font':
+        specifier: ^14.2.15
+        version: 14.2.15(next@15.1.7(@babel/core@7.26.9)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -265,6 +271,9 @@ packages:
     resolution: {integrity: sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
+  '@fontsource/mitr@5.1.1':
+    resolution: {integrity: sha512-cl0zP2eYXFeKWEE4lJVXFSoDzVvMmOorgvNfluREijcFFZyNoLp1EXGpVOzjHnTqPyILWLJTsu4AFCC9cPUNSg==}
+
   '@humanwhocodes/config-array@0.13.0':
     resolution: {integrity: sha512-DZLEEqFWQFiyK6h5YIeynKx7JlvCYWL0cImfSRXZ9l4Sg2efkFGTuFf6vzXjK1cq6IYkU+Eg/JizXw+TD2vRNw==}
     engines: {node: '>=10.10.0'}
@@ -416,6 +425,11 @@ packages:
 
   '@next/eslint-plugin-next@15.1.7':
     resolution: {integrity: sha512-kRP7RjSxfTO13NE317ek3mSGzoZlI33nc/i5hs1KaWpK+egs85xg0DJ4p32QEiHnR0mVjuUfhRIun7awqfL7pQ==}
+
+  '@next/font@14.2.15':
+    resolution: {integrity: sha512-QopYhBmCDDrNDynbi+ZD1hDZXmQXVFo7TmAFp4DQgO/kogz1OLbQ92hPigJbj572eZ3GaaVxNIyYVn3/eAsehg==}
+    peerDependencies:
+      next: '*'
 
   '@next/swc-darwin-arm64@15.1.7':
     resolution: {integrity: sha512-hPFwzPJDpA8FGj7IKV3Yf1web3oz2YsR8du4amKw8d+jAOHfYHYFpMkoF6vgSY4W6vB29RtZEklK9ayinGiCmQ==}
@@ -2988,6 +3002,8 @@ snapshots:
 
   '@eslint/js@8.57.1': {}
 
+  '@fontsource/mitr@5.1.1': {}
+
   '@humanwhocodes/config-array@0.13.0':
     dependencies:
       '@humanwhocodes/object-schema': 2.0.3
@@ -3115,6 +3131,10 @@ snapshots:
   '@next/eslint-plugin-next@15.1.7':
     dependencies:
       fast-glob: 3.3.1
+
+  '@next/font@14.2.15(next@15.1.7(@babel/core@7.26.9)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))':
+    dependencies:
+      next: 15.1.7(@babel/core@7.26.9)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
 
   '@next/swc-darwin-arm64@15.1.7':
     optional: true
