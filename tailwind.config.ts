@@ -20,6 +20,8 @@ const config: Config = {
         'button-green': '#076855',
         'dark-pink': '#DD579B',
         'light-pink': '#FAE9F3',
+        'gradient-dark-green': '#064E41',
+        'gradient-light-green': '#00FFD1',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {

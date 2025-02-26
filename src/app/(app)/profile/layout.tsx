@@ -5,11 +5,11 @@ const Layout: React.FC<Readonly<{ children: React.ReactNode }>> = ({
   children,
 }) => {
   return (
-    <>
+    <div className='flex min-h-screen flex-col bg-light-pink font-mitr'>
       <Navbar />
       {children}
       <Footer />
-    </>
+    </div>
   )
 }
 
