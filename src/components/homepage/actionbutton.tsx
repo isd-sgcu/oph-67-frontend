@@ -11,7 +11,7 @@ const Actionbutton: React.FC<ImageItem> = ({ title, url }) => {
   return (
     <Link
       aria-label={title}
-      className='bg-center0 h-full w-full rounded-lg bg-cover'
+      className='h-[160px] w-full rounded-lg bg-cover bg-center'
       href={url}
       style={{
         backgroundImage: `url(/homepage/${title}.svg)`,

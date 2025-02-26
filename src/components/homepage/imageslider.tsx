@@ -3,17 +3,19 @@
 import Image from 'next/image'
 import { useState } from 'react'
 
+import { ImageSliderImages } from '@/const/imageslider'
+
 const Imageslider: React.FC = () => {
-  const images: string[] = []
   const [currentIndex, setCurrentIndex] = useState(0)
 
   const nextSlide = (): void => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % ImageSliderImages.length)
   }
 
   const prevSlide = (): void => {
     setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + images.length) % images.length
+      (prevIndex) =>
+        (prevIndex - 1 + ImageSliderImages.length) % ImageSliderImages.length
     )
   }
 
@@ -25,14 +27,14 @@ const Imageslider: React.FC = () => {
     <div className='relative h-[196px] w-[314px] overflow-hidden rounded-lg shadow-lg'>
       {/* Images */}
       <div className='relative h-full w-full'>
-        {images.length > 0 ? (
-          images.map((img, index) => (
+        {ImageSliderImages.length > 0 ? (
+          ImageSliderImages.map((img, index) => (
             <Image
               key={img}
               fill
               alt={`Slide ${index + 1}`}
               className={`absolute transition-opacity duration-700 ease-in-out ${index === currentIndex ? 'opacity-100' : 'opacity-0'}`}
-              src={`/homepage/${img}.jpg`}
+              src={`/homepage/${img}`}
             />
           ))
         ) : (
@@ -46,7 +48,7 @@ const Imageslider: React.FC = () => {
         )}
       </div>
 
-      {images.length > 1 && (
+      {ImageSliderImages.length > 1 && (
         <>
           {/* Previous Button */}
           <button
@@ -70,7 +72,7 @@ const Imageslider: React.FC = () => {
 
           {/* Dots */}
           <div className='absolute bottom-2 left-1/2 flex -translate-x-1/2 transform space-x-2'>
-            {images.map((img, index) => (
+            {ImageSliderImages.map((img, index) => (
               <Image
                 key={img}
                 alt={img}

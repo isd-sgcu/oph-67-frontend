@@ -4,22 +4,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 
-interface MenuItem {
-  title: string
-  link: string
-}
+import { NavbarItems } from '@/const/navbar'
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
-
-  const menuItems: MenuItem[] = [
-    { title: 'Navigator', link: '/navigator' },
-    { title: 'Event', link: '/event' },
-    { title: 'Faculties', link: '/faculties' },
-    { title: 'Workshop', link: '/workshop' },
-    { title: 'Pick Your Flower', link: '/pick_your_flower' },
-    { title: 'Account', link: '/account' },
-  ]
 
   return (
     <div>
@@ -46,7 +34,7 @@ const Navbar: React.FC = () => {
           <ul
             className={`flex flex-col items-center justify-center transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0'}`}
           >
-            {menuItems.map((item) => (
+            {NavbarItems.map((item) => (
               <Link
                 key={item.title}
                 className='w-full cursor-pointer py-[36px] pl-[41px] text-xl font-semibold text-white hover:bg-[#064E41]'

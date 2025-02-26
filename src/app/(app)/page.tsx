@@ -6,19 +6,22 @@ import Footer from '@/components/homepage/footer'
 import Imageslider from '@/components/homepage/imageslider'
 import Navbar from '@/components/homepage/navbar'
 import Timer from '@/components/homepage/timer'
-
-interface ActionbuttonItem {
-  title: string
-  url: string
-}
+import {
+  actionButtonsNotRegistered,
+  // actionButtonsRegistered,
+} from '@/const/actionbutton'
 
 const Home: React.FC = () => {
-  const actionButtonsDetail: ActionbuttonItem[] = [
-    { title: 'pick_your_flower', url: '/pick_your_flower' },
-    { title: 'suchibat', url: '/suchibat' },
-  ]
+  // const isRegistered = false
+
+  // const actionButtonsDetail = isRegistered
+  //   ? actionButtonsRegistered
+  //   : actionButtonsNotRegistered
+
+  const actionButtonsDetail = actionButtonsNotRegistered
+
   return (
-    <>
+    <div className='bg-[#FCF3F8]'>
       <Navbar />
       <div className='flex flex-col items-center justify-center py-[20px]'>
         <Imageslider />
@@ -26,6 +29,7 @@ const Home: React.FC = () => {
       <Timer />
       <div className='flex flex-col items-center justify-center gap-5 p-[20px]'>
         {/* Register Button */}
+        {/* {!isRegistered && ( */}
         <Link
           className='rounded-lg bg-[#076855] px-12 py-4 shadow-xl'
           href='/register'
@@ -34,7 +38,8 @@ const Home: React.FC = () => {
             ลงทะเบียนเลย!
           </p>
         </Link>
-        <div className='grid h-[170px] w-full grid-cols-2 gap-2'>
+        {/* )} */}
+        <div className='grid w-full grid-cols-2 gap-2'>
           {actionButtonsDetail.map((item) => (
             <Actionbutton key={item.title} title={item.title} url={item.url} />
           ))}
@@ -42,7 +47,7 @@ const Home: React.FC = () => {
         <Faq />
       </div>
       <Footer />
-    </>
+    </div>
   )
 }
 
