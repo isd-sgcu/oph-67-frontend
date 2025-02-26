@@ -1,5 +1,4 @@
 'use client'
-
 import Image from 'next/image'
 import { useState } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
@@ -14,6 +13,8 @@ import { provinces } from '@/const/province'
 import { statusMap } from '@/const/status'
 import { type RegisterForm } from '@/schema/register'
 
+import CheckBox from '../policy/checkbox'
+
 interface UserFormProps {
   setStep: (value: number) => void
   form: UseFormReturn<RegisterForm>
@@ -24,14 +25,6 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
 
   function onNext(): void {
     setStep(2)
-  }
-
-  const handleCheckboxChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    if (event.target.value === 'อื่น ๆ') {
-      setShowOtherInput(event.target.checked)
-    }
   }
 
   return (
@@ -175,11 +168,20 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
               <tr>
                 <td className='w-1/2'>
                   {news.slice(0, 3).map((option) => (
-                    <label key={option} className='flex items-center gap-2'>
-                      <input
-                        type='checkbox'
-                        value={option}
-                        {...form.register('news')}
+                    <label key={option} className='flex items-center gap-1.5'>
+                      <CheckBox
+                        isChecked={(form.watch('news') ?? []).includes(option)}
+                        setIsChecked={(checked) => {
+                          const currentNews = form.getValues('news') ?? []
+                          if (checked) {
+                            form.setValue('news', [...currentNews, option])
+                          } else {
+                            form.setValue(
+                              'news',
+                              currentNews.filter((item) => item !== option)
+                            )
+                          }
+                        }}
                       />
                       <span className='text-sm font-light text-[#064E41]'>
                         {option}
@@ -189,12 +191,23 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                 </td>
                 <td className='w-1/2'>
                   {news.slice(3).map((option) => (
-                    <label key={option} className='flex items-center gap-2'>
-                      <input
-                        type='checkbox'
-                        value={option}
-                        {...form.register('news')}
-                        onChange={handleCheckboxChange}
+                    <label key={option} className='flex items-center gap-1.5'>
+                      <CheckBox
+                        isChecked={(form.watch('news') ?? []).includes(option)}
+                        setIsChecked={(checked) => {
+                          const currentNews = form.getValues('news') ?? []
+                          if (checked) {
+                            form.setValue('news', [...currentNews, option])
+                          } else {
+                            form.setValue(
+                              'news',
+                              currentNews.filter((item) => item !== option)
+                            )
+                          }
+                          if (option === 'อื่น ๆ') {
+                            setShowOtherInput(checked)
+                          }
+                        }}
                       />
                       <span className='text-sm font-light text-[#064E41]'>
                         {option}
