@@ -173,7 +173,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
           <table className='w-full'>
             <tbody>
               <tr>
-                <td className='w-3/5'>
+                <td className='w-1/2'>
                   {news.slice(0, 3).map((option) => (
                     <label key={option} className='flex items-center gap-2'>
                       <input
@@ -187,7 +187,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                     </label>
                   ))}
                 </td>
-                <td className='w-2/5'>
+                <td className='w-1/2'>
                   {news.slice(3).map((option) => (
                     <label key={option} className='flex items-center gap-2'>
                       <input
@@ -201,23 +201,15 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                       </span>
                     </label>
                   ))}
-                  {showOtherInput ? (
-                    <div className='flex gap-2'>
-                      <div className='flex w-1/12' />
-                      <input
-                        className='w-9/12 border-b border-[#064E41] bg-transparent text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-0'
-                        placeholder='โปรดระบุ'
-                        type='text'
-                        {...form.register('otherNews')}
-                      />
-                    </div>
-                  ) : (
-                    <div className='flex items-center gap-2'>
-                      <span className='text-sm font-light text-[#064E41]'>
-                        &nbsp;
-                      </span>
-                    </div>
-                  )}
+                  <div className='flex gap-2'>
+                    <div className='flex w-1/12' />
+                    <input
+                      className={`w-9/12 border-b border-[#064E41] bg-transparent text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-0 ${showOtherInput ? 'visible' : 'invisible'}`}
+                      placeholder='โปรดระบุ'
+                      type='text'
+                      {...form.register('otherNews')}
+                    />
+                  </div>
                 </td>
               </tr>
             </tbody>
