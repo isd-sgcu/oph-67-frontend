@@ -77,13 +77,14 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                 <div className='text-xs font-normal text-[#064E41]'>
                   วัน/เดือน/ปีเกิด<span className='text-[#FF0000]'>*</span>
                 </div>
-                <div className='flex items-center justify-center gap-2'>
+                <label className='flex cursor-pointer items-center justify-center gap-2'>
                   <input
                     className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
                     placeholder='dd/mm/yy'
+                    type='date'
                     {...form.register('dob')}
                   />
-                </div>
+                </label>
               </div>
               <div className='flex w-1/2 flex-col gap-1'>
                 <div className='text-xs font-normal text-[#064E41]'>
@@ -168,7 +169,10 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
               <tr>
                 <td className='w-1/2'>
                   {news.slice(0, 3).map((option) => (
-                    <label key={option} className='flex items-center gap-1.5'>
+                    <label
+                      key={option}
+                      className='mb-1.5 flex items-center gap-1.5'
+                    >
                       <CheckBox
                         isChecked={(form.watch('news') ?? []).includes(option)}
                         setIsChecked={(checked) => {
@@ -183,7 +187,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                           }
                         }}
                       />
-                      <span className='text-sm font-light text-[#064E41]'>
+                      <span className='text-sm font-light leading-4 text-[#064E41]'>
                         {option}
                       </span>
                     </label>
@@ -191,7 +195,10 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                 </td>
                 <td className='w-1/2'>
                   {news.slice(3).map((option) => (
-                    <label key={option} className='flex items-center gap-1.5'>
+                    <label
+                      key={option}
+                      className='mb-1.5 flex items-center gap-1.5'
+                    >
                       <CheckBox
                         isChecked={(form.watch('news') ?? []).includes(option)}
                         setIsChecked={(checked) => {
@@ -209,7 +216,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                           }
                         }}
                       />
-                      <span className='text-sm font-light text-[#064E41]'>
+                      <span className='text-sm font-light leading-4 text-[#064E41]'>
                         {option}
                       </span>
                     </label>
@@ -312,7 +319,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
           />
         </div>
         <Button
-          className='my-6 w-full font-cloud-soft text-2xl font-medium'
+          className='mb-32 w-full font-cloud-soft text-2xl font-medium'
           variant='filled'
           onClick={onNext}
         >
