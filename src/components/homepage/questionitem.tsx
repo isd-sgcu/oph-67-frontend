@@ -15,7 +15,7 @@ const QuestionComponent: React.FC<QuestionItem> = ({ title, detail }) => {
       <div
         className={`mb-[8px] flex items-center justify-between rounded-[14px] border border-[#DD579B] bg-gradient-to-r from-white to-[#F7D3E8] px-[14px] py-[7px] transition-all duration-500 ${isOpen ? 'mb-[8px] shadow-lg' : 'mb-0 shadow-none'}`}
       >
-        <h2 className='font-mitr text-base font-medium text-[#FB549C]'>
+        <h2 className='font-mitr text-base font-normal text-[#FB549C]'>
           {title}
         </h2>
         <button
@@ -36,7 +36,7 @@ const QuestionComponent: React.FC<QuestionItem> = ({ title, detail }) => {
             : 'mb-0 max-h-0 -translate-y-4 opacity-0 shadow-none'
         }`}
       >
-        <p className='text-[14px] font-normal leading-[18.84px] text-[#DD579B]'>
+        <p className='font-mitr text-[12px] font-light leading-[18.84px] text-[#DD579B]'>
           {detail}
         </p>
       </div>

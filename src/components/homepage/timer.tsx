@@ -38,10 +38,10 @@ const Timer: React.FC = () => {
             {/* Hours */}
             <div className='flex flex-col items-center justify-center gap-[5px]'>
               <div className='flex justify-center gap-[4px]'>
-                <p className='border-text-2xl rounded-lg bg-white px-[6px] py-[3px] text-center text-3xl font-semibold text-[#064E41]'>
+                <p className='border-text-2xl rounded-lg bg-white px-[6px] py-[3px] text-center text-2xl font-semibold text-[#064E41]'>
                   {Math.floor(timeLeft.hours / 10)}
                 </p>
-                <p className='border-text-2xl rounded-lg bg-white px-[6px] py-[3px] text-center text-3xl font-semibold text-[#064E41]'>
+                <p className='border-text-2xl rounded-lg bg-white px-[6px] py-[3px] text-center text-2xl font-semibold text-[#064E41]'>
                   {timeLeft.hours % 10}
                 </p>
               </div>
@@ -51,17 +51,17 @@ const Timer: React.FC = () => {
             </div>
 
             {/* : */}
-            <p className='text-center text-3xl font-semibold text-[#064E41]'>
+            <p className='text-center text-2xl font-semibold text-[#064E41]'>
               :
             </p>
 
             {/* Minutes */}
             <div className='flex flex-col items-center justify-center gap-[5px]'>
               <div className='flex justify-center gap-[4px]'>
-                <p className='border-text-2xl rounded-lg bg-white px-[6px] py-[3px] text-center text-3xl font-semibold text-[#064E41]'>
+                <p className='border-text-2xl rounded-lg bg-white px-[6px] py-[3px] text-center text-2xl font-semibold text-[#064E41]'>
                   {Math.floor(timeLeft.minutes / 10)}
                 </p>
-                <p className='border-text-2xl rounded-lg bg-white px-[6px] py-[3px] text-center text-3xl font-semibold text-[#064E41]'>
+                <p className='border-text-2xl rounded-lg bg-white px-[6px] py-[3px] text-center text-2xl font-semibold text-[#064E41]'>
                   {timeLeft.minutes % 10}
                 </p>
               </div>
@@ -71,17 +71,17 @@ const Timer: React.FC = () => {
             </div>
 
             {/* : */}
-            <p className='text-center text-3xl font-semibold text-[#064E41]'>
+            <p className='text-center text-2xl font-semibold text-[#064E41]'>
               :
             </p>
 
             {/* Seconds */}
             <div className='flex flex-col items-center justify-center gap-[5px]'>
               <div className='flex justify-center gap-[4px]'>
-                <p className='border-text-2xl rounded-lg bg-white px-[6px] py-[3px] text-center text-3xl font-semibold text-[#064E41]'>
+                <p className='border-text-2xl rounded-lg bg-white px-[6px] py-[3px] text-center text-2xl font-semibold text-[#064E41]'>
                   {Math.floor(timeLeft.seconds / 10)}
                 </p>
-                <p className='border-text-2xl rounded-lg bg-white px-[6px] py-[3px] text-center text-3xl font-semibold text-[#064E41]'>
+                <p className='border-text-2xl rounded-lg bg-white px-[6px] py-[3px] text-center text-2xl font-semibold text-[#064E41]'>
                   {timeLeft.seconds % 10}
                 </p>
               </div>

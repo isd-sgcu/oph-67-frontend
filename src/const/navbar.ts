@@ -9,5 +9,5 @@ export const NavbarItems: NavbarItem[] = [
   { title: 'Faculties', link: '/faculties' },
   { title: 'Workshop', link: '/workshop' },
   { title: 'Pick Your Flower', link: '/pick_your_flower' },
-  { title: 'Account', link: '/account' },
+  { title: 'Account', link: '/profile' },
 ]
