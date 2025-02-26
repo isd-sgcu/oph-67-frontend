@@ -3,5 +3,5 @@ export const news = [
   'Instagram (cu.openhouse)',
   'Camphub.com',
   'Dek-D.com',
-  'อื่น ๆ (โปรดระบุ)',
+  'อื่น ๆ',
 ] as const

@@ -1,7 +1,7 @@
 'use client'
-// import { useEffect } from 'react';
 
 import Image from 'next/image'
+import { useState } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
 
 import { Button } from '@/components/register/button'
@@ -20,8 +20,18 @@ interface UserFormProps {
 }
 
 const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
+  const [showOtherInput, setShowOtherInput] = useState(false)
+
   function onNext(): void {
     setStep(2)
+  }
+
+  const handleCheckboxChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    if (event.target.value === 'อื่น ๆ') {
+      setShowOtherInput(event.target.checked)
+    }
   }
 
   return (
@@ -160,18 +170,58 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
               ทราบข่าวการประชาสัมพันธ์ได้อย่างไร?
             </div>
           </div>
-          {news.map((option) => (
-            <label key={option} className='flex items-center gap-2'>
-              <input
-                type='checkbox'
-                value={option}
-                {...form.register('news')}
-              />
-              <span className='text-sm font-light text-[#064E41]'>
-                {option}
-              </span>
-            </label>
-          ))}
+          <table className='w-full'>
+            <tbody>
+              <tr>
+                <td className='w-3/5'>
+                  {news.slice(0, 3).map((option) => (
+                    <label key={option} className='flex items-center gap-2'>
+                      <input
+                        type='checkbox'
+                        value={option}
+                        {...form.register('news')}
+                      />
+                      <span className='text-sm font-light text-[#064E41]'>
+                        {option}
+                      </span>
+                    </label>
+                  ))}
+                </td>
+                <td className='w-2/5'>
+                  {news.slice(3).map((option) => (
+                    <label key={option} className='flex items-center gap-2'>
+                      <input
+                        type='checkbox'
+                        value={option}
+                        {...form.register('news')}
+                        onChange={handleCheckboxChange}
+                      />
+                      <span className='text-sm font-light text-[#064E41]'>
+                        {option}
+                      </span>
+                    </label>
+                  ))}
+                  {showOtherInput ? (
+                    <div className='flex gap-2'>
+                      <div className='flex w-1/12' />
+                      <input
+                        className='w-9/12 border-b border-[#064E41] bg-transparent text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-0'
+                        placeholder='โปรดระบุ'
+                        type='text'
+                        {...form.register('otherNews')}
+                      />
+                    </div>
+                  ) : (
+                    <div className='flex items-center gap-2'>
+                      <span className='text-sm font-light text-[#064E41]'>
+                        &nbsp;
+                      </span>
+                    </div>
+                  )}
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <div className='flex flex-col gap-2'>
           <div className='flex gap-2 border-b border-[#064E41] pb-1'>
