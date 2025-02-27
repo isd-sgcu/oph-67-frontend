@@ -4,9 +4,6 @@ import { useState } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
 
 import { Button } from '@/components/register/button'
-// import { useLiff } from '@/contexts/liff';
-// import { useAuth } from '@/contexts/auth';
-// import toast from 'react-hot-toast';
 import { faculties } from '@/const/faculties'
 import { news } from '@/const/news'
 import { provinces } from '@/const/province'
@@ -24,7 +21,51 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
   const [showOtherInput, setShowOtherInput] = useState(false)
 
   function onNext(): void {
-    setStep(2)
+    const values = form.getValues()
+    const requiredFields: (keyof RegisterForm)[] = [
+      'name',
+      'surname',
+      'dob',
+      'status',
+      'email',
+      'province',
+      'school',
+      'faculty1',
+      'faculty2',
+      'faculty3',
+      'purpose',
+    ]
+    let isFormValid = true
+    let firstInvalidField: HTMLElement | null = null
+
+    requiredFields.forEach((field) => {
+      const inputElement = document.querySelector(
+        `[name="${field}"]`
+      )
+      if (!values[field]) {
+        isFormValid = false
+        if (inputElement) {
+          inputElement.classList.add('border-red-500')
+          if (!firstInvalidField) {
+            firstInvalidField = inputElement
+          }
+        }
+      } else if (inputElement) {
+        inputElement.classList.remove('border-red-500')
+      }
+    })
+
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- เหตุผล: ค่า someVariable อาจมีการเปลี่ยนแปลงแบบ asynchronous ที่ไม่สามารถตรวจจับได้
+    if (!isFormValid && firstInvalidField) {
+      ;(firstInvalidField as HTMLElement).scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
+      console.log('Form is invalid')
+    } else {
+      console.log(form.getValues())
+      setStep(2)
+    }
   }
 
   return (
@@ -64,11 +105,13 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                   className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
                   placeholder='ชื่อ'
                   {...form.register('name')}
+                  name='name'
                 />
                 <input
                   className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
                   placeholder='นามสกุล'
                   {...form.register('surname')}
+                  name='surname'
                 />
               </div>
             </div>
@@ -83,6 +126,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                     placeholder='dd/mm/yy'
                     type='date'
                     {...form.register('dob')}
+                    name='dob'
                   />
                 </label>
               </div>
@@ -95,6 +139,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                     className='h-9 w-full rounded-md border border-[#064E41] p-1 text-sm font-light text-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
                     {...form.register('status')}
                     defaultValue=''
+                    name='status'
                   >
                     <option disabled value=''>
                       สถานภาพ
@@ -116,6 +161,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                 className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
                 placeholder='@email.com'
                 {...form.register('email')}
+                name='email'
               />
             </div>
             <div className='flex flex-col gap-1'>
@@ -126,6 +172,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                 className='h-9 w-1/2 rounded-md border border-[#064E41] p-1 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
                 {...form.register('province')}
                 defaultValue=''
+                name='province'
               >
                 <option disabled value=''>
                   เลือกจังหวัดที่อยู่
@@ -157,6 +204,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
               className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
               placeholder='โรงเรียน'
               {...form.register('school')}
+              name='school'
             />
           </div>
           <div className='flex gap-2 border-b border-[#064E41] p-2 pb-1'>
@@ -256,6 +304,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                 className='h-9 w-3/4 rounded-md border border-[#064E41] p-1 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
                 {...form.register('faculty1')}
                 defaultValue=''
+                name='faculty1'
               >
                 <option disabled value=''>
                   เลือกคณะที่สนใจ
@@ -275,6 +324,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                 className='h-9 w-3/4 rounded-md border border-[#064E41] p-1 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
                 {...form.register('faculty2')}
                 defaultValue=''
+                name='faculty2'
               >
                 <option disabled value=''>
                   เลือกคณะที่สนใจ
@@ -294,6 +344,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                 className='h-9 w-3/4 rounded-md border border-[#064E41] p-1 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
                 {...form.register('faculty3')}
                 defaultValue=''
+                name='faculty3'
               >
                 <option disabled value=''>
                   เลือกคณะที่สนใจ
@@ -316,6 +367,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
             className='mt-2 h-32 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
             placeholder='กรอกจุดประสงค์'
             {...form.register('purpose')}
+            name='purpose'
           />
         </div>
         <Button
