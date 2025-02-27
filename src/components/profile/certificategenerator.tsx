@@ -47,27 +47,29 @@ const CertificateGenerator: React.FC = () => {
     <div className='flex flex-col items-center gap-2 p-5'>
       <h1 className='text-2xl font-normal text-primary-green'>Certification</h1>
       <p className='text-base font-normal text-primary-green'>เกียรติบัตร</p>
-      <div className='my-2 w-[20rem] border border-b-0 border-primary-green' />
-      <div className='flex'>
-        <NextImage
-          alt='cert'
-          height={24}
-          src='/assets/icons/flower-vase.svg'
-          width={24}
-        />
-        <h1 className='header-green-gradient clip-text text-2xl'>
-          CONGRATULATIONS!
-        </h1>
-        <NextImage
-          alt='cert'
-          height={24}
-          src='/assets/icons/flower-vase.svg'
-          width={24}
-        />
+      <div className='my-8 w-[20rem] border border-b-0 border-primary-green' />
+      <div>
+        <div className='flex'>
+          <NextImage
+            alt='cert'
+            height={24}
+            src='/assets/icons/flower-vase.svg'
+            width={24}
+          />
+          <h1 className='header-green-gradient clip-text text-3xl'>
+            CONGRATULATIONS!
+          </h1>
+          <NextImage
+            alt='cert'
+            height={24}
+            src='/assets/icons/flower-vase.svg'
+            width={24}
+          />
+        </div>
+        <p className='text-green-gradient clip-text mt-1 text-center font-light'>
+          see you soon in Chula
+        </p>
       </div>
-      <p className='text-green-gradient clip-text font-light'>
-        see you soon in Chula
-      </p>
       <canvas ref={canvasRef} className='hidden' />
       {imageUrl ? (
         <>
