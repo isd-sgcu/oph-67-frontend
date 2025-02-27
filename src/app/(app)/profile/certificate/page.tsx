@@ -2,7 +2,7 @@
 
 import { type ReactNode, useState } from 'react'
 
-import CertificateGenerator from '@/components/profile/certificategenerator'
+import CertificateGenerator from '@/components/profile/certificate-generator'
 import { Button } from '@/components/ui/button'
 
 const Certificate: React.FC = () => {

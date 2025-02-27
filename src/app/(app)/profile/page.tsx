@@ -4,10 +4,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import QRCode from 'react-qr-code'
 
-import InteresteItem from '@/components/profile/interesteitem'
+import InterestedItem from '@/components/profile/interested-item'
 import { Button } from '@/components/ui/button'
 import { faculties } from '@/const/faculties'
-
 
 const Profile: React.FC = () => {
   const favFaculties = faculties.slice(0, 3)
@@ -45,11 +44,11 @@ const Profile: React.FC = () => {
       </h2>
       <div className='auto-number flex w-[20rem] flex-wrap justify-center gap-y-5'>
         {favFaculties.map((faculty) => (
-          <InteresteItem key={faculty.en} faculty={faculty} />
+          <InterestedItem key={faculty.en} faculty={faculty} />
         ))}
       </div>
       <div className='my-2 w-[20rem] border border-b-0 border-primary-green' />
-      <Link href="/profile/certificate">
+      <Link href='/profile/certificate'>
         <Button className='w-[20rem] font-cloud-soft text-2xl font-bold'>
           <Image
             alt='cert'
