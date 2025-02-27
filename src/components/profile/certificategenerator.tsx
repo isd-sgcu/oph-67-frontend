@@ -3,45 +3,51 @@ import React, { useEffect, useRef, useState } from 'react'
 
 import { Button } from '../ui/button'
 
-const CertificateGenerator: React.FC = () => {
-  const userName = 'Lickma Bold'
+interface CertificateGeneratorProps {
+  userName: string
+}
+
+const CertificateGenerator: React.FC<CertificateGeneratorProps> = ({
+  userName,
+}) => {
   const [imageUrl, setImageUrl] = useState<string | null>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
-    handleGenerate()
-  }, [])
-  const handleGenerate = (): void => {
-    const canvas = canvasRef.current
-    if (!canvas) return
+    const handleGenerate = (): void => {
+      const canvas = canvasRef.current
+      if (!canvas) return
 
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
+      const ctx = canvas.getContext('2d')
+      if (!ctx) return
 
-    const image = new Image()
-    image.src = '/certificate/template.jpg' // Ensure this file is in your public folder
+      const image = new Image()
+      image.src = '/certificate/template.jpg' // Ensure this file is in your public folder
 
-    image.onload = () => {
-      canvas.width = image.width
-      canvas.height = image.height
+      image.onload = () => {
+        canvas.width = image.width
+        canvas.height = image.height
 
-      // Draw certificate template
-      ctx.drawImage(image, 0, 0, canvas.width, canvas.height)
+        // Draw certificate template
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height)
 
-      // Set text properties
-      ctx.font = 'bold 50px Mitr'
-      ctx.fillStyle = 'black'
-      ctx.textAlign = 'center'
+        // Set text properties
+        ctx.font = 'bold 50px Mitr'
+        ctx.fillStyle = 'black'
+        ctx.textAlign = 'center'
 
-      // Position text in the middle
-      const x = canvas.width / 2
-      const y = 400 // Adjust as needed for your template
-      ctx.fillText(userName, x, y)
+        // Position text in the middle
+        const x = canvas.width / 2
+        const y = 400 // Adjust as needed for your template
+        ctx.fillText(userName, x, y)
 
-      // Convert to image URL
-      setImageUrl(canvas.toDataURL('image/png'))
+        // Convert to image URL
+        setImageUrl(canvas.toDataURL('image/png'))
+      }
     }
-  }
+
+    handleGenerate()
+  }, [userName])
 
   return (
     <div className='flex flex-col items-center gap-2 p-5'>

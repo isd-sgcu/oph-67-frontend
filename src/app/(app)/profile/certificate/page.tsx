@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 
 const Certificate: React.FC = () => {
   const [step, setStep] = useState(1)
+  const userName = 'Name Lastname'
 
   const getPage = (): ReactNode => {
     switch (step) {
@@ -31,7 +32,7 @@ const Certificate: React.FC = () => {
           </div>
         )
       case 2:
-        return <CertificateGenerator />
+        return <CertificateGenerator userName={userName} />
       default:
         return <div>404</div>
     }
