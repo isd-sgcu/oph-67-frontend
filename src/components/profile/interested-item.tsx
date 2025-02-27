@@ -1,10 +1,10 @@
 import { type Faculty } from '@/const/faculties'
 
-interface InteresteItemProps {
+interface InterestedItemProps {
   faculty: Faculty
 }
 
-const InteresteItem: React.FC<InteresteItemProps> = ({ faculty }) => {
+const InterestedItem: React.FC<InterestedItemProps> = ({ faculty }) => {
   return (
     <div className='relative w-1/2 text-nowrap text-base font-light text-primary-green'>
       <p>{faculty.th}</p>
@@ -13,4 +13,4 @@ const InteresteItem: React.FC<InteresteItemProps> = ({ faculty }) => {
   )
 }
 
-export default InteresteItem
+export default InterestedItem
