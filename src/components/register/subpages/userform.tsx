@@ -45,7 +45,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
         if (inputElement) {
           inputElement.classList.add('border-red-500')
           if (!firstInvalidField) {
-            firstInvalidField = inputElement
+            firstInvalidField = inputElement as HTMLElement
           }
         }
       } else if (inputElement) {
