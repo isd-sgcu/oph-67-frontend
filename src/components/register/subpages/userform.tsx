@@ -8,7 +8,7 @@ import { Button } from '@/components/register/button'
 // import { useLiff } from '@/contexts/liff';
 // import { useAuth } from '@/contexts/auth';
 // import toast from 'react-hot-toast';
-import { faculties } from '@/const/faculties'
+import { FacultyTH } from '@/const/faculties'
 import { news } from '@/const/news'
 import { provinces } from '@/const/province'
 import { statusMap } from '@/const/status'
@@ -198,7 +198,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                 <option disabled value=''>
                   เลือกคณะที่สนใจ
                 </option>
-                {faculties.map((faculty) => (
+                {FacultyTH.map((faculty) => (
                   <option key={faculty} value={faculty}>
                     {faculty}
                   </option>
@@ -217,7 +217,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                 <option disabled value=''>
                   เลือกคณะที่สนใจ
                 </option>
-                {faculties.map((faculty) => (
+                {FacultyTH.map((faculty) => (
                   <option key={faculty} value={faculty}>
                     {faculty}
                   </option>
@@ -236,7 +236,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                 <option disabled value=''>
                   เลือกคณะที่สนใจ
                 </option>
-                {faculties.map((faculty) => (
+                {FacultyTH.map((faculty) => (
                   <option key={faculty} value={faculty}>
                     {faculty}
                   </option>
