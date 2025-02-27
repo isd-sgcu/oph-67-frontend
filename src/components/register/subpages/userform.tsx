@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
 
-import { Button } from '@/components/register/button'
+import { Button } from '@/components/ui/button'
 import { FacultyTH } from '@/const/faculties'
 import { news } from '@/const/news'
 import { provinces } from '@/const/province'

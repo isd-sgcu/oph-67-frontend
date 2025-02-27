@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import { type UseFormReturn } from 'react-hook-form'
 
-import { Button } from '@/components/register/button'
+import { Button } from '@/components/ui/button'
 import { yearMap } from '@/const/staff-year'
 import { statusMap } from '@/const/status-staff'
 import { type AdminRegisterForm } from '@/schema/admin-register'

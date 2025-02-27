@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
-import { Button } from '@/components/register/button'
+import { Button } from '@/components/ui/button'
 
 const Success: React.FC = () => {
   const router = useRouter()
