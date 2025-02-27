@@ -1,5 +1,4 @@
 import NextImage from 'next/image'
-import Link from 'next/link'
 import React, { useEffect, useRef, useState } from 'react'
 
 import { Button } from '../ui/button'
@@ -70,7 +69,8 @@ const CertificateGenerator: React.FC = () => {
         see you soon in Chula
       </p>
       <canvas ref={canvasRef} className='hidden' />
-      {imageUrl ? <>
+      {imageUrl ? (
+        <>
           <div className='mt-4'>
             <NextImage
               alt='Generated Certificate'
@@ -81,7 +81,7 @@ const CertificateGenerator: React.FC = () => {
             />
           </div>
 
-          <Link download='certificate.png' href={imageUrl}>
+          <a download='certificate.png' href={imageUrl}>
             <Button className='mt-8 w-[20rem] font-cloud-soft text-2xl font-bold'>
               <NextImage
                 alt='download'
@@ -92,8 +92,9 @@ const CertificateGenerator: React.FC = () => {
               />
               ดาวน์โหลด
             </Button>
-          </Link>
-        </> : null}
+          </a>
+        </>
+      ) : null}
     </div>
   )
 }
