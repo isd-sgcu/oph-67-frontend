@@ -1,25 +1,13 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 
-interface MenuItem {
-  title: string
-  link: string
-}
+import { NavbarItems } from '@/const/navbar'
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
-
-  const menuItems: MenuItem[] = [
-    { title: 'Navigator', link: '/' },
-    { title: 'Event', link: '/' },
-    { title: 'Faculties', link: '/' },
-    { title: 'Workshop', link: '/' },
-    { title: 'Pick Your Flower', link: '/' },
-    { title: 'Account', link: '/' },
-  ]
+  // const isRegistered = false
 
   return (
     <div>
@@ -46,10 +34,10 @@ const Navbar: React.FC = () => {
           <ul
             className={`flex flex-col items-center justify-center transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0'}`}
           >
-            {menuItems.map((item) => (
+            {NavbarItems.map((item) => (
               <Link
                 key={item.title}
-                className="w-full cursor-pointer py-[36px] pl-[41px] text-xl font-semibold text-white hover:bg-[#064E41]"
+                className='w-full cursor-pointer py-[36px] pl-[41px] text-xl font-semibold text-white hover:bg-[#064E41]'
                 href={item.link}
                 onClick={() => setIsOpen(!isOpen)}
               >
@@ -59,23 +47,35 @@ const Navbar: React.FC = () => {
           </ul>
         </div>
 
-        <div className='flex h-[72px] w-full items-center justify-between bg-[#064E41] px-2 py-1'>
+        <div className='flex h-[72px] w-full items-center justify-between bg-[#064E41] py-1 pl-2 pr-4'>
           {/* Logo is at the left */}
-          <Image
-            alt='logo'
-            height={64}
-            src='/homepage/oph_logo-01.svg'
-            width={64}
-          />
+          <Link
+            className='h-[64px] w-[64px]'
+            href="/"
+            style={{
+              backgroundImage: 'url(/homepage/oph_logo-01.svg)',
+            }}
+           />
 
           {/* Burger Button is at the right */}
-          <button type='button' onClick={() => setIsOpen(!isOpen)}>
-            <div className='relative grid justify-items-center gap-1.5'>
-              <span className='h-0.5 w-6 rounded-full bg-white' />
-              <span className='h-0.5 w-6 rounded-full bg-white' />
-              <span className='h-0.5 w-6 rounded-full bg-white' />
-            </div>
-          </button>
+          <div className='flex gap-4'>
+            {/* {isRegistered && ( */}
+            <Link
+              className='h-[31.5px] w-[31.5px]'
+              href="/profile"
+              style={{
+                backgroundImage: 'url(/homepage/profile.svg)',
+              }}
+             />
+            {/* )} */}
+            <button type='button' onClick={() => setIsOpen(!isOpen)}>
+              <div className='relative grid justify-items-center gap-1.5'>
+                <span className='h-0.5 w-6 rounded-full bg-white' />
+                <span className='h-0.5 w-6 rounded-full bg-white' />
+                <span className='h-0.5 w-6 rounded-full bg-white' />
+              </div>
+            </button>
+          </div>
         </div>
       </header>
     </div>
