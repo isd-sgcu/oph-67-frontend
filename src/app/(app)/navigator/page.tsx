@@ -14,7 +14,7 @@ const Navigator: React.FC = () => {
         <h1 className='pb-6 font-mitr text-2xl font-normal text-[#064E41]'>
           แผนที่
         </h1>
-        <ToggleButtons initialSelected='Navigator' labels={MapButtons} />
+        <ToggleButtons initialSelected="Navigator" labels={MapButtons} />
         <Frame />
       </div>
       <Footer />
