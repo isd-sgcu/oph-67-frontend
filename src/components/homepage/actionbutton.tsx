@@ -1,18 +1,20 @@
 'use client'
 
-interface ImageString {
-  imgName: string
+import Link from 'next/link'
+
+interface ImageItem {
+  title: string
+  url: string
 }
 
-const Actionbutton: React.FC<ImageString> = ({ imgName }) => {
+const Actionbutton: React.FC<ImageItem> = ({ title, url }) => {
   return (
-    <button
-      className='h-[137px] w-[170px] max-w-[50%]'
-      type='button'
+    <Link
+      aria-label={title}
+      className='h-[160px] w-full rounded-lg bg-cover bg-center'
+      href={url}
       style={{
-        backgroundImage: `url(/homepage/${imgName}.svg)`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundImage: `url(/homepage/${title}.svg)`,
       }}
     />
   )
