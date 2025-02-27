@@ -14,7 +14,7 @@ const Actionbutton: React.FC<ImageString> = ({ imgName }) => {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
-     />
+    />
   )
 }
 

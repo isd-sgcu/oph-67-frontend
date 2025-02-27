@@ -39,9 +39,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
     let firstInvalidField: HTMLElement | null = null
 
     requiredFields.forEach((field) => {
-      const inputElement = document.querySelector(
-        `[name="${field}"]`
-      )
+      const inputElement = document.querySelector(`[name="${field}"]`)
       if (!values[field]) {
         isFormValid = false
         if (inputElement) {

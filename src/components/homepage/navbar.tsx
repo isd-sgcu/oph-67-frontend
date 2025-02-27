@@ -49,7 +49,7 @@ const Navbar: React.FC = () => {
             {menuItems.map((item) => (
               <Link
                 key={item.title}
-                className="w-full cursor-pointer py-[36px] pl-[41px] text-xl font-semibold text-white hover:bg-[#064E41]"
+                className='w-full cursor-pointer py-[36px] pl-[41px] text-xl font-semibold text-white hover:bg-[#064E41]'
                 href={item.link}
                 onClick={() => setIsOpen(!isOpen)}
               >
