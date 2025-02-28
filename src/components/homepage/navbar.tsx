@@ -37,7 +37,7 @@ const Navbar: React.FC = () => {
             {NavbarItems.map((item) => (
               <Link
                 key={item.title}
-                className='w-full cursor-pointer py-[36px] pl-[41px] text-xl font-semibold text-white hover:bg-[#064E41]'
+                className='w-full cursor-pointer py-[36px] pl-[41px] font-anuphan text-xl font-semibold text-white hover:bg-[#064E41]'
                 href={item.link}
                 onClick={() => setIsOpen(!isOpen)}
               >
@@ -51,22 +51,22 @@ const Navbar: React.FC = () => {
           {/* Logo is at the left */}
           <Link
             className='h-[64px] w-[64px]'
-            href="/"
+            href='/'
             style={{
               backgroundImage: 'url(/homepage/oph_logo-01.svg)',
             }}
-           />
+          />
 
           {/* Burger Button is at the right */}
           <div className='flex gap-4'>
             {/* {isRegistered && ( */}
             <Link
               className='h-[31.5px] w-[31.5px]'
-              href="/profile"
+              href='/profile'
               style={{
                 backgroundImage: 'url(/homepage/profile.svg)',
               }}
-             />
+            />
             {/* )} */}
             <button type='button' onClick={() => setIsOpen(!isOpen)}>
               <div className='relative grid justify-items-center gap-1.5'>
