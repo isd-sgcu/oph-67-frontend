@@ -1,5 +1,6 @@
 'use client'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
 
@@ -13,11 +14,11 @@ import { type RegisterForm } from '@/schema/register'
 import CheckBox from '../policy/checkbox'
 
 interface UserFormProps {
-  setStep: (value: number) => void
   form: UseFormReturn<RegisterForm>
 }
 
-const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
+const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
+  const router = useRouter()
   const [showOtherInput, setShowOtherInput] = useState(false)
 
   function onNext(): void {
@@ -62,7 +63,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
       console.log('Form is invalid')
     } else {
       console.log(form.getValues())
-      setStep(2)
+      router.push('/profile')
     }
   }
 
@@ -76,11 +77,19 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
           width={125}
         />
         <div className='flex flex-col items-center justify-center gap-0 font-mitr tracking-tight text-[#064E41]'>
-          <div className='text-xl font-medium'>ลงทะเบียน</div>
+          <div className='flex gap-1 text-xl font-medium'>
+            <Image
+              alt='edit'
+              height={16}
+              src='/assets/register/edit.svg'
+              width={16}
+            />
+            <div>แก้ไขข้อมูล</div>
+          </div>
           <div className='text-base font-light'>Registration Form</div>
         </div>
       </div>
-      <div className='flex flex-col gap-4 px-3 py-3 font-mitr'>
+      <div className='flex flex-col gap-4 bg-white px-3 py-3 font-mitr'>
         <div className='flex flex-col gap-2'>
           <div className='flex gap-2 border-b border-[#064E41] pb-1'>
             <Image
@@ -373,11 +382,11 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
           variant='filled'
           onClick={onNext}
         >
-          ลงทะเบียน
+          ยืนยัน
         </Button>
       </div>
     </div>
   )
 }
 
-export default UserForm
+export default UserFormEdit

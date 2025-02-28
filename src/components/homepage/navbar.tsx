@@ -14,7 +14,7 @@ const Navbar: React.FC = () => {
       <header className='z-10 flex w-full flex-col'>
         {/* Burger's Content */}
         <div
-          className={`absolute left-0 z-20 w-full bg-[#076855] transition-all duration-[500ms] ease-in-out ${isOpen ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}`}
+          className={`duration-[500ms] absolute left-0 z-20 w-full bg-[#076855] transition-all ease-in-out ${isOpen ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}`}
         >
           {/* X Button */}
           <div

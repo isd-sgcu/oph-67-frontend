@@ -26,6 +26,7 @@ export const RegisterSchema = z.object({
     message: 'เลือกคณะที่สนใจอันดับ 1',
   }),
   news: z.array(z.enum(news)).optional(),
+  otherNews: z.string().min(1).optional(),
   faculty2: z.enum(FacultyTH, {
     message: 'เลือกคณะที่สนใจอันดับ 2',
   }),
