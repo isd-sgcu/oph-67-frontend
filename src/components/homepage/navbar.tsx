@@ -14,7 +14,7 @@ const Navbar: React.FC = () => {
       <header className='z-10 flex w-full flex-col'>
         {/* Burger's Content */}
         <div
-          className={`absolute left-0 z-20 w-full bg-[#076855] transition-all duration-[500ms] ease-in-out ${isOpen ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}`}
+          className={`duration-[500ms] absolute left-0 z-20 w-full bg-[#076855] transition-all ease-in-out ${isOpen ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}`}
         >
           {/* X Button */}
           <div
@@ -37,7 +37,7 @@ const Navbar: React.FC = () => {
             {NavbarItems.map((item) => (
               <Link
                 key={item.title}
-                className='w-full cursor-pointer py-[36px] pl-[41px] text-xl font-semibold text-white hover:bg-[#064E41]'
+                className='w-full cursor-pointer py-[36px] pl-[41px] font-anuphan text-xl font-semibold text-white hover:bg-[#064E41]'
                 href={item.link}
                 onClick={() => setIsOpen(!isOpen)}
               >
@@ -51,22 +51,22 @@ const Navbar: React.FC = () => {
           {/* Logo is at the left */}
           <Link
             className='h-[64px] w-[64px]'
-            href="/"
+            href='/'
             style={{
               backgroundImage: 'url(/homepage/oph_logo-01.svg)',
             }}
-           />
+          />
 
           {/* Burger Button is at the right */}
           <div className='flex gap-4'>
             {/* {isRegistered && ( */}
             <Link
               className='h-[31.5px] w-[31.5px]'
-              href="/profile"
+              href='/profile'
               style={{
                 backgroundImage: 'url(/homepage/profile.svg)',
               }}
-             />
+            />
             {/* )} */}
             <button type='button' onClick={() => setIsOpen(!isOpen)}>
               <div className='relative grid justify-items-center gap-1.5'>

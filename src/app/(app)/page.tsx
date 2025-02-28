@@ -6,6 +6,7 @@ import Footer from '@/components/homepage/footer'
 import Imageslider from '@/components/homepage/imageslider'
 import Navbar from '@/components/homepage/navbar'
 import Timer from '@/components/homepage/timer'
+import { Button } from '@/components/ui/button'
 import {
   actionButtonsNotRegistered,
   // actionButtonsRegistered,
@@ -30,14 +31,11 @@ const Home: React.FC = () => {
       <div className='flex flex-col items-center justify-center gap-5 p-[20px]'>
         {/* Register Button */}
         {/* {!isRegistered && ( */}
-        <Link
-          className='rounded-lg bg-[#076855] px-12 py-4 shadow-xl'
-          href='/register'
-        >
-          <p className='text font-cloud-soft text-2xl text-white'>
-            ลงทะเบียนเลย!
-          </p>
-        </Link>
+        <Button className='px-11 py-4 shadow-xl'>
+          <Link href='/register'>
+            <p className='font-cloud-soft text-2xl text-white'>ลงทะเบียนเลย!</p>
+          </Link>
+        </Button>
         {/* )} */}
         <div className='grid w-full grid-cols-2 gap-2'>
           {actionButtonsDetail.map((item) => (
