@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
-import { type RegisterForm, RegisterSchema } from '@/schema/register'
+import { type RegisterForm, RegisterSchema } from '@/types/register'
 
 import UserFormEdit from '../../../../components/register/subpages/userform-edit'
 

@@ -8,7 +8,7 @@ import { FacultyTH } from '@/const/faculties'
 import { news } from '@/const/news'
 import { provinces } from '@/const/province'
 import { statusMap } from '@/const/status'
-import { type RegisterForm } from '@/schema/register'
+import { type RegisterForm } from '@/types/register'
 
 import CheckBox from '../policy/checkbox'
 

@@ -4,10 +4,9 @@ import { type ReactNode, useCallback, useMemo, useState } from 'react'
 
 import Footer from '@/components/homepage/footer'
 import Navbar from '@/components/homepage/navbar'
+import FlowerResult from '@/components/pick-your-flower/subpages/flower-result'
+import SelectCard from '@/components/pick-your-flower/subpages/select-card'
 import FlowerDatas from '@/const/flower-data'
-
-import FlowerResult from '@/components/pick_your_flower/subpages/flower-result'
-import SelectCard from '@/components/pick_your_flower/subpages/select-card'
 
 const FlowerPage: React.FC = () => {
   const [phase, setPhase] = useState(1)

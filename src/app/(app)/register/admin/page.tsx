@@ -9,7 +9,7 @@ import Navbar from '@/components/homepage/navbar'
 import {
   type AdminRegisterForm,
   AdminRegisterSchema,
-} from '@/schema/admin-register'
+} from '@/types/admin-register'
 
 import AdminForm from '../../../../components/register/subpages/adminform'
 import Pdpa from '../../../../components/register/subpages/pdpa'

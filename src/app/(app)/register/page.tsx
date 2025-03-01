@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 
 import Footer from '@/components/homepage/footer'
 import Navbar from '@/components/homepage/navbar'
-import { type RegisterForm, RegisterSchema } from '@/schema/register'
+import { type RegisterForm, RegisterSchema } from '@/types/register'
 
 import Pdpa from '../../../components/register/subpages/pdpa'
 import Success from '../../../components/register/subpages/success'

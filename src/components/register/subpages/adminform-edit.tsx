@@ -6,7 +6,7 @@ import { type UseFormReturn } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
 import { yearMap } from '@/const/staff-year'
 import { statusMap } from '@/const/status-staff'
-import { type AdminRegisterForm } from '@/schema/admin-register'
+import { type AdminRegisterForm } from '@/types/admin-register'
 
 interface UserFormProps {
   form: UseFormReturn<AdminRegisterForm>
