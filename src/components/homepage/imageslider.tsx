@@ -24,25 +24,26 @@ const Imageslider: React.FC = () => {
   }
 
   return (
-    <div className='relative h-[196px] w-[314px] overflow-hidden rounded-lg shadow-lg'>
+    <div className='relative flex w-full items-center justify-center overflow-hidden'>
       {/* Images */}
-      <div className='relative h-full w-full'>
+      <div className='relative aspect-[4/3] w-full max-w-[800px]'>
         {ImageSliderImages.length > 0 ? (
           ImageSliderImages.map((img, index) => (
             <Image
               key={img}
-              fill
               alt={`Slide ${index + 1}`}
               className={`absolute transition-opacity duration-700 ease-in-out ${index === currentIndex ? 'opacity-100' : 'opacity-0'}`}
+              layout='fill'
+              objectFit='contain'
               src={`/homepage/${img}`}
             />
           ))
         ) : (
           <Image
             key='banner_null'
-            fill
             alt='banner_null'
-            className='absolute'
+            layout='fill'
+            objectFit='contain'
             src='/homepage/banner_null.png'
           />
         )}
