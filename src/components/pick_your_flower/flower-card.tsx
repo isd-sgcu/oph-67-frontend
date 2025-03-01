@@ -9,7 +9,7 @@ interface FlowerCardProps {
 const FlowerCard: React.FC<FlowerCardProps> = ({ onClick, image }) => {
   return (
     <button
-      className='shrink-0 cursor-pointer rounded-[10px] shadow-purple-500 transition-all duration-100 hover:scale-110'
+      className='shrink-0 cursor-pointer rounded-[10px] shadow-[0_0_4.78px_0_rgba(0,0,0,0.25)] transition-all duration-100 hover:scale-110'
       type='button'
       onClick={onClick}
     >
