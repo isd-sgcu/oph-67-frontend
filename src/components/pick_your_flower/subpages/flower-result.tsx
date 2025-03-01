@@ -1,7 +1,10 @@
 import Image from 'next/image'
 import React from 'react'
 
-import InvitatiovCard from '../invitation-card'
+import { download } from '@/utils/download'
+import { shareWeb } from '@/utils/share'
+
+import InvitationCard from '../invitation-card'
 
 interface FlowerResultProps {
   resultImage: string
@@ -17,20 +20,25 @@ const FlowerResult: React.FC<FlowerResultProps> = ({
   resultText,
 }) => {
   const handleSave: () => void = () => {
-    // download(resultDownloadandShare, resultName);
+    download(resultDownloadandShare, resultName)
     console.log('save')
-    console.log(resultDownloadandShare)
-    console.log(resultName)
     console.log(resultText)
   }
 
-  const handleShare: () => void = () => {
-    // shareWeb();
-    console.log('share')
+  const handleShare: () => Promise<void> = async () => {
+    try {
+      await shareWeb(
+        'CU Open House 2025 - Flower',
+        'Come and check your flower at CU OPH 2025!'
+      )
+      console.log('share')
+    } catch (error) {
+      console.error('Error sharing', error)
+    }
   }
 
   return (
-    <div className='relative flex h-screen flex-col items-center gap-8 bg-gradient-to-b from-[#FFFFFF] to-[#EA88BD] px-6 py-10'>
+    <div className='relative flex flex-col items-center gap-5 bg-gradient-to-b from-[#FFFFFF] to-[#EA88BD] px-6 py-10'>
       <div className='font-cloud-soft text-2xl font-bold tracking-tight text-primary-green'>
         Your Flower
       </div>
@@ -90,7 +98,7 @@ const FlowerResult: React.FC<FlowerResultProps> = ({
           </div>
         </button>
       </div>
-      <InvitatiovCard />
+      <InvitationCard />
     </div>
   )
 }

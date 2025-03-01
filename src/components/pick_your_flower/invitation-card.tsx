@@ -1,9 +1,18 @@
 import Image from 'next/image'
 import React from 'react'
 
-const InvitatiovCard: React.FC = () => {
-  const handleShare: () => void = () => {
-    // shareWeb();
+const InvitationCard: React.FC = () => {
+  const handleShare: () => Promise<void> = async () => {
+    const shareData = {
+      title: 'CU Open House 2025',
+      text: 'Come joy us at CU OPH 2025!',
+      url: 'https://www.youtube.com/',
+    }
+    try {
+      await navigator.share(shareData)
+    } catch (error) {
+      console.error('Error sharing', error)
+    }
     console.log('share link')
   }
 
@@ -60,4 +69,4 @@ const InvitatiovCard: React.FC = () => {
   )
 }
 
-export default InvitatiovCard
+export default InvitationCard
