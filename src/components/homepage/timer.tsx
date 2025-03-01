@@ -2,17 +2,17 @@
 
 import { useEffect, useState } from 'react'
 
-import { timer } from '@/utils/timer'
+import { getTimer } from '@/utils/timer'
 
 const Timer: React.FC = () => {
-  const [timeLeft, setTimeLeft] = useState<ReturnType<typeof timer> | null>(
+  const [timeLeft, setTimeLeft] = useState<ReturnType<typeof getTimer> | null>(
     null
   )
 
   useEffect(() => {
-    setTimeLeft(timer())
+    setTimeLeft(getTimer())
     const interval = setInterval(() => {
-      setTimeLeft(timer())
+      setTimeLeft(getTimer())
     }, 1000)
 
     return () => clearInterval(interval)
