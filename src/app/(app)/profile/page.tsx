@@ -22,10 +22,12 @@ const Profile: React.FC = () => {
         </h1>
       </div>
       <p className='text-base font-light text-primary-green'>{userName}</p>
-      <Button className='font-normal' size='sm' variant='outline'>
-        <EditSolid />
-        แก้ไขข้อมูล
-      </Button>
+      <Link href='/profile/edit'>
+        <Button className='font-normal' size='sm' variant='outline'>
+          <EditSolid />
+          แก้ไขข้อมูล
+        </Button>
+      </Link>
       <div className='relative'>
         <Image
           alt='mascot'

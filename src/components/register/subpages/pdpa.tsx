@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@/components/register/button'
+import { Button } from '@/components/ui/button'
 import { PDPA, termAndCondition } from '@/const/policy'
 
 import Policy from '../policy/policy'

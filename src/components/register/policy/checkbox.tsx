@@ -11,7 +11,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({ isChecked, setIsChecked }) => {
       aria-checked={isChecked} // Added aria-checked attribute
       role='checkbox' // Added role attribute
       tabIndex={0} // Added tabIndex for keyboard navigation
-      className={`flex h-5 w-5 cursor-pointer items-center justify-center rounded ${
+      className={`flex h-4 w-4 cursor-pointer items-center justify-center rounded ${
         isChecked ? 'bg-[#076855]' : 'border border-[#757575]'
       }`}
       onClick={() => setIsChecked && setIsChecked(!isChecked)}
