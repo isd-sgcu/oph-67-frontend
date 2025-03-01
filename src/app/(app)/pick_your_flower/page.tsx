@@ -4,6 +4,7 @@ import { type ReactNode, useCallback, useMemo, useState } from 'react'
 
 import Footer from '@/components/homepage/footer'
 import Navbar from '@/components/homepage/navbar'
+import FlowerResult from '@/components/pick_your_flower/subpages/flower-result'
 import SelectCard from '@/components/pick_your_flower/subpages/select-card'
 import FlowerDatas from '@/const/flower-data'
 
@@ -19,12 +20,18 @@ const FlowerPage: React.FC = () => {
     () => shuffledCards.map((data) => data.img),
     [shuffledCards]
   )
-  // const downloadAndShareList = useMemo(
-  //   () => shuffledCards.map((data) => data.downloadShare),
-  //   []
-  // );
-  // const titleList = useMemo(() => shuffledCards.map((data) => data.title), []);
-  // const textList = useMemo(() => shuffledCards.map((data) => data.content), []);
+  const downloadAndShareList = useMemo(
+    () => shuffledCards.map((data) => data.downloadShare),
+    [shuffledCards]
+  )
+  const titleList = useMemo(
+    () => shuffledCards.map((data) => data.title),
+    [shuffledCards]
+  )
+  const textList = useMemo(
+    () => shuffledCards.map((data) => data.content),
+    [shuffledCards]
+  )
 
   const handleClick = useCallback(() => {
     const randomCard: number = Math.floor(Math.random() * cardList.length)
@@ -43,7 +50,16 @@ const FlowerPage: React.FC = () => {
           />
         )
       case 2:
-        return <div>result eiei</div>
+        return (
+          selectedCard !== null && (
+            <FlowerResult
+              resultDownloadandShare={downloadAndShareList[selectedCard]}
+              resultImage={cardList[selectedCard]}
+              resultName={titleList[selectedCard]}
+              resultText={textList[selectedCard]}
+            />
+          )
+        )
       default:
         return <div>404</div>
     }
