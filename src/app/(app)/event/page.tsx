@@ -1,7 +1,7 @@
 'use client'
 
-import Frame from '@/components/event_and_map/frame'
-import ToggleButtons from '@/components/event_and_map/togglebutton'
+import Frame from '@/components/event-and-map/frame'
+import ToggleButtons from '@/components/event-and-map/togglebutton'
 import Footer from '@/components/homepage/footer'
 import Navbar from '@/components/homepage/navbar'
 import { EventButtons } from '@/const/togglebutton'
