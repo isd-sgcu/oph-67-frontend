@@ -43,6 +43,20 @@ const FlowerResult: React.FC<FlowerResultProps> = ({
           src={resultImage}
           width={206}
         />
+        <Image
+          alt='flower with leaf'
+          className='absolute left-[-15px] top-[-20px]'
+          height={50}
+          src='/assets/pick_your_flower/flower-w-leaf.svg'
+          width={50}
+        />
+        <Image
+          alt='girl with flower'
+          className='absolute bottom-[-17px] right-[-45px]'
+          height={104}
+          src='/assets/pick_your_flower/flower-girl.svg'
+          width={66}
+        />
       </div>
       <div className='mt-4 flex w-full items-center justify-center gap-2'>
         <button
