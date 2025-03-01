@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import React from 'react'
 
+import InvitatiovCard from '../invitation-card'
+
 interface FlowerResultProps {
   resultImage: string
   resultDownloadandShare: string
@@ -74,6 +76,7 @@ const FlowerResult: React.FC<FlowerResultProps> = ({
           </div>
         </button>
       </div>
+      <InvitatiovCard />
     </div>
   )
 }
