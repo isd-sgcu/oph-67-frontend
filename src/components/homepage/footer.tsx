@@ -25,11 +25,16 @@ const Footer: React.FC = () => {
 
       {/* Footer Part 2 */}
       <div className='flex h-[38px] w-full items-center justify-center gap-[14.55px] bg-[#1C1B1F]'>
-        <Image alt='logo' height={22} src='/homepage/isd_logo.svg' width={40} />
+        <Image
+          alt='logo'
+          height={22}
+          src='/assets/homepage/isd_logo.svg'
+          width={40}
+        />
         <Image
           alt='logo'
           height={25.39}
-          src='/homepage/orborjor_logo.svg'
+          src='/assets/homepage/orborjor_logo.svg'
           width={25.39}
         />
       </div>

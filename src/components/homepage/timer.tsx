@@ -20,11 +20,11 @@ const Timer: React.FC = () => {
 
   if (!timeLeft)
     return (
-      <div className='flex h-[175px] flex-col items-center justify-center gap-3 border border-[#F0ADBE] bg-[radial-gradient(circle,_white,_#F0ADBE)] p-3' />
+      <div className='flex h-[175px] flex-col items-center justify-center gap-3 border border-[#F0ADBE] bg-[radial-gradient(circle,_white,_#F0ADBE)] p-6' />
     )
 
   return (
-    <div className='flex h-[175px] flex-col items-center justify-center gap-3 border border-[#F0ADBE] bg-[radial-gradient(circle,_white,_#F0ADBE)] p-3'>
+    <div className='flex h-[175px] flex-col items-center justify-center gap-3 border border-[#F0ADBE] bg-[radial-gradient(circle,_white,_#F0ADBE)] p-6'>
       {timeLeft.time_left === 0 ? (
         <p className='font-anuphan text-2xl font-semibold text-[#064E41]'>
           Live

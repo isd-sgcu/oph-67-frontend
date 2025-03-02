@@ -17,7 +17,7 @@ import {
 import { getTimer } from '@/utils/timer'
 
 const Home: React.FC = () => {
-  // const isRegistered = false
+  // const isRegistered = true
   const [currentTimeLeft, setCurrentTimeLeft] = useState<number | null>(null)
 
   useEffect(() => {
