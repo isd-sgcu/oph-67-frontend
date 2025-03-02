@@ -3,7 +3,6 @@
 import Image from 'next/image'
 import { useState } from 'react'
 
-import { Button } from '@/components/ui/button'
 import { PanelItems } from '@/const/adminpanel'
 
 const Adminrole: React.FC = () => {
@@ -11,7 +10,6 @@ const Adminrole: React.FC = () => {
   const [items, setItems] = useState(PanelItems)
   const [searchQuery, setSearchQuery] = useState('')
   const [searchInput, setSearchInput] = useState('')
-  const [isHoveredAddRoleButton, setIsHoveredAddRoleButton] = useState(false)
 
   const handleRemove = (uid: number): void => {
     const updatedItems = items.filter((item) => item.uid !== uid)
@@ -46,7 +44,7 @@ const Adminrole: React.FC = () => {
   const filteredItems =
     searchQuery !== ''
       ? items.filter((item) =>
-          item.name.toLowerCase().includes(searchQuery.toLowerCase())
+          item.name.toLowerCase().startsWith(searchQuery.toLowerCase())
         )
       : items
 
@@ -68,37 +66,6 @@ const Adminrole: React.FC = () => {
 
       {/* Content */}
       <div className='w-full bg-white'>
-        {/* Add Role */}
-        <div className='mx-12 my-4 flex items-center justify-center gap-4'>
-          <input
-            className='w-full rounded-full border p-2'
-            placeholder='add phone number'
-            type='tel'
-          />
-          <Button
-            className='flex items-center justify-center rounded-full p-5'
-            size='sm'
-            type='button'
-            variant='outline'
-            onMouseEnter={() => setIsHoveredAddRoleButton(true)}
-            onMouseLeave={() => setIsHoveredAddRoleButton(false)}
-          >
-            <Image
-              alt='add_role'
-              height={20}
-              width={20}
-              src={
-                isHoveredAddRoleButton
-                  ? '/assets/admin/add_role_white.svg'
-                  : '/assets/admin/add_role.svg'
-              }
-            />
-            Add Role
-          </Button>
-        </div>
-
-        <hr className='border-b-2 border-[#EA88BD]' />
-
         {/* Search Box */}
         <div className='relative m-4'>
           <input

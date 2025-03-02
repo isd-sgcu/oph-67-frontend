@@ -9,32 +9,43 @@ import Footer from '@/components/homepage/footer'
 import Navbar from '@/components/homepage/navbar'
 import { Button } from '@/components/ui/button'
 import { faculties } from '@/const/faculties'
-import { DestinationDirectionItems, LocationItems } from '@/const/map'
+import { FaciItems, LocationItems, NavigationItems } from '@/const/navigator'
 import { MapButtons } from '@/const/togglebutton'
 
-interface DestinationItem {
+interface NavigationItem {
   how: string
   from: string
   to: string
 }
 
+interface MapItem {
+  location: string
+  facility: string
+}
+
 const Navigator: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState<string>(MapButtons[0])
-  const [selectedLocationItem, setSelectedLocationItem] = useState(
-    LocationItems[0]
-  )
-  const [selectedDestinationItem, setSelectedDestinationItem] =
-    useState<DestinationItem>({
-      how: DestinationDirectionItems[0].title,
+
+  const [selectedMapItem, setSelectedMapItem] = useState<MapItem>({
+    location: LocationItems[0].title,
+    facility: FaciItems[0].title,
+  })
+
+  const [selectedNavigationItem, setSelectedNavigationItem] =
+    useState<NavigationItem>({
+      how: NavigationItems[0].title,
       from: '',
       to: '',
     })
 
+  // console.log(selectedMapItem)
+  // console.log(selectedNavigationItem)
+
   const validSubmit = (): boolean => {
     return (
-      selectedDestinationItem.how !== '' &&
-      selectedDestinationItem.from !== '' &&
-      selectedDestinationItem.to !== ''
+      selectedNavigationItem.how !== '' &&
+      selectedNavigationItem.from !== '' &&
+      selectedNavigationItem.to !== ''
     )
   }
 
@@ -61,10 +72,13 @@ const Navigator: React.FC = () => {
                 <div className='grid w-full grid-cols-2 gap-3'>
                   {LocationItems.map((locationItem) => (
                     <Button
-                      key={locationItem.id}
-                      className={`font-mitr text-[16px] font-normal shadow-xl ${locationItem.title === selectedLocationItem.title ? 'bg-white text-[#DD579B]' : 'bg-[#DD579B] text-white'}`}
+                      key={locationItem.title}
+                      className={`font-mitr text-[16px] font-normal shadow-xl ${locationItem.title === selectedMapItem.location ? 'bg-white text-[#DD579B]' : 'bg-[#DD579B] text-white'}`}
                       onClick={() => {
-                        setSelectedLocationItem(locationItem)
+                        setSelectedMapItem((prev) => ({
+                          ...prev,
+                          location: locationItem.title,
+                        }))
                       }}
                     >
                       {locationItem.title}
@@ -77,24 +91,26 @@ const Navigator: React.FC = () => {
                   สิ่งอำนวยความสะดวก
                 </h2>
                 <div className='flex flex-wrap items-center justify-center gap-2'>
-                  {LocationItems.filter(
-                    (locationItem) => locationItem === selectedLocationItem
-                  ).flatMap((locationItem) =>
-                    locationItem.facilities.map((f) => (
-                      <div
-                        key={locationItem.title + f.title}
-                        className='flex h-[35px] min-w-[108px] items-center justify-center gap-[8px] rounded-sm bg-[#076855] px-[8px] py-[16px] font-mitr text-sm font-light text-white shadow-xl'
-                      >
-                        <Image
-                          alt={f.title}
-                          height={19}
-                          src={`/assets/event_map/${f.iconName}.svg`}
-                          width={19}
-                        />
-                        {f.title}
-                      </div>
-                    ))
-                  )}
+                  {FaciItems.map((faciItem) => (
+                    <Button
+                      key={faciItem.title}
+                      className={`min-w-[108px] px-[16px] font-mitr text-[16px] font-light shadow-xl ${faciItem.title === selectedMapItem.facility ? 'bg-white text-[#064E41]' : 'bg-[#064E41] text-white'}`}
+                      onClick={() => {
+                        setSelectedMapItem((prev) => ({
+                          ...prev,
+                          facility: faciItem.title,
+                        }))
+                      }}
+                    >
+                      <Image
+                        alt={faciItem.title}
+                        height={19}
+                        src={`/assets/event_map/${faciItem.iconName}${faciItem.title === selectedMapItem.facility ? '_green' : ''}.svg`}
+                        width={19}
+                      />
+                      {faciItem.title}
+                    </Button>
+                  ))}
                 </div>
               </div>
             </div>
@@ -107,24 +123,24 @@ const Navigator: React.FC = () => {
 
                 {/* How */}
                 <div className='flex justify-center gap-2'>
-                  {DestinationDirectionItems.map((destinationItem) => (
+                  {NavigationItems.map((navigationItem) => (
                     <Button
-                      key={destinationItem.title}
-                      className={`flex h-[35px] min-w-[152px] items-center justify-center gap-1 font-mitr text-[14px] font-light shadow-xl ${destinationItem.title === selectedDestinationItem.how ? 'bg-white text-[#DD579B]' : 'bg-[#DD579B] text-white'}`}
+                      key={navigationItem.title}
+                      className={`flex h-[35px] min-w-[152px] items-center justify-center gap-1 font-mitr text-[14px] font-light shadow-xl ${navigationItem.title === selectedNavigationItem.how ? 'bg-white text-[#DD579B]' : 'bg-[#DD579B] text-white'}`}
                       onClick={() => {
-                        setSelectedDestinationItem((prev) => ({
+                        setSelectedNavigationItem((prev) => ({
                           ...prev,
-                          how: destinationItem.title,
+                          how: navigationItem.title,
                         }))
                       }}
                     >
                       <Image
-                        alt={destinationItem.title}
+                        alt={navigationItem.title}
                         height={12}
-                        src={`/assets/event_map/${destinationItem.iconName}_${destinationItem.title === selectedDestinationItem.how ? 'pink' : 'white'}.svg`}
+                        src={`/assets/event_map/${navigationItem.iconName}_${navigationItem.title === selectedNavigationItem.how ? 'pink' : 'white'}.svg`}
                         width={12}
                       />
-                      {destinationItem.title}
+                      {navigationItem.title}
                     </Button>
                   ))}
                 </div>
@@ -150,7 +166,7 @@ const Navigator: React.FC = () => {
                       defaultValue=''
                       style={{ textOverflow: 'ellipsis' }}
                       onChange={(e) =>
-                        setSelectedDestinationItem((prev) => ({
+                        setSelectedNavigationItem((prev) => ({
                           ...prev,
                           from: e.target.value,
                         }))
@@ -162,7 +178,7 @@ const Navigator: React.FC = () => {
                       {faculties.map((faculty) => (
                         <option
                           key={faculty.th}
-                          disabled={faculty.th === selectedDestinationItem.to}
+                          disabled={faculty.th === selectedNavigationItem.to}
                           value={faculty.th}
                         >
                           {faculty.th} {faculty.en}
@@ -190,7 +206,7 @@ const Navigator: React.FC = () => {
                       defaultValue=''
                       style={{ textOverflow: 'ellipsis' }}
                       onChange={(e) =>
-                        setSelectedDestinationItem((prev) => ({
+                        setSelectedNavigationItem((prev) => ({
                           ...prev,
                           to: e.target.value,
                         }))
@@ -202,7 +218,7 @@ const Navigator: React.FC = () => {
                       {faculties.map((faculty) => (
                         <option
                           key={faculty.th}
-                          disabled={faculty.th === selectedDestinationItem.from}
+                          disabled={faculty.th === selectedNavigationItem.from}
                           value={faculty.th}
                         >
                           {faculty.th} {faculty.en}
@@ -216,7 +232,7 @@ const Navigator: React.FC = () => {
                 <Button
                   className='px-14 shadow-xl'
                   disabled={!validSubmit()}
-                  onClick={() => console.log(selectedDestinationItem)}
+                  onClick={() => console.log(selectedNavigationItem)}
                 >
                   <p className='font-mitr text-lg font-normal text-white'>
                     ยืนยัน

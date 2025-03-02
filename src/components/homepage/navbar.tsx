@@ -53,7 +53,7 @@ const Navbar: React.FC = () => {
             className='h-[64px] w-[64px]'
             href='/'
             style={{
-              backgroundImage: 'url(/homepage/oph_logo-01.svg)',
+              backgroundImage: 'url(/assets/homepage/oph_logo-01.svg)',
             }}
           />
 
@@ -64,7 +64,7 @@ const Navbar: React.FC = () => {
               className='h-[31.5px] w-[31.5px]'
               href='/profile'
               style={{
-                backgroundImage: 'url(/homepage/profile.svg)',
+                backgroundImage: 'url(/assets/homepage/profile.svg)',
               }}
             />
             {/* )} */}
