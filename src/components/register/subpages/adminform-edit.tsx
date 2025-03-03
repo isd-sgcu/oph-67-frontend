@@ -4,8 +4,8 @@ import { useRouter } from 'next/navigation'
 import { type UseFormReturn } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
-import { yearMap } from '@/const/staff-year'
-import { statusMap } from '@/const/status-staff'
+import { years } from '@/const/staff-year'
+import { status } from '@/const/status-staff'
 import { type AdminRegisterForm } from '@/types/admin-register'
 
 interface UserFormProps {
@@ -166,9 +166,9 @@ const AdminFormEdit: React.FC<UserFormProps> = ({ form }) => {
                     <option disabled value=''>
                       Staff
                     </option>
-                    {Object.entries(statusMap).map(([key, value]) => (
-                      <option key={key} value={key}>
-                        {value}
+                    {status.map((st) => (
+                      <option key={st} value={st}>
+                        {st}
                       </option>
                     ))}
                   </select>
@@ -190,9 +190,9 @@ const AdminFormEdit: React.FC<UserFormProps> = ({ form }) => {
                     <option disabled value=''>
                       ชั้นปี
                     </option>
-                    {Object.entries(yearMap).map(([key, value]) => (
-                      <option key={key} value={key}>
-                        {value}
+                    {years.map((year) => (
+                      <option key={year} value={year}>
+                        {year}
                       </option>
                     ))}
                   </select>

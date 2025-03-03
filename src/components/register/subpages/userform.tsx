@@ -143,7 +143,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                       สถานภาพ
                     </option>
                     {Object.entries(statusMap).map(([key, value]) => (
-                      <option key={key} value={key}>
+                      <option key={key} value={value}>
                         {value}
                       </option>
                     ))}
