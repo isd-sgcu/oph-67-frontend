@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { FacultyTH } from '@/const/faculties'
 import { news } from '@/const/news'
 import { provinces } from '@/const/province'
-import { statusMap } from '@/const/status'
+import { status } from '@/const/status'
 import { type RegisterForm } from '@/types/register'
 
 import CheckBox from '../policy/checkbox'
@@ -151,9 +151,9 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
                     <option disabled value=''>
                       สถานภาพ
                     </option>
-                    {Object.entries(statusMap).map(([key, value]) => (
-                      <option key={key} value={value}>
-                        {value}
+                    {status.map((st) => (
+                      <option key={st} value={st}>
+                        {st}
                       </option>
                     ))}
                   </select>
