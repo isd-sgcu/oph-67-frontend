@@ -1,37 +1,24 @@
 import Image from 'next/image'
-import Link from 'next/link'
 
-import ImageCarousel from '@/components/faculties/image-carousel'
-import { Button } from '@/components/ui/button'
-import { faculties } from '@/const/faculties'
+import { type Faculty } from '@/const/faculties'
 
-interface FacultyPageProps {
-  params: {
-    faculty: string
-  }
+import { Button } from '../ui/button'
+
+import ImageCarousel from './image-carousel'
+
+interface FacultyInfoProps {
+  faculty: Faculty
 }
 
-const FacultyPage: React.FC<FacultyPageProps> = ({ params }) => {
-  const faculty = faculties.find((f) => f.id.toString() === params.faculty)
-  if (!faculty) return <div>Faculty not found</div>
-
+const FacultyInfo: React.FC<FacultyInfoProps> = ({ faculty }) => {
   return (
-    <div className='flex h-full w-full grow flex-col items-center gap-3 overflow-hidden py-8'>
-      <div className='text-center'>
-        <h1 className='text-2xl font-normal tracking-tight text-primary-green'>
-          {faculty.th}
-        </h1>
-        <p className='text-base font-light text-primary-green'>{faculty.en}</p>
-      </div>
-      <div className='my-2 w-5/6 border border-b-0 border-dark-pink' />
-      <Link href={`/faculties/${faculty.id}/workshops`}>
-        <Button
-          className='w-[18rem] bg-dark-pink font-mitr text-lg font-light shadow-lg'
-          size='lg'
-        >
-          ดู Workshop ทั้งหมด
-        </Button>
-      </Link>
+    <>
+      <Button
+        className='w-[18rem] bg-dark-pink font-mitr text-lg font-light shadow-lg'
+        size='lg'
+      >
+        ดู Workshop ทั้งหมด
+      </Button>
       {faculty.images ? <ImageCarousel images={faculty.images} /> : null}
       {faculty.about ? (
         <>
@@ -120,8 +107,8 @@ const FacultyPage: React.FC<FacultyPageProps> = ({ params }) => {
           ) : null}
         </div>
       ) : null}
-    </div>
+    </>
   )
 }
 
-export default FacultyPage
+export default FacultyInfo
