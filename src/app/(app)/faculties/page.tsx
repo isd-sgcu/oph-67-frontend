@@ -26,7 +26,11 @@ const Faculties: React.FC = () => {
         ค้นหาคณะ / Faculties
       </h1>
       <div className='mt-2 w-5/6'>
-        <SearchBar search={search} setSearch={setSearch} />
+        <SearchBar
+          placeholder='คณะอักษรศาสตร์'
+          search={search}
+          setSearch={setSearch}
+        />
       </div>
       <div className='my-2 w-5/6 border border-b-0 border-dark-pink' />
       <div className='grid grid-cols-2 gap-6'>

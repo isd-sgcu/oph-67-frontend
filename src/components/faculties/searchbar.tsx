@@ -17,7 +17,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
     <div className='relative'>
       <Image
         alt='search icon'
-        className='absolute left-[10] top-1/2 -translate-y-1/2'
+        className='absolute left-[12] top-1/2 -translate-y-1/2'
         height={12}
         src='/assets/icons/search.svg'
         width={12}

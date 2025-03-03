@@ -17,7 +17,7 @@ const FacultyCard: React.FC<FacultyCardProps> = ({ faculty }) => {
             <Image
               fill
               alt='faculty-logo'
-              className='rounded-md border border-dark-pink'
+              className='rounded-md border border-dark-pink object-cover'
               src={faculty.thumbnail}
             />
           ) : (
