@@ -1,6 +1,7 @@
 import { liff } from '@line/liff'
 
-import { type Response } from '@/schema/response'
+import { type Profile } from '@/types/liff'
+import { type Response } from '@/types/response'
 
 export const initLiff = async (): Promise<Response<boolean>> => {
   try {
@@ -37,5 +38,19 @@ export const closeLiff = (): Promise<Response<boolean>> => {
       data: false,
       error: error instanceof Error ? error.message : String(error),
     })
+  }
+}
+
+export const getProfile = async (): Promise<Response<Profile | null>> => {
+  try {
+    const profile = await liff.getProfile()
+    return { success: true, data: profile }
+  } catch (error) {
+    console.error('Failed to get LINE LIFF profile', error)
+    return {
+      success: false,
+      data: null,
+      error: error instanceof Error ? error.message : String(error),
+    }
   }
 }

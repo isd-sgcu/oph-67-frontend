@@ -1,10 +1,9 @@
 import { type Liff, liff } from '@line/liff'
 import { useEffect, useState } from 'react'
 
-import { type Response } from '@/schema/response'
+import { type Response } from '@/types/response'
 
 import { initLiff } from './helper'
-
 
 interface LiffContextType {
   isInit: boolean
