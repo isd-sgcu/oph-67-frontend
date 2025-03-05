@@ -1,20 +1,20 @@
 import { liff } from '@line/liff'
 
+import { config } from '@/app/config'
 import { type Profile } from '@/types/liff'
 import { type Response } from '@/types/response'
 
 export const initLiff = async (): Promise<Response<boolean>> => {
   try {
-    if (!process.env.NEXT_PUBLIC_LIFF_ID) {
+    if (!config.liffId) {
       return {
         success: false,
         data: false,
         error: 'LIFF_ID is not set',
       }
     }
-
     await liff.init({
-      liffId: process.env.NEXT_PUBLIC_LIFF_ID,
+      liffId: config.liffId,
     })
     return { success: true, data: true }
   } catch (error: unknown) {
