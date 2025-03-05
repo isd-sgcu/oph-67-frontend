@@ -19,6 +19,7 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
       'name',
       'surname',
       'nickname',
+      'studentId',
       'status',
       'email',
       'tel',
@@ -102,16 +103,29 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                 />
               </div>
             </div>
-            <div className='flex flex-col gap-1'>
-              <div className='text-xs font-normal text-[#064E41]'>
-                ชื่อเล่น<span className='text-[#FF0000]'>*</span>
+            <div className='flex items-center justify-center gap-2'>
+              <div className='flex flex-col gap-1'>
+                <div className='text-xs font-normal text-[#064E41]'>
+                  ชื่อเล่น<span className='text-[#FF0000]'>*</span>
+                </div>
+                <input
+                  className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
+                  placeholder='ชื่อเล่น'
+                  {...form.register('nickname')}
+                  name='nickname'
+                />
               </div>
-              <input
-                className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
-                placeholder='ชื่อเล่น'
-                {...form.register('nickname')}
-                name='nickname'
-              />
+              <div className='flex flex-col gap-1'>
+                <div className='text-xs font-normal text-[#064E41]'>
+                  รหัสนิสิต<span className='text-[#FF0000]'>*</span>
+                </div>
+                <input
+                  className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
+                  placeholder='รหัสนิสิต'
+                  {...form.register('studentId')}
+                  name='studentId'
+                />
+              </div>
             </div>
             <div className='flex gap-2'>
               <div className='flex w-1/2 flex-col gap-1'>
