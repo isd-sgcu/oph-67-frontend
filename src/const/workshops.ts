@@ -20,7 +20,7 @@ export const workshops: Partial<Record<FacultyId, Workshop[]>> = {
       description:
         'Lorem ipsum dolor sit amet consectetur. Ultrices tortor egestas viverra placerat volutpat vulputate ',
       major: 'เอกภาษาเกาหลี',
-      thumbnail: '/assets/faculties/art/1.png',
+      thumbnail: '/assets/workshop/workshop.png',
       registerUrl: '/register1',
     },
     {
@@ -30,7 +30,7 @@ export const workshops: Partial<Record<FacultyId, Workshop[]>> = {
       description:
         'Lorem ipsum dolor sit amet consectetur. Ultrices tortor egestas viverra placerat volutpat vulputate ',
       major: 'เอกภาษาญี่ปุ่น',
-      thumbnail: '/assets/faculties/art/1.png',
+      thumbnail: '/assets/workshop/workshop.png',
       registerUrl: '/register2',
     },
     {
@@ -40,7 +40,7 @@ export const workshops: Partial<Record<FacultyId, Workshop[]>> = {
       description:
         'Lorem ipsum dolor sit amet consectetur. Ultrices tortor egestas viverra placerat volutpat vulputate ',
       major: 'เอกภาษาจีน',
-      thumbnail: '/assets/faculties/art/1.png',
+      thumbnail: '/assets/workshop/workshop.png',
       registerUrl: '/register3',
     },
     {
@@ -50,7 +50,7 @@ export const workshops: Partial<Record<FacultyId, Workshop[]>> = {
       description:
         'Lorem ipsum dolor sit amet consectetur. Ultrices tortor egestas viverra placerat volutpat vulputate ',
       major: 'เอกภาษาอังกฤษ',
-      thumbnail: '/assets/faculties/art/1.png',
+      thumbnail: '/assets/workshop/workshop.png',
       registerUrl: '/register4',
     },
     {
@@ -60,8 +60,10 @@ export const workshops: Partial<Record<FacultyId, Workshop[]>> = {
       description:
         'Lorem ipsum dolor sit amet consectetur. Ultrices tortor egestas viverra placerat volutpat vulputate ',
       major: 'เอกภาษาฝรั่งเศส',
-      thumbnail: '/assets/faculties/art/1.png',
+      thumbnail: '/assets/workshop/workshop.png',
       registerUrl: '/register5',
     },
   ],
 }
+
+export const allWorkshops = Object.values(workshops).flat()
