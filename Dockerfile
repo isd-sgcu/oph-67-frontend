@@ -10,6 +10,11 @@ RUN pnpm install
 
 COPY . .
 
+ARG NEXT_PUBLIC_LIFF_ID=2006975619-je4oBBk9
+ARG NEXT_PUBLIC_BASE_URL=https://dev-api.cuopenhouse2025.com/
+
+ENV NEXT_PUBLIC_LIFF_ID=${NEXT_PUBLIC_LIFF_ID}
+ENV NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL}
 
 RUN pnpm build
 
@@ -26,6 +31,9 @@ COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/pnpm-lock.yaml ./pnpm-lock.yaml
+
+ENV NEXT_PUBLIC_LIFF_ID=${NEXT_PUBLIC_LIFF_ID}
+ENV NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL}
 
 RUN pnpm install --prod --ignore-scripts
 
