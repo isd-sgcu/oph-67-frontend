@@ -1,6 +1,7 @@
 import { FacultyId, facultyMap } from './faculties'
 
 export interface Workshop {
+  id: string // should be unique (use for bookmarking)
   faculty: string
   name: string
   description: string
@@ -13,6 +14,7 @@ export interface Workshop {
 export const workshops: Partial<Record<FacultyId, Workshop[]>> = {
   [FacultyId.Arts]: [
     {
+      id: 'workshop-1',
       faculty: facultyMap[FacultyId.Arts].th,
       name: 'Workshop 1',
       description:
@@ -22,6 +24,7 @@ export const workshops: Partial<Record<FacultyId, Workshop[]>> = {
       registerUrl: '/register1',
     },
     {
+      id: 'workshop-2',
       faculty: facultyMap[FacultyId.Arts].th,
       name: 'Workshop 2',
       description:
@@ -31,6 +34,7 @@ export const workshops: Partial<Record<FacultyId, Workshop[]>> = {
       registerUrl: '/register2',
     },
     {
+      id: 'workshop-3',
       faculty: facultyMap[FacultyId.Arts].th,
       name: 'Workshop 3',
       description:
@@ -40,6 +44,7 @@ export const workshops: Partial<Record<FacultyId, Workshop[]>> = {
       registerUrl: '/register3',
     },
     {
+      id: 'workshop-4',
       faculty: facultyMap[FacultyId.Arts].th,
       name: 'Workshop 4',
       description:
@@ -49,6 +54,7 @@ export const workshops: Partial<Record<FacultyId, Workshop[]>> = {
       registerUrl: '/register4',
     },
     {
+      id: 'workshop-5',
       faculty: facultyMap[FacultyId.Arts].th,
       name: 'Workshop 5',
       description:
