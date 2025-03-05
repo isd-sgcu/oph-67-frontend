@@ -8,14 +8,16 @@ import ImageCarousel from './image-carousel'
 
 interface FacultyInfoProps {
   faculty: Faculty
+  setStep: (step: number) => void
 }
 
-const FacultyInfo: React.FC<FacultyInfoProps> = ({ faculty }) => {
+const FacultyInfo: React.FC<FacultyInfoProps> = ({ faculty, setStep }) => {
   return (
     <>
       <Button
         className='w-[18rem] bg-dark-pink font-mitr text-lg font-light shadow-lg'
         size='lg'
+        onClick={() => setStep(2)}
       >
         ดู Workshop ทั้งหมด
       </Button>
