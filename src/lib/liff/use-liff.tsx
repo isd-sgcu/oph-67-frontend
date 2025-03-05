@@ -33,6 +33,7 @@ export const useLiff = (): LiffContextType => {
         const response: Response<boolean> = await initLiff()
 
         if (!response.success) {
+          console.error('Failed to init LINE LIFF', response.error)
           setError(response.error)
           return
         }
