@@ -4,15 +4,25 @@ import Image from 'next/image'
 import Link from 'next/link'
 import QRCode from 'react-qr-code'
 
-import { getLiffProfile } from '@/app/actions/profile/user'
+import { LiffError } from '@/components/liff/liff-error'
+import { LiffLoading } from '@/components/liff/liff-loading'
+import { useLiffContext } from '@/components/liff/liff-provider'
 import InterestedItem from '@/components/profile/interested-item'
 import { Button } from '@/components/ui/button'
 import { faculties } from '@/const/faculties'
 
-const Profile: React.FC = async () => {
+const Profile: React.FC = () => {
   const favFaculties = faculties.slice(0, 3)
-  const userProfile = await getLiffProfile()
-  const userName = userProfile.data?.displayName
+  const { profile, isInit } = useLiffContext()
+  const userName = profile?.displayName
+
+  if (!isInit) {
+    return <LiffLoading />
+  }
+
+  if (!profile) {
+    return <LiffError error='Failed to load profile' />
+  }
 
   return (
     <div className='flex h-full w-full grow flex-col items-center gap-3 py-8'>
@@ -38,11 +48,8 @@ const Profile: React.FC = async () => {
           width={57}
         />
         <div className='flex flex-col items-center overflow-hidden rounded-lg border-2 border-dark-pink bg-white p-1'>
-          <QRCode
-            className='bg-white p-5'
-            value={userProfile.data?.userId ?? ''}
-          />
-          <p className='font-light'>ID: {userProfile.data?.userId}</p>
+          <QRCode className='bg-white p-5' value={profile.userId} />
+          <p className='font-light'>ID: {profile.userId}</p>
         </div>
       </div>
       <h2 className='mt-2 text-lg font-normal text-dark-pink'>
