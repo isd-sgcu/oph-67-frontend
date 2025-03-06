@@ -9,7 +9,12 @@ import QuestionComponent from './questionitem'
 const Faq: React.FC = () => {
   return (
     <div className='flex w-full flex-col'>
-      <Image alt='faq' height={45.81} src='/homepage/faq.svg' width={79.48} />
+      <Image
+        alt='faq'
+        height={45.81}
+        src='/assets/homepage/faq.svg'
+        width={79.48}
+      />
       <div className='flex w-full flex-col justify-start gap-[4px]'>
         {FaqItems.map((q) => (
           <QuestionComponent key={q.title} detail={q.detail} title={q.title} />
