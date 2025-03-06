@@ -4,14 +4,15 @@ import Image from 'next/image'
 import Link from 'next/link'
 import QRCode from 'react-qr-code'
 
+import { getLiffProfile } from '@/app/actions/profile/user'
 import InterestedItem from '@/components/profile/interested-item'
 import { Button } from '@/components/ui/button'
 import { faculties } from '@/const/faculties'
 
-const Profile: React.FC = () => {
+const Profile: React.FC = async () => {
   const favFaculties = faculties.slice(0, 3)
-  const userID = '123456'
-  const userName = 'Name Lastname'
+  const userProfile = await getLiffProfile()
+  const userName = userProfile.data?.displayName
 
   return (
     <div className='flex h-full w-full grow flex-col items-center gap-3 py-8'>
@@ -37,8 +38,11 @@ const Profile: React.FC = () => {
           width={57}
         />
         <div className='flex flex-col items-center overflow-hidden rounded-lg border-2 border-dark-pink bg-white p-1'>
-          <QRCode className='bg-white p-5' value={userID} />
-          <p className='font-light'>ID: {userID}</p>
+          <QRCode
+            className='bg-white p-5'
+            value={userProfile.data?.userId ?? ''}
+          />
+          <p className='font-light'>ID: {userProfile.data?.userId}</p>
         </div>
       </div>
       <h2 className='mt-2 text-lg font-normal text-dark-pink'>
