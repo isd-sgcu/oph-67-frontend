@@ -8,12 +8,7 @@ import { status } from '@/const/status'
 export const RegisterSchema = z.object({
   name: z.string().min(1, 'ชื่อ'),
   surname: z.string().min(1, 'นามสกุล'),
-  dob: z
-    .string()
-    .regex(
-      /^(?:0[1-9]|[12][0-9]|3[01])\/(?:0[1-9]|1[0-2])\/\d{4}$/,
-      'dd/mm/yyyy'
-    ),
+  dob: z.date().refine((date) => !isNaN(date.getTime())),
   status: z.enum(status, {
     message: 'สถานภาพ',
   }),

@@ -3,8 +3,8 @@ import Image from 'next/image'
 import { type UseFormReturn } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
-import { yearMap } from '@/const/staff-year'
-import { statusMap } from '@/const/status-staff'
+import { years } from '@/const/staff-year'
+import { status } from '@/const/status-staff'
 import { type AdminRegisterForm } from '@/types/admin-register'
 
 interface UserFormProps {
@@ -19,6 +19,7 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
       'name',
       'surname',
       'nickname',
+      'studentId',
       'status',
       'email',
       'tel',
@@ -102,16 +103,29 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                 />
               </div>
             </div>
-            <div className='flex flex-col gap-1'>
-              <div className='text-xs font-normal text-[#064E41]'>
-                ชื่อเล่น<span className='text-[#FF0000]'>*</span>
+            <div className='flex items-center justify-center gap-2'>
+              <div className='flex flex-col gap-1'>
+                <div className='text-xs font-normal text-[#064E41]'>
+                  ชื่อเล่น<span className='text-[#FF0000]'>*</span>
+                </div>
+                <input
+                  className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
+                  placeholder='ชื่อเล่น'
+                  {...form.register('nickname')}
+                  name='nickname'
+                />
               </div>
-              <input
-                className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
-                placeholder='ชื่อเล่น'
-                {...form.register('nickname')}
-                name='nickname'
-              />
+              <div className='flex flex-col gap-1'>
+                <div className='text-xs font-normal text-[#064E41]'>
+                  รหัสนิสิต<span className='text-[#FF0000]'>*</span>
+                </div>
+                <input
+                  className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
+                  placeholder='รหัสนิสิต'
+                  {...form.register('studentId')}
+                  name='studentId'
+                />
+              </div>
             </div>
             <div className='flex gap-2'>
               <div className='flex w-1/2 flex-col gap-1'>
@@ -134,7 +148,7 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                   </div>
                   <input
                     className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
-                    placeholder='xxx-xxx-xxxx'
+                    placeholder='0987654321'
                     {...form.register('tel')}
                     name='tel'
                   />
@@ -156,9 +170,9 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                     <option disabled value=''>
                       Staff
                     </option>
-                    {Object.entries(statusMap).map(([key, value]) => (
-                      <option key={key} value={key}>
-                        {value}
+                    {status.map((st) => (
+                      <option key={st} value={st}>
+                        {st}
                       </option>
                     ))}
                   </select>
@@ -180,9 +194,9 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                     <option disabled value=''>
                       ชั้นปี
                     </option>
-                    {Object.entries(yearMap).map(([key, value]) => (
-                      <option key={key} value={key}>
-                        {value}
+                    {years.map((year) => (
+                      <option key={year} value={year}>
+                        {year}
                       </option>
                     ))}
                   </select>

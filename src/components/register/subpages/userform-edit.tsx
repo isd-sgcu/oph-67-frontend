@@ -1,14 +1,18 @@
 'use client'
+import { format } from 'date-fns'
+import { CalendarIcon } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
+import { Controller } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
 import { FacultyTH } from '@/const/faculties'
 import { news } from '@/const/news'
 import { provinces } from '@/const/province'
-import { statusMap } from '@/const/status'
+import { status } from '@/const/status'
 import { type RegisterForm } from '@/types/register'
 
 import CheckBox from '../policy/checkbox'
@@ -20,6 +24,9 @@ interface UserFormProps {
 const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
   const router = useRouter()
   const [showOtherInput, setShowOtherInput] = useState(false)
+  const { trigger, watch } = form
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false)
+  watch('dob')
 
   function onNext(): void {
     const values = form.getValues()
@@ -127,15 +134,47 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
                 <div className='text-xs font-normal text-[#064E41]'>
                   วัน/เดือน/ปีเกิด<span className='text-[#FF0000]'>*</span>
                 </div>
-                <label className='flex cursor-pointer items-center justify-center gap-2'>
-                  <input
-                    className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
-                    placeholder='dd/mm/yy'
-                    type='date'
-                    {...form.register('dob')}
-                    name='dob'
-                  />
-                </label>
+                <Controller
+                  control={form.control}
+                  {...form.register('dob')}
+                  defaultValue={undefined}
+                  render={({ field }) => (
+                    <div className='relative'>
+                      <input
+                        readOnly
+                        className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
+                        name='dob'
+                        placeholder='dd/mm/yyyy'
+                        type='text'
+                        value={
+                          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- field.value can be undefined initially
+                          field.value
+                            ? format(new Date(field.value), 'dd/MM/yyyy')
+                            : ''
+                        }
+                        onClick={() => setIsCalendarOpen(!isCalendarOpen)}
+                      />
+                      <CalendarIcon className='absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 transform opacity-50' />
+                      {isCalendarOpen ? (
+                        <div className='absolute z-10 mt-1'>
+                          <Calendar
+                            className='rounded-md border border-[#064E41]'
+                            disabled={(date) => date > new Date()}
+                            mode='single'
+                            selected={field.value}
+                            onSelect={async (date: Date | undefined) => {
+                              if (date) {
+                                field.onChange(date)
+                                setIsCalendarOpen(false)
+                                await trigger('dob')
+                              }
+                            }}
+                          />
+                        </div>
+                      ) : null}
+                    </div>
+                  )}
+                />
               </div>
               <div className='flex w-1/2 flex-col gap-1'>
                 <div className='text-xs font-normal text-[#064E41]'>
@@ -151,9 +190,9 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
                     <option disabled value=''>
                       สถานภาพ
                     </option>
-                    {Object.entries(statusMap).map(([key, value]) => (
-                      <option key={key} value={key}>
-                        {value}
+                    {status.map((st) => (
+                      <option key={st} value={st}>
+                        {st}
                       </option>
                     ))}
                   </select>

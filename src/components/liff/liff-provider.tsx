@@ -38,7 +38,7 @@ interface LiffProviderProps {
 export const LiffProvider: React.FC<LiffProviderProps> = ({
   children,
   fallback = <LiffLoading />,
-  errorComponent = <LiffError error="Failed to To connect to LINE" />,
+  errorComponent = <LiffError error='Failed to To connect to LINE' />,
 }) => {
   const { isInit, error, profile, liff } = useLiff()
 

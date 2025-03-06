@@ -4,6 +4,7 @@ export const AdminRegisterSchema = z.object({
   name: z.string().min(1, 'ชื่อ'),
   surname: z.string().min(1, 'นามสกุล'),
   nickname: z.string().min(1, 'ชื่อเล่น'),
+  studentId: z.string().min(1, 'รหัสนิสิต'),
   email: z.string().email('@email.com'),
   tel: z.string().min(1, 'เบอร์โทรศัพท์'),
   status: z.enum(['Staff ส่วนกลาง', 'Staff ประจำคณะ'], {
