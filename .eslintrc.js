@@ -17,9 +17,6 @@ module.exports = {
     'import/resolver': { typescript: { project } },
   },
   rules: {
-    'prefer-named-capture-group': 'off',
-    'react/no-array-index-key': 'off',
-    '@typescript-eslint/restrict-plus-operands': 'off',
     '@typescript-eslint/explicit-function-return-type': 'error',
     '@typescript-eslint/no-confusing-void-expression': [
       'error',

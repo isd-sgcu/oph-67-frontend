@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { Button } from '@/components/ui/button'
 import { Adminbuttons } from '@/const/adminbutton'
 
 const Adminhome: React.FC = () => {
@@ -25,23 +24,19 @@ const Adminhome: React.FC = () => {
       {/* Buttons */}
       <div className='flex w-full flex-col items-center gap-8'>
         {Adminbuttons.map((adminbutton) => (
-          <Button
+          <Link
             key={adminbutton.title}
-            className='h-[50px] w-full rounded-full bg-white text-lg font-medium text-[#064E41]'
+            className='flex h-[50px] w-full items-center justify-center gap-2 rounded-full bg-white text-lg font-medium text-[#064E41] hover:bg-white/90'
+            href={`/admin${adminbutton.path}`}
           >
-            <Link
-              className='flex justify-center gap-2'
-              href={`/admin${adminbutton.path}`}
-            >
-              <Image
-                alt={adminbutton.iconName}
-                height={20}
-                src={`/assets/admin/${adminbutton.iconName}.svg`}
-                width={20}
-              />
-              {adminbutton.title}
-            </Link>
-          </Button>
+            <Image
+              alt={adminbutton.iconName}
+              height={20}
+              src={`/assets/admin/${adminbutton.iconName}.svg`}
+              width={20}
+            />
+            {adminbutton.title}
+          </Link>
         ))}
       </div>
     </div>
