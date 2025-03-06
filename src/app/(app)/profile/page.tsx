@@ -1,3 +1,4 @@
+'use client'
 import { EditSolid } from '@mynaui/icons-react'
 import { IconFlowerFilled } from '@tabler/icons-react'
 import Image from 'next/image'
