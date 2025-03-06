@@ -1,9 +1,13 @@
 'use client'
+import { format } from 'date-fns'
+import { CalendarIcon } from 'lucide-react'
 import Image from 'next/image'
 import { useState } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
 import { FacultyTH } from '@/const/faculties'
 import { news } from '@/const/news'
 import { provinces } from '@/const/province'
@@ -19,6 +23,9 @@ interface UserFormProps {
 
 const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
   const [showOtherInput, setShowOtherInput] = useState(false)
+  const { control, trigger, watch } = useForm()
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false)
+  watch('dob')
 
   function onNext(): void {
     const values = form.getValues()
@@ -114,19 +121,61 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
               </div>
             </div>
             <div className='flex gap-2'>
-              <div className='flex w-1/2 flex-col gap-1'>
+              {/* <div className='flex w-1/2 flex-col gap-1'>
                 <div className='text-xs font-normal text-[#064E41]'>
                   วัน/เดือน/ปีเกิด<span className='text-[#FF0000]'>*</span>
                 </div>
                 <label className='flex cursor-pointer items-center justify-center gap-2'>
-                  <input
+                  <Calendar
                     className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
-                    placeholder='dd/mm/yy'
-                    type='date'
+                    // placeholder='dd/mm/yy'
                     {...form.register('dob')}
-                    name='dob'
+                    // name='dob'
                   />
                 </label>
+              </div> */}
+              <div className='flex w-1/2 flex-col gap-1'>
+                <div className='text-xs font-normal text-[#064E41]'>
+                  วัน/เดือน/ปีเกิด<span className='text-[#FF0000]'>*</span>
+                </div>
+                <Controller
+                  control={control}
+                  defaultValue={null}
+                  name='dob'
+                  render={({ field }) => (
+                    <div className='relative'>
+                      <input
+                        placeholder='dd/mm/yyyy'
+                        type='text'
+                        {...form.register('dob')}
+                        readOnly
+                        className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
+                        value={
+                          field.value
+                            ? format(field.value as Date, 'dd/MM/yyyy')
+                            : ''
+                        }
+                        onClick={() => setIsCalendarOpen(!isCalendarOpen)}
+                      />
+                      <CalendarIcon className='absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 transform opacity-50' />
+                      {isCalendarOpen ? <div className='absolute z-10 mt-1'>
+                          <Calendar
+                            className='rounded-md border border-[#064E41]'
+                            disabled={(date) => date > new Date()}
+                            mode='single'
+                            selected={field.value as Date}
+                            onSelect={async (date: Date | undefined) => {
+                              if (date) {
+                                field.onChange(date)
+                                setIsCalendarOpen(false)
+                                await trigger('dob')
+                              }
+                            }}
+                          />
+                        </div> : null}
+                    </div>
+                  )}
+                />
               </div>
               <div className='flex w-1/2 flex-col gap-1'>
                 <div className='text-xs font-normal text-[#064E41]'>
