@@ -24,26 +24,27 @@ const Imageslider: React.FC = () => {
   }
 
   return (
-    <div className='relative h-[196px] w-[314px] overflow-hidden rounded-lg shadow-lg'>
+    <div className='relative flex w-full items-center justify-center overflow-hidden py-6'>
       {/* Images */}
-      <div className='relative h-full w-full'>
+      <div className='relative min-h-[300px] w-full'>
         {ImageSliderImages.length > 0 ? (
           ImageSliderImages.map((img, index) => (
             <Image
               key={img}
-              fill
               alt={`Slide ${index + 1}`}
               className={`absolute transition-opacity duration-700 ease-in-out ${index === currentIndex ? 'opacity-100' : 'opacity-0'}`}
-              src={`/homepage/${img}`}
+              layout='fill'
+              objectFit='cover'
+              src={`/assets/homepage/${img}`}
             />
           ))
         ) : (
           <Image
             key='banner_null'
-            fill
             alt='banner_null'
-            className='absolute'
-            src='/homepage/banner_null.png'
+            layout='fill'
+            objectFit='cover'
+            src='/assets/homepage/banner_null.png'
           />
         )}
       </div>
@@ -52,7 +53,7 @@ const Imageslider: React.FC = () => {
         <>
           {/* Previous Button */}
           <button
-            className='absolute left-[16px] top-[50%] flex -translate-y-4 flex-col items-center justify-center'
+            className='absolute left-[16px] top-[50%] flex -translate-y-1/2 flex-col items-center justify-center'
             type='button'
             onClick={prevSlide}
           >
@@ -62,7 +63,7 @@ const Imageslider: React.FC = () => {
 
           {/* Next Button */}
           <button
-            className='absolute right-[16px] top-[50%] flex -translate-y-4 flex-col items-center justify-center'
+            className='absolute right-[16px] top-[50%] flex -translate-y-1/2 flex-col items-center justify-center'
             type='button'
             onClick={nextSlide}
           >
@@ -71,15 +72,15 @@ const Imageslider: React.FC = () => {
           </button>
 
           {/* Dots */}
-          <div className='absolute bottom-2 left-1/2 flex -translate-x-1/2 transform space-x-2'>
+          <div className='absolute bottom-8 left-1/2 flex -translate-x-1/2 transform space-x-2'>
             {ImageSliderImages.map((img, index) => (
               <Image
                 key={img}
                 alt={img}
                 className='cursor-pointer'
-                height={10}
-                src={`/homepage/flower_icon${index === currentIndex ? '_selected' : ''}.svg`}
-                width={10}
+                height={12}
+                src={`/assets/homepage/flower_icon${index === currentIndex ? '_selected' : ''}.svg`}
+                width={12}
                 onClick={() => goToSlide(index)}
               />
             ))}
