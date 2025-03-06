@@ -50,7 +50,7 @@ const Profile: React.FC = () => {
         />
         <div className='flex flex-col items-center overflow-hidden rounded-lg border-2 border-dark-pink bg-white p-1'>
           <QRCode className='bg-white p-5' value={profile.userId} />
-          <p className='font-light'>ID: {profile.userId}</p>
+          <p className='font-light'>ID: {profile.userId.substring(0, 6)}</p>
         </div>
       </div>
       <h2 className='mt-2 text-lg font-normal text-dark-pink'>
