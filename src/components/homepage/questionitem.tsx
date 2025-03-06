@@ -10,18 +10,20 @@ interface QuestionItem {
 const QuestionComponent: React.FC<QuestionItem> = ({ title, detail }) => {
   const [isOpen, setIsOpen] = useState(false)
 
-  const regex = /(\\b.*?\\b)/g
+  const boldTextRegex = /(?:\\b.*?\\b)/g
 
   const formatText = (text: string): JSX.Element[] => {
-    return text.split(/\n/).map((line, index) => {
-      const parts = line.split(regex).map((part, i) => {
+    return text.split(/\n/).map((line) => {
+      const lineKey = `line-${line.trim()}`
+      const parts = line.split(boldTextRegex).map((part) => {
+        const partKey = `part-${part.trim()}`
         if (part.startsWith('\\b') && part.endsWith('\\b')) {
-          return <strong key={`${line}-${i}`}>{part.slice(2, -2)}</strong>
+          return <strong key={partKey}>{part.slice(2, -2)}</strong>
         }
-        return <span key={`${line.toString()}-${i}`}>{part}</span>
+        return <span key={partKey}>{part}</span>
       })
       return (
-        <React.Fragment key={`${line.toString()}-${index}`}>
+        <React.Fragment key={lineKey}>
           {parts}
           <br />
         </React.Fragment>
