@@ -9,23 +9,63 @@ interface QuestionItem {
 
 const QuestionComponent: React.FC<QuestionItem> = ({ title, detail }) => {
   const [isOpen, setIsOpen] = useState(false)
-
   const boldTextRegex = /(?:\\b.*?\\b)/g
 
+  const getStableKey = (text: string, prefix = ''): string => {
+    const truncated = text.slice(0, 10).replace(/\s+/g, '-')
+    return `${prefix}-${truncated}-${text.length}`
+  }
+
   const formatText = (text: string): JSX.Element[] => {
-    return text.split(/\n/).map((line) => {
-      const lineKey = `line-${line.trim()}`
-      const parts = line.split(boldTextRegex).map((part) => {
-        const partKey = `part-${part.trim()}`
-        if (part.startsWith('\\b') && part.endsWith('\\b')) {
-          return <strong key={partKey}>{part.slice(2, -2)}</strong>
+    const lines = text.split('\n')
+
+    return lines.map((line, lineIndex) => {
+      const lineKey = getStableKey(line, `line-${lineIndex}`)
+
+      if (!boldTextRegex.test(line)) {
+        return (
+          <React.Fragment key={lineKey}>
+            {line}
+            {lineIndex < lines.length - 1 && <br />}
+          </React.Fragment>
+        )
+      }
+
+      boldTextRegex.lastIndex = 0
+
+      const parts: JSX.Element[] = []
+      let lastIndex = 0
+
+      let match
+      while ((match = boldTextRegex.exec(line)) !== null) {
+        const startIdx = match.index
+
+        if (startIdx > lastIndex) {
+          const beforeText = line.substring(lastIndex, startIdx)
+          parts.push(
+            <span key={getStableKey(beforeText, 'regular')}>{beforeText}</span>
+          )
         }
-        return <span key={partKey}>{part}</span>
-      })
+
+        const boldText = match[0].substring(2, match[0].length - 2)
+        parts.push(
+          <strong key={getStableKey(boldText, 'bold')}>{boldText}</strong>
+        )
+
+        lastIndex = startIdx + match[0].length
+      }
+
+      if (lastIndex < line.length) {
+        const remainingText = line.substring(lastIndex)
+        parts.push(
+          <span key={getStableKey(remainingText, 'end')}>{remainingText}</span>
+        )
+      }
+
       return (
         <React.Fragment key={lineKey}>
           {parts}
-          <br />
+          {lineIndex < lines.length - 1 && <br />}
         </React.Fragment>
       )
     })
@@ -33,7 +73,6 @@ const QuestionComponent: React.FC<QuestionItem> = ({ title, detail }) => {
 
   return (
     <div>
-      {/* Title */}
       <div
         className={`mb-[8px] flex items-center justify-between rounded-[14px] border border-[#DD579B] bg-gradient-to-r from-white to-[#F7D3E8] px-[14px] py-[7px] transition-all duration-500 ${isOpen ? 'mb-[8px] shadow-lg' : 'mb-0 shadow-none'}`}
       >
@@ -41,7 +80,8 @@ const QuestionComponent: React.FC<QuestionItem> = ({ title, detail }) => {
           {formatText(title)}
         </h2>
         <button
-          className={`flex cursor-pointer transition-all duration-500 ${isOpen ? '-translate-x-2 rotate-180' : ''}`}
+          aria-label={isOpen ? 'Close details' : 'Open details'}
+          className={`flex cursor-pointer p-2 transition-all duration-500 ${isOpen ? '-translate-x-2 rotate-180' : ''}`}
           type='button'
           onClick={() => setIsOpen(!isOpen)}
         >
@@ -49,8 +89,6 @@ const QuestionComponent: React.FC<QuestionItem> = ({ title, detail }) => {
           <span className='h-[14px] w-[2px] -rotate-45 rounded-full bg-[#DD579B]' />
         </button>
       </div>
-
-      {/* Detail */}
       <div
         className={`overflow-hidden rounded-md border border-[#FDDDEB] bg-white px-[14px] py-[7px] transition-all duration-500 ${isOpen ? 'mb-[12px] max-h-[500px] translate-y-0 opacity-100 shadow-lg' : 'mb-0 max-h-0 -translate-y-4 opacity-0 shadow-none'}`}
       >
