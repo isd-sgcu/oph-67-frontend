@@ -22,7 +22,7 @@ const InvitationCard: React.FC = () => {
         <Image
           alt='qrcode'
           height={93}
-          src='/assets/pick_your_flower/qrcode.png'
+          src='/assets/pick-your-flower/qrcode.png'
           width={93}
         />
         <div className='font-mitr text-xs font-light text-primary-green'>
@@ -33,7 +33,7 @@ const InvitationCard: React.FC = () => {
         <Image
           alt='oph logo'
           height={45}
-          src='/assets/pick_your_flower/cu-oph-logo.svg'
+          src='/assets/pick-your-flower/cu-oph-logo.svg'
           width={57}
         />
         <div className='flex flex-col font-mitr text-[10px] font-light text-primary-green'>
@@ -49,7 +49,7 @@ const InvitationCard: React.FC = () => {
           <Image
             alt='link'
             height={16}
-            src='/assets/pick_your_flower/link.svg'
+            src='/assets/pick-your-flower/link.svg'
             width={16}
           />
           <div className='font-mitr text-sm font-light tracking-tight text-white'>
@@ -61,7 +61,7 @@ const InvitationCard: React.FC = () => {
         <Image
           alt='flower'
           height={30}
-          src='/assets/pick_your_flower/share-flower.svg'
+          src='/assets/pick-your-flower/share-flower.svg'
           width={30}
         />
       </div>
