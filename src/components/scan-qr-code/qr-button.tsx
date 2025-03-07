@@ -5,80 +5,116 @@ import { useState } from 'react'
 
 import { scanQRCode } from '@/app/actions/qr-code/scan-qr'
 import { useLiffContext } from '@/components/liff/liff-provider'
+import { Button } from '@/components/ui/button'
 
 import Modal from './modal'
 
 type ModalType = 'confirm' | 'invalid' | 'already'
 
 const QrButton: React.FC = () => {
-  const { liff } = useLiffContext()
+  const { liff, isInit } = useLiffContext()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [modalType, setModalType] = useState<ModalType>('invalid')
   const [userInfo, setUserInfo] = useState<string>()
   const [time, setTime] = useState<string>()
+  const [isScanning, setIsScanning] = useState(false)
+
+  const getButtonText = (): string => {
+    if (isScanning) {
+      return 'กำลังสแกน...'
+    }
+    if (!isInit) {
+      return 'กำลังโหลด...'
+    }
+    return 'คลิกเพื่อสแกน'
+  }
 
   const handleScan = async (): Promise<void> => {
     try {
-      if (!liff) {
-        console.error('LIFF is not initialized')
-        return
-      }
-
-      const scanResult = await liff.scanCodeV2()
-      const studentId = scanResult.value
-
-      if (!studentId) {
-        console.error('Failed scanning QR: No studentId')
+      // Check if LIFF is initialized
+      if (!isInit || !liff) {
         setModalType('invalid')
+        setUserInfo('LIFF is not initialized')
         setIsModalOpen(true)
         return
       }
 
-      const result = await scanQRCode(studentId)
+      // Check if running in LINE app
+      if (!liff.isInClient()) {
+        setModalType('invalid')
+        setUserInfo('Please open this page in LINE app')
+        setIsModalOpen(true)
+        return
+      }
 
-      if (!result.success) {
-        if (result.error === 'User has already entered') {
-          setModalType('already')
-          setTime(result.lastEntered)
-          setUserInfo(studentId)
-        } else {
+      setIsScanning(true)
+
+      try {
+        const scanResult = await liff.scanCodeV2()
+        const studentId = scanResult.value
+
+        if (!studentId) {
           setModalType('invalid')
+          setUserInfo('No QR code detected')
+          setIsModalOpen(true)
+          return
         }
-        setIsModalOpen(true)
-        return
-      }
 
-      setModalType('confirm')
-      setUserInfo(result.data?.name)
-      setTime(result.data?.lastEntered)
-      setIsModalOpen(true)
+        const result = await scanQRCode(studentId)
+
+        if (!result.success) {
+          if (result.error === 'User has already entered') {
+            setModalType('already')
+            setTime(result.lastEntered)
+            setUserInfo(studentId)
+          } else {
+            setModalType('invalid')
+            setUserInfo(result.error)
+          }
+          setIsModalOpen(true)
+          return
+        }
+
+        // Success case
+        setModalType('confirm')
+        setUserInfo(result.data?.name)
+        setTime(result.data?.lastEntered)
+        setIsModalOpen(true)
+      } catch (scanError) {
+        console.error('QR Scan Error:', scanError)
+        setModalType('invalid')
+        setUserInfo('Failed to scan QR code')
+        setIsModalOpen(true)
+      }
     } catch (error) {
-      console.error('Failed to scan QR code:', error)
+      console.error('General Error:', error)
       setModalType('invalid')
+      setUserInfo('An unexpected error occurred')
       setIsModalOpen(true)
+    } finally {
+      setIsScanning(false)
     }
   }
 
   return (
     <div className='mt-12 flex cursor-pointer justify-center'>
-      <button
-        className='flex h-12 w-72 flex-row items-center justify-center rounded-full bg-white px-4 py-2 text-lg text-dark-pink hover:bg-white/90'
+      <Button
+        className='flex h-12 w-72 items-center justify-center gap-2 rounded-full bg-white text-lg text-dark-pink hover:bg-white/90 disabled:bg-white/50'
+        disabled={isScanning || !isInit}
         type='button'
         onClick={handleScan}
       >
-        <ScanLine className='mr-2' size={26} />
-        <span>คลิกเพื่อสแกน</span>
-      </button>
+        <ScanLine className={isScanning ? 'animate-pulse' : ''} size={26} />
+        <span>{getButtonText()}</span>
+      </Button>
 
-      {isModalOpen ? (
-        <Modal
+      {isModalOpen ? <Modal
           closeFn={() => setIsModalOpen(false)}
           modalType={modalType}
           scanAgain={handleScan}
           time={time}
           userInfo={userInfo}
-        />
-      ) : null}
+        /> : null}
     </div>
   )
 }
