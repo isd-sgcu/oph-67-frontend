@@ -12,21 +12,23 @@ const Event: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState<string>(EventButtons[0])
   console.log(selectedOption) // Remove Later !!!
   return (
-    <div className='bg-[#FCF3F8]'>
-      <Navbar />
-      <div className='flex flex-col items-center justify-center p-8'>
-        <h1 className='pb-6 font-mitr text-2xl font-normal text-[#064E41]'>
-          กิจกรรม
-        </h1>
-        <div className='flex flex-col items-center justify-center gap-3'>
-          <ToggleButtons
-            initialSelected={EventButtons[0]}
-            labels={EventButtons}
-            onSelect={() => {
-              setSelectedOption
-            }}
-          />
-          <Frame hasBorder={false} imgPath='/assets/event_map/null.png' />
+    <div className='flex min-h-screen flex-col justify-between bg-[#FCF3F8]'>
+      <div>
+        <Navbar />
+        <div className='flex flex-col items-center justify-center p-8'>
+          <h1 className='pb-6 font-mitr text-2xl font-normal text-[#064E41]'>
+            กิจกรรม
+          </h1>
+          <div className='flex flex-col items-center justify-center gap-3'>
+            <ToggleButtons
+              initialSelected={EventButtons[0]}
+              labels={EventButtons}
+              onSelect={() => {
+                setSelectedOption
+              }}
+            />
+            <Frame hasBorder={false} imgPath='/assets/event_map/null.png' />
+          </div>
         </div>
       </div>
       <Footer />

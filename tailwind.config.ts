@@ -9,6 +9,7 @@ const config: Config = {
         anuphan: ['var(--font-anuphan)'],
         'cloud-soft': ['var(--font-cloud-soft)'],
         mitr: ['var(--font-mitr)'],
+        ubuntu: ['var(--font-ubuntu)'],
       },
       borderRadius: {
         lg: 'var(--radius)',

@@ -11,9 +11,9 @@ import {
   AdminRegisterSchema,
 } from '@/types/admin-register'
 
-import AdminForm from '../../../../components/register/subpages/adminform'
-import Pdpa from '../../../../components/register/subpages/pdpa'
-import Success from '../../../../components/register/subpages/success'
+import AdminForm from '../../../../../components/register/subpages/adminform'
+import Pdpa from '../../../../../components/register/subpages/pdpa'
+import Success from '../../../../../components/register/subpages/success'
 
 const Register: React.FC = () => {
   const [step, setStep] = useState(1)

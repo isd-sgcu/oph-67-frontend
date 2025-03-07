@@ -5,6 +5,13 @@ import * as React from 'react'
 import { DayPicker } from 'react-day-picker'
 
 import { buttonVariants } from '@/components/ui/button'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { cn } from '@/lib/cn'
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>
@@ -22,16 +29,12 @@ const Calendar: React.FC<CalendarProps> = ({
     new Date().getMonth()
   )
 
-  const handleYearChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ): void => {
-    setSelectedYear(Number(event.target.value))
+  const handleYearChange = (value: string): void => {
+    setSelectedYear(Number(value))
   }
 
-  const handleMonthChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ): void => {
-    setSelectedMonth(Number(event.target.value))
+  const handleMonthChange = (value: string): void => {
+    setSelectedMonth(Number(value))
   }
 
   const years = Array.from({ length: 101 }, (_, i) => 2025 - 100 + i)
@@ -54,28 +57,34 @@ const Calendar: React.FC<CalendarProps> = ({
     <div className='space-y-4'>
       <div className='rounded-md border border-[#064E41] bg-white p-3 text-[#064E41]'>
         <div className='mb-3 flex items-center justify-center gap-2 text-sm'>
-          <select
-            className='w-2/3 rounded-md border p-2'
-            value={selectedMonth}
-            onChange={handleMonthChange}
+          <Select
+            value={String(selectedMonth)}
+            onValueChange={handleMonthChange}
           >
-            {months.map((month, index) => (
-              <option key={month} value={index}>
-                {month}
-              </option>
-            ))}
-          </select>
-          <select
-            className='w-1/3 rounded-md border p-2'
-            value={selectedYear}
-            onChange={handleYearChange}
-          >
-            {years.map((year) => (
-              <option key={year} value={year}>
-                {year}
-              </option>
-            ))}
-          </select>
+            <SelectTrigger className='w-2/3'>
+              <SelectValue placeholder='Month' />
+            </SelectTrigger>
+            <SelectContent>
+              {months.map((month, index) => (
+                <SelectItem key={month} value={String(index)}>
+                  {month}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select value={String(selectedYear)} onValueChange={handleYearChange}>
+            <SelectTrigger className='w-1/3'>
+              <SelectValue placeholder='Year' />
+            </SelectTrigger>
+            <SelectContent>
+              {years.map((year) => (
+                <SelectItem key={year} value={String(year)}>
+                  {year}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
         <DayPicker
           className={cn('bg-white p-3', className)}
