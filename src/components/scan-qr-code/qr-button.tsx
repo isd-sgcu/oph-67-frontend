@@ -24,11 +24,6 @@ const QrButton: React.FC = () => {
         return
       }
 
-      if (!liff.isInClient()) {
-        console.error('Please use this feature inside the LINE app.')
-        return
-      }
-
       const scanResult = await liff.scanCodeV2()
       const studentId = scanResult.value
 
@@ -75,13 +70,15 @@ const QrButton: React.FC = () => {
         <span>คลิกเพื่อสแกน</span>
       </button>
 
-      {isModalOpen ? <Modal
+      {isModalOpen ? (
+        <Modal
           closeFn={() => setIsModalOpen(false)}
           modalType={modalType}
           scanAgain={handleScan}
           time={time}
           userInfo={userInfo}
-        /> : null}
+        />
+      ) : null}
     </div>
   )
 }
