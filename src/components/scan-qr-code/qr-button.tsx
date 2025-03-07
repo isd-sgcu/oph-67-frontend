@@ -3,7 +3,7 @@
 import { ScanLine } from 'lucide-react'
 import { useState } from 'react'
 
-import { scanQRCode } from '@/app/actions/qr-code/scan-qr'
+// import { scanQRCode } from '@/app/actions/qr-code/scan-qr'
 import { useLiffContext } from '@/components/liff/liff-provider'
 import { Button } from '@/components/ui/button'
 
@@ -60,25 +60,33 @@ const QrButton: React.FC = () => {
           return
         }
 
-        const result = await scanQRCode(studentId)
-
-        if (!result.success) {
-          if (result.error === 'User has already entered') {
-            setModalType('already')
-            setTime(result.lastEntered)
-            setUserInfo(studentId)
-          } else {
-            setModalType('invalid')
-            setUserInfo(result.error)
-          }
-          setIsModalOpen(true)
-          return
+        const result = {
+          success: true,
+          error: null,
+          lastEntered: '2025-03-07 10:00:00',
+          data: {
+            name: 'John Doe',
+            lastEntered: '2025-03-07 10:00:00',
+          },
         }
+
+        // if (!result.success) {
+        //   if (result.error === 'User has already entered') {
+        //     setModalType('already')
+        //     setTime(result.lastEntered)
+        //     setUserInfo(studentId)
+        //   } else {
+        //     setModalType('invalid')
+        //     setUserInfo('')
+        //   }
+        //   setIsModalOpen(true)
+        //   return
+        // }
 
         // Success case
         setModalType('confirm')
-        setUserInfo(result.data?.name)
-        setTime(result.data?.lastEntered)
+        setUserInfo(result.data.name)
+        setTime(result.data.lastEntered)
         setIsModalOpen(true)
       } catch (scanError) {
         console.error('QR Scan Error:', scanError)
@@ -108,13 +116,15 @@ const QrButton: React.FC = () => {
         <span>{getButtonText()}</span>
       </Button>
 
-      {isModalOpen ? <Modal
+      {isModalOpen ? (
+        <Modal
           closeFn={() => setIsModalOpen(false)}
           modalType={modalType}
           scanAgain={handleScan}
           time={time}
           userInfo={userInfo}
-        /> : null}
+        />
+      ) : null}
     </div>
   )
 }
