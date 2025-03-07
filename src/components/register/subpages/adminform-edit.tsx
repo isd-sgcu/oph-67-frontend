@@ -158,7 +158,7 @@ const AdminFormEdit: React.FC<UserFormProps> = ({ form }) => {
                   </div>
                   <input
                     className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
-                    placeholder='0987654321'
+                    placeholder='09xxxxxxxx'
                     {...form.register('tel')}
                     name='tel'
                   />

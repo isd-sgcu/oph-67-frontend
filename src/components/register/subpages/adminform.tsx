@@ -1,8 +1,17 @@
 'use client'
 import Image from 'next/image'
 import { type UseFormReturn } from 'react-hook-form'
+import { Controller } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { years } from '@/const/staff-year'
 import { status } from '@/const/status-staff'
 import { type AdminRegisterForm } from '@/types/admin-register'
@@ -89,13 +98,13 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                 ชื่อ - นามสกุล<span className='text-[#FF0000]'>*</span>
               </div>
               <div className='flex items-center justify-center gap-2'>
-                <input
+                <Input
                   className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
                   placeholder='ชื่อ'
                   {...form.register('name')}
                   name='name'
                 />
-                <input
+                <Input
                   className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
                   placeholder='นามสกุล'
                   {...form.register('surname')}
@@ -108,7 +117,7 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                 <div className='text-xs font-normal text-[#064E41]'>
                   ชื่อเล่น<span className='text-[#FF0000]'>*</span>
                 </div>
-                <input
+                <Input
                   className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
                   placeholder='ชื่อเล่น'
                   {...form.register('nickname')}
@@ -119,7 +128,7 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                 <div className='text-xs font-normal text-[#064E41]'>
                   รหัสนิสิต<span className='text-[#FF0000]'>*</span>
                 </div>
-                <input
+                <Input
                   className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
                   placeholder='รหัสนิสิต'
                   {...form.register('studentId')}
@@ -133,7 +142,7 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                   <div className='text-xs font-normal text-[#064E41]'>
                     Email<span className='text-[#FF0000]'>*</span>
                   </div>
-                  <input
+                  <Input
                     className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
                     placeholder='@email.com'
                     {...form.register('email')}
@@ -146,9 +155,9 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                   <div className='text-xs font-normal text-[#064E41]'>
                     เบอร์ติดต่อ<span className='text-[#FF0000]'>*</span>
                   </div>
-                  <input
+                  <Input
                     className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
-                    placeholder='0987654321'
+                    placeholder='09xxxxxxxx'
                     {...form.register('tel')}
                     name='tel'
                   />
@@ -185,21 +194,30 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                   ชั้นปี<span className='text-[#FF0000]'>*</span>
                 </div>
                 <div className='flex items-center justify-center gap-2'>
-                  <select
-                    className='h-9 w-full rounded-md border border-[#064E41] p-1 text-sm font-light text-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
-                    {...form.register('year')}
-                    defaultValue=''
+                  <Controller
+                    control={form.control}
                     name='year'
-                  >
-                    <option disabled value=''>
-                      ชั้นปี
-                    </option>
-                    {years.map((year) => (
-                      <option key={year} value={year}>
-                        {year}
-                      </option>
-                    ))}
-                  </select>
+                    render={({ field }) => (
+                      <Select
+                        {...form.register('year')}
+                        defaultValue=''
+                        name='year'
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger className='h-9 w-full rounded-md border border-[#064E41] p-1 text-sm font-light text-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'>
+                          <SelectValue placeholder='เลือกคณะที่สนใจ' />
+                        </SelectTrigger>
+                        <SelectContent position='popper' side='bottom'>
+                          {years.map((year) => (
+                            <SelectItem key={year} value={year}>
+                              {year}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
                 </div>
               </div>
             </div>
