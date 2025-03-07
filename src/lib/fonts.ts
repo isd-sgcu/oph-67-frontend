@@ -1,4 +1,4 @@
-import { Anuphan, Mitr } from 'next/font/google'
+import { Anuphan , Mitr, Ubuntu } from 'next/font/google'
 import localFont from 'next/font/local'
 
 export const cloudSoft = localFont({
@@ -17,4 +17,10 @@ export const mitr = Mitr({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700'],
   variable: '--font-mitr',
+})
+
+export const ubuntu = Ubuntu({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '700'],
+  variable: '--font-ubuntu',
 })
