@@ -1,5 +1,4 @@
 'use client'
-import { format } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -22,6 +21,7 @@ import { news } from '@/const/news'
 import { provinces } from '@/const/province'
 import { status } from '@/const/status'
 import { type RegisterForm } from '@/types/register'
+import { formatDateSafe } from '@/utils/date'
 
 import CheckBox from '../policy/checkbox'
 
@@ -146,7 +146,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                         name='dob'
                         placeholder='dd/mm/yyyy'
                         type='text'
-                        value={format(new Date(field.value), 'dd/MM/yyyy')}
+                        value={formatDateSafe(field.value)}
                         onClick={() => setIsCalendarOpen(!isCalendarOpen)}
                       />
                       <CalendarIcon className='absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 transform opacity-50' />
