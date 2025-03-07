@@ -3,10 +3,17 @@
 import Image from 'next/image'
 import { useState } from 'react'
 
+import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { Input } from '@/components/ui/input'
 import { PanelItems } from '@/const/adminpanel'
 
 const Adminrole: React.FC = () => {
-  const [dropdownIndex, setDropdownIndex] = useState<number | null>(null)
   const [items, setItems] = useState(PanelItems)
   const [searchQuery, setSearchQuery] = useState('')
   const [searchInput, setSearchInput] = useState('')
@@ -14,7 +21,6 @@ const Adminrole: React.FC = () => {
   const handleRemove = (uid: number): void => {
     const updatedItems = items.filter((item) => item.uid !== uid)
     setItems(updatedItems)
-    setDropdownIndex(null)
   }
 
   const handleRoleChange = (uid: number, newRole: string): void => {
@@ -22,23 +28,12 @@ const Adminrole: React.FC = () => {
       item.uid === uid ? { ...item, role: newRole } : item
     )
     setItems(updatedItems)
-
     setSearchQuery(searchQuery)
     setSearchInput(searchQuery)
-    setDropdownIndex(null)
   }
 
   const handleSearchClick = (): void => {
     setSearchQuery(searchInput)
-  }
-
-  const handleKeyDown = (
-    event: React.KeyboardEvent,
-    action: () => void
-  ): void => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      action()
-    }
   }
 
   const filteredItems =
@@ -68,27 +63,23 @@ const Adminrole: React.FC = () => {
       <div className='w-full bg-white'>
         {/* Search Box */}
         <div className='relative m-4'>
-          <input
-            className='w-full rounded-full border p-2'
+          <Input
             placeholder='searching staff'
             type='text'
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
           />
-          <div
-            className='absolute right-3 top-1/2 -translate-y-1/2 transform cursor-pointer'
-            role='button'
-            tabIndex={0}
+          <Button
+            className='absolute right-2 top-1/2 -translate-y-1/2 transform'
             onClick={handleSearchClick}
-            onKeyDown={(e) => handleKeyDown(e, handleSearchClick)}
           >
             <Image
               alt='Search Icon'
-              height={24}
+              height={20}
               src='/assets/admin/search.svg'
-              width={24}
+              width={20}
             />
-          </div>
+          </Button>
         </div>
 
         {/* Table */}
@@ -110,7 +101,7 @@ const Adminrole: React.FC = () => {
           </div>
         </div>
 
-        {filteredItems.map((item, index) => (
+        {filteredItems.map((item) => (
           <div
             key={item.uid}
             className='grid grid-cols-5 gap-4 border-b bg-white'
@@ -121,7 +112,7 @@ const Adminrole: React.FC = () => {
             <div className='p-3 text-center font-anuphan text-sm font-normal text-black'>
               {item.name}
             </div>
-            <div className='p-3'>
+            <div className='p-3 text-center'>
               <span
                 className='inline-block w-[60px] text-center font-anuphan text-[12px] font-normal text-white'
                 style={{
@@ -132,7 +123,7 @@ const Adminrole: React.FC = () => {
                 {item.role.charAt(0).toUpperCase() + item.role.slice(1)}
               </span>
             </div>
-            <div className='p-3'>
+            <div className='p-3 text-center'>
               <span
                 className='inline-block w-[60px] text-center font-anuphan text-[12px] font-normal text-white'
                 style={{
@@ -143,61 +134,48 @@ const Adminrole: React.FC = () => {
                 {item.faculty}
               </span>
             </div>
-            <div className='relative p-3'>
-              <div className='relative flex items-center justify-center'>
-                <button
-                  className='text-black'
-                  type='button'
-                  onClick={() =>
-                    setDropdownIndex(dropdownIndex === index ? null : index)
-                  }
-                >
-                  ...
-                </button>
-                {dropdownIndex === index && (
-                  <div className='absolute right-0 z-10 mt-2 w-48'>
-                    <button
-                      className='flex w-full items-center gap-2 bg-[#ff0000] p-2 font-anuphan text-sm font-medium text-white'
-                      type='button'
-                      onClick={() => handleRemove(item.uid)}
-                    >
-                      <Image
-                        alt='remove'
-                        height={16}
-                        src='/assets/admin/remove.svg'
-                        width={16}
-                      />
-                      Remove
-                    </button>
-                    <button
-                      className='flex w-full items-center gap-2 bg-[#DD579B] p-2 font-anuphan text-sm font-medium text-white'
-                      type='button'
-                      onClick={() => handleRoleChange(item.uid, 'staff')}
-                    >
-                      <Image
-                        alt='staff'
-                        height={16}
-                        src='/assets/admin/staff.svg'
-                        width={16}
-                      />
-                      Change to Staff
-                    </button>
-                    <button
-                      className='flex w-full items-center gap-2 bg-[#064E41] p-2 font-anuphan text-sm font-medium text-white'
-                      type='button'
-                      onClick={() => handleRoleChange(item.uid, 'admin')}
-                    >
-                      <Image
-                        alt='admin'
-                        height={16}
-                        src='/assets/admin/admin.svg'
-                        width={16}
-                      />
-                      Change to Admin
-                    </button>
-                  </div>
-                )}
-              </div>
+            <div className='relative p-3 text-center'>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant='outline'>...</Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className='w-56'>
+                  <DropdownMenuItem onClick={() => handleRemove(item.uid)}>
+                    <Image
+                      alt='remove'
+                      className='mr-2'
+                      height={16}
+                      src='/assets/admin/remove.svg'
+                      width={16}
+                    />
+                    Remove
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => handleRoleChange(item.uid, 'staff')}
+                  >
+                    <Image
+                      alt='staff'
+                      className='mr-2'
+                      height={16}
+                      src='/assets/admin/staff.svg'
+                      width={16}
+                    />
+                    Change to Staff
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => handleRoleChange(item.uid, 'admin')}
+                  >
+                    <Image
+                      alt='admin'
+                      className='mr-2'
+                      height={16}
+                      src='/assets/admin/admin.svg'
+                      width={16}
+                    />
+                    Change to Admin
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         ))}
