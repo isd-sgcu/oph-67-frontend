@@ -3,6 +3,4 @@ dist
 build
 .cache
 .git
-Dockerfile
-.dockerignore
 .env
