@@ -20,7 +20,7 @@ const SelectCard: React.FC<SelectFlowerProps> = ({
         <Image
           alt='background flower'
           height={92}
-          src='/assets/pick_your_flower/flower-white-l.svg'
+          src='/assets/pick-your-flower/flower-white-l.svg'
           width={92}
         />
       </div>
@@ -28,7 +28,7 @@ const SelectCard: React.FC<SelectFlowerProps> = ({
         <Image
           alt='background flower'
           height={92}
-          src='/assets/pick_your_flower/flower-white-r.svg'
+          src='/assets/pick-your-flower/flower-white-r.svg'
           width={92}
         />
       </div>
@@ -36,7 +36,7 @@ const SelectCard: React.FC<SelectFlowerProps> = ({
         <Image
           alt='background flower'
           height={75}
-          src='/assets/pick_your_flower/flower-white-r.svg'
+          src='/assets/pick-your-flower/flower-white-r.svg'
           width={75}
         />
       </div>
@@ -44,7 +44,7 @@ const SelectCard: React.FC<SelectFlowerProps> = ({
         <Image
           alt='flower'
           height={25}
-          src='/assets/pick_your_flower/flower.svg'
+          src='/assets/pick-your-flower/flower.svg'
           width={25}
         />
         <div className='font-mitr text-2xl font-normal tracking-tight text-primary-green'>
@@ -61,7 +61,7 @@ const SelectCard: React.FC<SelectFlowerProps> = ({
             image={
               selectedCard === index
                 ? cardImage
-                : '/assets/pick_your_flower/flower-card-cover.png'
+                : '/assets/pick-your-flower/flower-card-cover.png'
             }
             onClick={() => handleClick(index)}
           />
