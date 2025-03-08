@@ -56,7 +56,7 @@ const Pdpa: React.FC<PdpaProps> = ({
           await registerStaff({ id: '12', form: adminFormValues })
         } else {
           const userFormValues = formValues as RegisterForm
-          await registerUser({ id: '12', form: userFormValues })
+          await registerUser({ id: '13', form: userFormValues })
         }
         setStep(3)
       } catch (error) {

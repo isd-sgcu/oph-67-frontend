@@ -11,7 +11,7 @@ export async function registerUser(data: {
 
   // Append form fields to formData, excluding 'status', 'name', and 'surname'
   Object.entries(data.form).forEach(([key, value]) => {
-    if (key !== 'status' && key !== 'name' && key !== 'surname') {
+    if (key !== 'name' && key !== 'surname') {
       if (key === 'selectedSources' && Array.isArray(value)) {
         formData.append(key, value.join(',').toString())
       } else if (key === 'birthDate' && value instanceof Date) {
