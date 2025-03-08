@@ -39,15 +39,16 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
     const requiredFields: (keyof RegisterForm)[] = [
       'name',
       'surname',
-      'dob',
+      'birthDate',
       'status',
       'email',
+      'phone',
       'province',
       'school',
-      'faculty1',
-      'faculty2',
-      'faculty3',
-      'purpose',
+      'firstInterest',
+      'secondInterest',
+      'thirdInterest',
+      'objective',
     ]
     let isFormValid = true
     let firstInvalidField: HTMLElement | null = null
@@ -142,7 +143,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                 </div>
                 <Controller
                   control={form.control}
-                  {...form.register('dob')}
+                  {...form.register('birthDate')}
                   defaultValue={undefined}
                   render={({ field }) => (
                     <div className='relative'>
@@ -229,20 +230,37 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                 />
               </div>
             </div>
-            <div className='flex flex-col gap-1'>
-              <div className='text-xs font-normal text-[#064E41]'>
-                Email<span className='text-[#FF0000]'>*</span>
+            <div className='flex gap-2'>
+              <div className='flex w-1/2 flex-col gap-1'>
+                <div className='text-xs font-normal text-[#064E41]'>
+                  Email<span className='text-[#FF0000]'>*</span>
+                </div>
+                <Input
+                  className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
+                  placeholder='@email.com'
+                  {...form.register('email')}
+                  name='email'
+                  onInput={(e) => {
+                    const inputElement = e.currentTarget
+                    inputElement.classList.remove('border-red-500')
+                  }}
+                />
               </div>
-              <Input
-                className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
-                placeholder='@email.com'
-                {...form.register('email')}
-                name='email'
-                onInput={(e) => {
-                  const inputElement = e.currentTarget
-                  inputElement.classList.remove('border-red-500')
-                }}
-              />
+              <div className='flex w-1/2 flex-col gap-1'>
+                <div className='text-xs font-normal text-[#064E41]'>
+                  เบอร์ติดต่อ<span className='text-[#FF0000]'>*</span>
+                </div>
+                <Input
+                  className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
+                  placeholder='09xxxxxxxx'
+                  {...form.register('phone')}
+                  name='phone'
+                  onInput={(e) => {
+                    const inputElement = e.currentTarget
+                    inputElement.classList.remove('border-red-500')
+                  }}
+                />
+              </div>
             </div>
             <div className='flex flex-col gap-1'>
               <div className='text-xs font-normal text-[#064E41]'>
@@ -325,16 +343,20 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                         className='mb-1.5 flex items-center gap-1.5'
                       >
                         <CheckBox
-                          isChecked={(form.watch('news') ?? []).includes(
-                            option
-                          )}
+                          isChecked={(
+                            form.watch('selectedSources') ?? []
+                          ).includes(option)}
                           setIsChecked={(checked) => {
-                            const currentNews = form.getValues('news') ?? []
+                            const currentNews =
+                              form.getValues('selectedSources') ?? []
                             if (checked) {
-                              form.setValue('news', [...currentNews, option])
+                              form.setValue('selectedSources', [
+                                ...currentNews,
+                                option,
+                              ])
                             } else {
                               form.setValue(
-                                'news',
+                                'selectedSources',
                                 currentNews.filter((item) => item !== option)
                               )
                             }
@@ -355,16 +377,20 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                         className='mb-1.5 flex items-center gap-1.5'
                       >
                         <CheckBox
-                          isChecked={(form.watch('news') ?? []).includes(
-                            option
-                          )}
+                          isChecked={(
+                            form.watch('selectedSources') ?? []
+                          ).includes(option)}
                           setIsChecked={(checked) => {
-                            const currentNews = form.getValues('news') ?? []
+                            const currentNews =
+                              form.getValues('selectedSources') ?? []
                             if (checked) {
-                              form.setValue('news', [...currentNews, option])
+                              form.setValue('selectedSources', [
+                                ...currentNews,
+                                option,
+                              ])
                             } else {
                               form.setValue(
-                                'news',
+                                'selectedSources',
                                 currentNews.filter((item) => item !== option)
                               )
                             }
@@ -384,7 +410,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                         className={`h-4 w-9/12 rounded-none border-x-0 border-b border-t-0 border-[#064E41] bg-transparent px-1 text-xs font-light text-[#064E41] shadow-none placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:border-b focus-visible:ring-0 ${showOtherInput ? 'visible' : 'invisible'}`}
                         placeholder='โปรดระบุ'
                         type='text'
-                        {...form.register('otherNews')}
+                        {...form.register('otherSource')}
                       />
                     </div>
                   </div>
@@ -412,7 +438,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
               </div>
               <Controller
                 control={form.control}
-                name='faculty1'
+                name='firstInterest'
                 render={({ field }) => (
                   <Select
                     defaultValue=''
@@ -429,7 +455,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                   >
                     <SelectTrigger
                       className='h-9 w-3/4 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'
-                      name='faculty1'
+                      name='firstInterest'
                     >
                       <SelectValue placeholder='เลือกคณะที่สนใจ' />
                     </SelectTrigger>
@@ -454,7 +480,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
               </div>
               <Controller
                 control={form.control}
-                name='faculty2'
+                name='secondInterest'
                 render={({ field }) => (
                   <Select
                     defaultValue=''
@@ -471,7 +497,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                   >
                     <SelectTrigger
                       className='h-9 w-3/4 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'
-                      name='faculty2'
+                      name='secondInterest'
                     >
                       <SelectValue placeholder='เลือกคณะที่สนใจ' />
                     </SelectTrigger>
@@ -496,7 +522,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
               </div>
               <Controller
                 control={form.control}
-                name='faculty3'
+                name='thirdInterest'
                 render={({ field }) => (
                   <Select
                     defaultValue=''
@@ -513,7 +539,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                   >
                     <SelectTrigger
                       className='h-9 w-3/4 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'
-                      name='faculty3'
+                      name='thirdInterest'
                     >
                       <SelectValue placeholder='เลือกคณะที่สนใจ' />
                     </SelectTrigger>
@@ -542,8 +568,8 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
           <Textarea
             className='mt-2 h-32 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
             placeholder='กรอกจุดประสงค์'
-            {...form.register('purpose')}
-            name='purpose'
+            {...form.register('objective')}
+            name='objective'
             onInput={(e) => {
               const inputElement = e.currentTarget
               inputElement.classList.remove('border-red-500')

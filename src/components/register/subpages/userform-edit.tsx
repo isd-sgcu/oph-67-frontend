@@ -35,22 +35,22 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
   const [showOtherInput, setShowOtherInput] = useState(false)
   const { trigger, watch } = form
   const [isCalendarOpen, setIsCalendarOpen] = useState(false)
-  watch('dob')
+  watch('birthDate')
 
   function onNext(): void {
     const values = form.getValues()
     const requiredFields: (keyof RegisterForm)[] = [
       'name',
       'surname',
-      'dob',
+      'birthDate',
       'status',
       'email',
       'province',
       'school',
-      'faculty1',
-      'faculty2',
-      'faculty3',
-      'purpose',
+      'firstInterest',
+      'secondInterest',
+      'thirdInterest',
+      'objective',
     ]
     let isFormValid = true
     let firstInvalidField: HTMLElement | null = null
@@ -145,7 +145,7 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
                 </div>
                 <Controller
                   control={form.control}
-                  {...form.register('dob')}
+                  {...form.register('birthDate')}
                   defaultValue={undefined}
                   render={({ field }) => (
                     <div className='relative'>
@@ -170,7 +170,7 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
                               if (date) {
                                 field.onChange(date)
                                 setIsCalendarOpen(false)
-                                await trigger('dob')
+                                await trigger('birthDate')
                               }
                             }}
                           />
@@ -284,14 +284,20 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
                       className='mb-1.5 flex items-center gap-1.5'
                     >
                       <CheckBox
-                        isChecked={(form.watch('news') ?? []).includes(option)}
+                        isChecked={(
+                          form.watch('selectedSources') ?? []
+                        ).includes(option)}
                         setIsChecked={(checked) => {
-                          const currentNews = form.getValues('news') ?? []
+                          const currentNews =
+                            form.getValues('selectedSources') ?? []
                           if (checked) {
-                            form.setValue('news', [...currentNews, option])
+                            form.setValue('selectedSources', [
+                              ...currentNews,
+                              option,
+                            ])
                           } else {
                             form.setValue(
-                              'news',
+                              'selectedSources',
                               currentNews.filter((item) => item !== option)
                             )
                           }
@@ -310,14 +316,20 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
                       className='mb-1.5 flex items-center gap-1.5'
                     >
                       <CheckBox
-                        isChecked={(form.watch('news') ?? []).includes(option)}
+                        isChecked={(
+                          form.watch('selectedSources') ?? []
+                        ).includes(option)}
                         setIsChecked={(checked) => {
-                          const currentNews = form.getValues('news') ?? []
+                          const currentNews =
+                            form.getValues('selectedSources') ?? []
                           if (checked) {
-                            form.setValue('news', [...currentNews, option])
+                            form.setValue('selectedSources', [
+                              ...currentNews,
+                              option,
+                            ])
                           } else {
                             form.setValue(
-                              'news',
+                              'selectedSources',
                               currentNews.filter((item) => item !== option)
                             )
                           }
@@ -337,7 +349,7 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
                       className={`w-9/12 border-x-0 border-b border-t-0 border-[#064E41] bg-transparent text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:border-b focus-visible:ring-0 ${showOtherInput ? 'visible' : 'invisible'}`}
                       placeholder='โปรดระบุ'
                       type='text'
-                      {...form.register('otherNews')}
+                      {...form.register('otherSource')}
                     />
                   </div>
                 </td>
@@ -364,7 +376,7 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
               </div>
               <Controller
                 control={form.control}
-                name='faculty1'
+                name='firstInterest'
                 render={({ field }) => (
                   <Select
                     defaultValue=''
@@ -391,7 +403,7 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
               </div>
               <Controller
                 control={form.control}
-                name='faculty2'
+                name='secondInterest'
                 render={({ field }) => (
                   <Select
                     defaultValue=''
@@ -418,7 +430,7 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
               </div>
               <Controller
                 control={form.control}
-                name='faculty3'
+                name='thirdInterest'
                 render={({ field }) => (
                   <Select
                     defaultValue=''
@@ -449,8 +461,8 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
           <Textarea
             className='mt-2 h-32 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
             placeholder='กรอกจุดประสงค์'
-            {...form.register('purpose')}
-            name='purpose'
+            {...form.register('objective')}
+            name='objective'
           />
         </div>
         <Button

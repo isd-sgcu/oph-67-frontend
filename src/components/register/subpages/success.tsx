@@ -23,7 +23,7 @@ const Success: React.FC = () => {
         <Image
           alt='logo'
           height={300}
-          src='/assets/register/oph-logo-nobg.svg'
+          src='/assets/register/oph-logo-nobg.png'
           width={300}
         />
         <div className='flex flex-col items-center justify-center gap-0 font-cloud-soft text-lg font-normal tracking-tight text-[#064E41]'>

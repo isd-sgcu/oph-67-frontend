@@ -14,7 +14,6 @@ import { type RegisterForm } from '@/types/register'
 // import { LiffLoading } from '@/components/liff/liff-loading'
 import Policy from '../policy/policy'
 
-
 interface PdpaProps {
   isTerm: boolean
   isPDPA: boolean
@@ -54,10 +53,10 @@ const Pdpa: React.FC<PdpaProps> = ({
 
         if (isStaff) {
           const adminFormValues = formValues as AdminRegisterForm
-          await registerStaff({ id: '5', form: adminFormValues })
+          await registerStaff({ id: '12', form: adminFormValues })
         } else {
           const userFormValues = formValues as RegisterForm
-          await registerUser({ id: '5', form: userFormValues })
+          await registerUser({ id: '12', form: userFormValues })
         }
         setStep(3)
       } catch (error) {
