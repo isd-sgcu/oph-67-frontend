@@ -22,9 +22,9 @@ const Success: React.FC = () => {
       <div className='relative z-10 flex flex-col items-center justify-center gap-5'>
         <Image
           alt='logo'
-          height={300}
-          src='/assets/register/oph-logo-nobg.png'
-          width={300}
+          height={280}
+          src='/assets/register/oph-logo-nobg.svg'
+          width={280}
         />
         <div className='flex flex-col items-center justify-center gap-0 font-cloud-soft text-lg font-normal tracking-tight text-[#064E41]'>
           <div className='text-3xl font-bold'>ลงทะเบียนเรียบร้อย!</div>
