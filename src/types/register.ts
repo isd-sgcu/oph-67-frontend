@@ -6,6 +6,7 @@ import { provinces } from '@/const/province'
 import { status } from '@/const/status'
 
 export const RegisterSchema = z.object({
+  id: z.string(),
   name: z.string().min(1, 'ชื่อ'),
   surname: z.string().min(1, 'นามสกุล'),
   dob: z.date().refine((date) => !isNaN(date.getTime())),

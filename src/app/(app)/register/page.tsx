@@ -29,7 +29,9 @@ const Register: React.FC = () => {
       case 2:
         return (
           <Pdpa
+            form={form}
             isPDPA={isPDPA}
+            isStaff={false}
             isTerm={isTerm}
             setIsPDPA={setIsPDPA}
             setIsTerm={setIsTerm}

@@ -316,69 +316,77 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
           </div>
           <table className='w-full'>
             <tbody>
-              <tr>
-                <td className='w-1/2'>
-                  {news.slice(0, 3).map((option) => (
-                    <label
-                      key={option}
-                      className='mb-1.5 flex items-center gap-1.5'
-                    >
-                      <CheckBox
-                        isChecked={(form.watch('news') ?? []).includes(option)}
-                        setIsChecked={(checked) => {
-                          const currentNews = form.getValues('news') ?? []
-                          if (checked) {
-                            form.setValue('news', [...currentNews, option])
-                          } else {
-                            form.setValue(
-                              'news',
-                              currentNews.filter((item) => item !== option)
-                            )
-                          }
-                        }}
-                      />
-                      <span className='text-sm font-light leading-4 text-[#064E41]'>
-                        {option}
-                      </span>
-                    </label>
-                  ))}
+              <tr className='align-top'>
+                <td className='h-full w-1/2'>
+                  <div className='flex h-full flex-col justify-between'>
+                    {news.slice(0, 3).map((option) => (
+                      <label
+                        key={option}
+                        className='mb-1.5 flex items-center gap-1.5'
+                      >
+                        <CheckBox
+                          isChecked={(form.watch('news') ?? []).includes(
+                            option
+                          )}
+                          setIsChecked={(checked) => {
+                            const currentNews = form.getValues('news') ?? []
+                            if (checked) {
+                              form.setValue('news', [...currentNews, option])
+                            } else {
+                              form.setValue(
+                                'news',
+                                currentNews.filter((item) => item !== option)
+                              )
+                            }
+                          }}
+                        />
+                        <span className='text-sm font-light leading-4 text-[#064E41]'>
+                          {option}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
                 </td>
-                <td className='w-1/2'>
-                  {news.slice(3).map((option) => (
-                    <label
-                      key={option}
-                      className='mb-1.5 flex items-center gap-1.5'
-                    >
-                      <CheckBox
-                        isChecked={(form.watch('news') ?? []).includes(option)}
-                        setIsChecked={(checked) => {
-                          const currentNews = form.getValues('news') ?? []
-                          if (checked) {
-                            form.setValue('news', [...currentNews, option])
-                          } else {
-                            form.setValue(
-                              'news',
-                              currentNews.filter((item) => item !== option)
-                            )
-                          }
-                          if (option === 'อื่น ๆ') {
-                            setShowOtherInput(checked)
-                          }
-                        }}
+                <td className='h-full w-1/2'>
+                  <div className='flex h-full flex-col justify-between'>
+                    {news.slice(3).map((option) => (
+                      <label
+                        key={option}
+                        className='mb-1.5 flex items-center gap-1.5'
+                      >
+                        <CheckBox
+                          isChecked={(form.watch('news') ?? []).includes(
+                            option
+                          )}
+                          setIsChecked={(checked) => {
+                            const currentNews = form.getValues('news') ?? []
+                            if (checked) {
+                              form.setValue('news', [...currentNews, option])
+                            } else {
+                              form.setValue(
+                                'news',
+                                currentNews.filter((item) => item !== option)
+                              )
+                            }
+                            if (option === 'อื่น ๆ') {
+                              setShowOtherInput(checked)
+                            }
+                          }}
+                        />
+                        <span className='text-sm font-light leading-4 text-[#064E41]'>
+                          {option}
+                        </span>
+                      </label>
+                    ))}
+                    <div className='flex gap-2'>
+                      <div className='flex w-1/12' />
+                      <Input
+                        className={`h-4 w-9/12 rounded-none border-x-0 border-b border-t-0 border-[#064E41] bg-transparent px-1 text-xs font-light text-[#064E41] shadow-none placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:border-b focus-visible:ring-0 ${showOtherInput ? 'visible' : 'invisible'}`}
+                        placeholder='โปรดระบุ'
+                        type='text'
+                        {...form.register('otherNews')}
                       />
-                      <span className='text-sm font-light leading-4 text-[#064E41]'>
-                        {option}
-                      </span>
-                    </label>
-                  ))}
-                  <div className='flex gap-2'>
-                    <div className='flex w-1/12' />
-                    <Input
-                      className={`w-9/12 border-x-0 border-b border-t-0 border-[#064E41] bg-transparent text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:border-b focus-visible:ring-0 ${showOtherInput ? 'visible' : 'invisible'}`}
-                      placeholder='โปรดระบุ'
-                      type='text'
-                      {...form.register('otherNews')}
-                    />
+                    </div>
                   </div>
                 </td>
               </tr>
