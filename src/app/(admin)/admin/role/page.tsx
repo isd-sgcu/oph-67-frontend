@@ -27,6 +27,8 @@ const Adminrole: React.FC = () => {
   const [items, setItems] = useState(PanelItems)
   const [searchQuery, setSearchQuery] = useState('')
   const [searchInput, setSearchInput] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const [isAddingRole, setIsAddingRole] = useState(false)
 
   const handleRemove = (uid: number): void => {
     const updatedItems = items.filter((item) => item.uid !== uid)
@@ -43,6 +45,29 @@ const Adminrole: React.FC = () => {
   const handleSearch = (e: React.FormEvent): void => {
     e.preventDefault()
     setSearchQuery(searchInput)
+  }
+
+  const handleAddRole = (): void => {
+    if (!phoneNumber || phoneNumber.trim() === '') {
+      return
+    }
+
+    // TODO: add api call
+    setIsAddingRole(true)
+
+    // Simulate API call delay
+    setTimeout(() => {
+      const newUser = {
+        uid: Math.floor(Math.random() * 1000) + 100,
+        name: `New User (${phoneNumber})`,
+        role: 'staff',
+        faculty: 'ส่วนกลาง',
+      }
+
+      setItems([newUser, ...items])
+      setPhoneNumber('')
+      setIsAddingRole(false)
+    }, 1000)
   }
 
   const filteredItems = searchQuery
@@ -66,11 +91,45 @@ const Adminrole: React.FC = () => {
               width={118}
             />
           </div>
-          <h1 className='text-2xl font-medium text-white'>Staff Management</h1>
+          <h1 className='text-2xl font-semibold text-white'>
+            Staff Management
+          </h1>
+        </div>
+
+        <div className='flex justify-center bg-white p-4'>
+          <div className='flex w-full max-w-xl items-center justify-between gap-3'>
+            <Input
+              className='h-12 flex-1 rounded-full border border-gray-200 bg-white pl-6 text-gray-600 placeholder-gray-400 shadow-sm'
+              disabled={isAddingRole}
+              placeholder='add phone number'
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+            />
+            <Button
+              className='border-dark-green text-dark-green h-12 rounded-full border bg-white px-6 hover:bg-white/90'
+              disabled={isAddingRole || !phoneNumber}
+              variant='outline'
+              onClick={handleAddRole}
+            >
+              {isAddingRole ? (
+                <div className='border-dark-green mr-2 h-4 w-4 animate-spin rounded-full border-2 border-t-transparent' />
+              ) : (
+                <svg
+                  className='mr-2 h-5 w-5'
+                  fill='currentColor'
+                  viewBox='0 0 20 20'
+                  xmlns='http://www.w3.org/2000/svg'
+                >
+                  <path d='M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z' />
+                </svg>
+              )}
+              Add Role
+            </Button>
+          </div>
         </div>
 
         {/* Main Content Card */}
-        <div className='rounded-xl bg-white shadow-lg'>
+        <div className='bg-white shadow-lg'>
           {/* Search Bar */}
           <div className='border-b p-4'>
             <form className='relative' onSubmit={handleSearch}>
