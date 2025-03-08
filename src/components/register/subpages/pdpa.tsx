@@ -1,8 +1,8 @@
 'use client'
 
-import { cookies } from 'next/headers'
 import { type UseFormReturn } from 'react-hook-form'
 
+import { setAuthCookie } from '@/app/actions/auth'
 import { registerStaff } from '@/app/actions/register/register-staff'
 import { registerUser } from '@/app/actions/register/register-user'
 import { LiffError } from '@/components/liff/liff-error'
@@ -62,27 +62,11 @@ const Pdpa: React.FC<PdpaProps> = ({
         if (isStaff) {
           const adminFormValues = formValues as AdminRegisterForm
           const res = await registerStaff({ id: userId, form: adminFormValues })
-          const cookieStore = await cookies()
-          const token = res.accessToken
-          cookieStore.set('auth-token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
-            path: '/',
-            maxAge: 60 * 60 * 24 * 7, // 7 days
-          })
+          await setAuthCookie(res.accessToken)
         } else {
           const userFormValues = formValues as RegisterForm
           const res = await registerUser({ id: userId, form: userFormValues })
-          const cookieStore = await cookies()
-          const token = res.accessToken
-          cookieStore.set('auth-token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
-            path: '/',
-            maxAge: 60 * 60 * 24 * 7, // 7 days
-          })
+          await setAuthCookie(res.accessToken)
         }
         setStep(3)
       } catch (error) {
