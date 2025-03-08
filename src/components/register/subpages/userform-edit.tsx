@@ -45,6 +45,7 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
       'birthDate',
       'status',
       'email',
+      'phone',
       'province',
       'school',
       'firstInterest',

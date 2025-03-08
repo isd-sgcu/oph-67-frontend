@@ -33,7 +33,7 @@ const AdminFormEdit: React.FC<UserFormProps> = ({ form }) => {
       'studentId',
       'status',
       'email',
-      'tel',
+      'phone',
       'year',
     ]
     let isFormValid = true
@@ -165,8 +165,8 @@ const AdminFormEdit: React.FC<UserFormProps> = ({ form }) => {
                 <Input
                   className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
                   placeholder='0987654321'
-                  {...form.register('tel')}
-                  name='tel'
+                  {...form.register('phone')}
+                  name='phone'
                 />
               </div>
             </div>
