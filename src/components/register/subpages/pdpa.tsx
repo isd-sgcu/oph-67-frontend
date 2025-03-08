@@ -1,5 +1,6 @@
 'use client'
 
+import { cookies } from 'next/headers'
 import { type UseFormReturn } from 'react-hook-form'
 
 import { registerStaff } from '@/app/actions/register/register-staff'
@@ -11,7 +12,6 @@ import { Button } from '@/components/ui/button'
 import { PDPA, termAndCondition } from '@/const/policy'
 import { type AdminRegisterForm } from '@/types/admin-register'
 import { type RegisterForm } from '@/types/register'
-
 
 import Policy from '../policy/policy'
 
@@ -61,10 +61,28 @@ const Pdpa: React.FC<PdpaProps> = ({
 
         if (isStaff) {
           const adminFormValues = formValues as AdminRegisterForm
-          await registerStaff({ id: userId, form: adminFormValues })
+          const res = await registerStaff({ id: userId, form: adminFormValues })
+          const cookieStore = await cookies()
+          const token = res.accessToken
+          cookieStore.set('auth-token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            path: '/',
+            maxAge: 60 * 60 * 24 * 7, // 7 days
+          })
         } else {
           const userFormValues = formValues as RegisterForm
-          await registerUser({ id: userId, form: userFormValues })
+          const res = await registerUser({ id: userId, form: userFormValues })
+          const cookieStore = await cookies()
+          const token = res.accessToken
+          cookieStore.set('auth-token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            path: '/',
+            maxAge: 60 * 60 * 24 * 7, // 7 days
+          })
         }
         setStep(3)
       } catch (error) {
