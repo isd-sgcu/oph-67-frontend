@@ -97,9 +97,11 @@ const Modal: React.FC<ModalProps> = ({
               />
             </div>
             <div className='mb-6 text-lg'>สแกนไม่สำเร็จ โปรดลองอีกครั้ง</div>
-            {userInfo && userInfo !== 'No QR code detected' ? <div className='mb-6 max-w-[220px] text-sm text-gray-600'>
+            {userInfo && userInfo !== 'No QR code detected' ? (
+              <div className='mb-6 max-w-[220px] text-sm text-gray-600'>
                 {userInfo}
-              </div> : null}
+              </div>
+            ) : null}
             <div className='w-full'>
               <button
                 className='h-11 w-full cursor-pointer rounded-lg bg-dark-pink font-medium text-white shadow-md transition-colors hover:bg-opacity-90'

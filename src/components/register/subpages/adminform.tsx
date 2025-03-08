@@ -1,5 +1,7 @@
 'use client'
+
 import Image from 'next/image'
+import { useState } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
 
@@ -12,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { faculties } from '@/const/faculties'
 import { years } from '@/const/staff-year'
 import { status } from '@/const/status-staff'
 import { type AdminRegisterForm } from '@/types/admin-register'
@@ -22,6 +25,8 @@ interface UserFormProps {
 }
 
 const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
+  const [showFaculty, setShowFaculty] = useState(false)
+
   function onNext(): void {
     const values = form.getValues()
     const requiredFields: (keyof AdminRegisterForm)[] = [
@@ -31,7 +36,7 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
       'studentId',
       'status',
       'email',
-      'tel',
+      'phone',
       'year',
     ]
     let isFormValid = true
@@ -52,9 +57,21 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
       }
     })
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- เหตุผล: ค่า someVariable อาจมีการเปลี่ยนแปลงแบบ asynchronous ที่ไม่สามารถตรวจจับได้
+    if (values.status === 'Staff ประจำคณะ' && !values.faculty) {
+      isFormValid = false
+      const facultyInput = document.querySelector(`[name="faculty"]`)
+      if (facultyInput) {
+        facultyInput.classList.add('border-red-500')
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- เหตุผล: ค่า someVariable อาจมีการเปลี่ยนแปลงแบบ asynchronous ที่ไม่สามารถตรวจจับได้
+        if (!firstInvalidField) {
+          firstInvalidField = facultyInput as HTMLElement
+        }
+      }
+    }
+
+     
     if (!isFormValid && firstInvalidField) {
-      ;(firstInvalidField as HTMLElement).scrollIntoView({
+      ;(firstInvalidField).scrollIntoView({
         behavior: 'smooth',
         block: 'center',
       })
@@ -103,12 +120,20 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                   placeholder='ชื่อ'
                   {...form.register('name')}
                   name='name'
+                  onInput={(e) => {
+                    const inputElement = e.currentTarget
+                    inputElement.classList.remove('border-red-500')
+                  }}
                 />
                 <Input
                   className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
                   placeholder='นามสกุล'
                   {...form.register('surname')}
                   name='surname'
+                  onInput={(e) => {
+                    const inputElement = e.currentTarget
+                    inputElement.classList.remove('border-red-500')
+                  }}
                 />
               </div>
             </div>
@@ -122,6 +147,10 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                   placeholder='ชื่อเล่น'
                   {...form.register('nickname')}
                   name='nickname'
+                  onInput={(e) => {
+                    const inputElement = e.currentTarget
+                    inputElement.classList.remove('border-red-500')
+                  }}
                 />
               </div>
               <div className='flex w-full flex-col gap-1'>
@@ -133,6 +162,10 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                   placeholder='รหัสนิสิต'
                   {...form.register('studentId')}
                   name='studentId'
+                  onInput={(e) => {
+                    const inputElement = e.currentTarget
+                    inputElement.classList.remove('border-red-500')
+                  }}
                 />
               </div>
             </div>
@@ -146,6 +179,10 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                   placeholder='@email.com'
                   {...form.register('email')}
                   name='email'
+                  onInput={(e) => {
+                    const inputElement = e.currentTarget
+                    inputElement.classList.remove('border-red-500')
+                  }}
                 />
               </div>
               <div className='flex w-1/2 flex-col gap-1'>
@@ -154,9 +191,13 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                 </div>
                 <Input
                   className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
-                  placeholder='0987654321'
-                  {...form.register('tel')}
-                  name='tel'
+                  placeholder='09xxxxxxxx'
+                  {...form.register('phone')}
+                  name='phone'
+                  onInput={(e) => {
+                    const inputElement = e.currentTarget
+                    inputElement.classList.remove('border-red-500')
+                  }}
                 />
               </div>
             </div>
@@ -172,12 +213,32 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                     <Select
                       defaultValue=''
                       value={field.value}
-                      onValueChange={field.onChange}
+                      onValueChange={(value) => {
+                        field.onChange(value)
+                        if (value === 'Staff ประจำคณะ') {
+                          setShowFaculty(true)
+                        } else {
+                          setShowFaculty(false)
+                        }
+                        // Remove red border when user selects value
+                        const inputElement =
+                          document.querySelector(`[name="status"]`)
+                        if (inputElement) {
+                          inputElement.classList.remove('border-red-500')
+                        }
+                      }}
                     >
-                      <SelectTrigger className='h-9 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'>
+                      <SelectTrigger
+                        className='h-9 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'
+                        name='status'
+                      >
                         <SelectValue placeholder='Staff' />
                       </SelectTrigger>
-                      <SelectContent position='popper' side='bottom'>
+                      <SelectContent
+                        className='w-[var(--radix-select-trigger-width)]'
+                        position='popper'
+                        side='bottom'
+                      >
                         {status.map((st) => (
                           <SelectItem key={st} value={st}>
                             {st}
@@ -189,6 +250,55 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                 />
               </div>
             </div>
+            {showFaculty ? <div className='flex gap-2'>
+                <div className='flex w-full flex-col gap-1'>
+                  <div className='text-xs font-normal text-[#064E41]'>
+                    คณะ<span className='text-[#FF0000]'>*</span>
+                  </div>
+                  <Controller
+                    control={form.control}
+                    name='faculty'
+                    render={({ field }) => (
+                      <Select
+                        defaultValue=''
+                        value={
+                          typeof field.value === 'string' ? field.value : ''
+                        }
+                        onValueChange={(value) => {
+                          field.onChange(value)
+                          if (value === 'Staff ประจำคณะ') {
+                            setShowFaculty(true)
+                          }
+                          // Remove red border when user selects value
+                          const inputElement =
+                            document.querySelector(`[name="faculty"]`)
+                          if (inputElement) {
+                            inputElement.classList.remove('border-red-500')
+                          }
+                        }}
+                      >
+                        <SelectTrigger
+                          className='h-9 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'
+                          name='faculty'
+                        >
+                          <SelectValue placeholder='เลือกคณะ' />
+                        </SelectTrigger>
+                        <SelectContent
+                          className='w-[var(--radix-select-trigger-width)]'
+                          position='popper'
+                          side='bottom'
+                        >
+                          {faculties.map((f) => (
+                            <SelectItem key={f.th} value={f.th}>
+                              {f.th}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                </div>
+              </div> : null}
             <div className='flex gap-2'>
               <div className='flex w-full flex-col gap-1'>
                 <div className='text-xs font-normal text-[#064E41]'>
@@ -201,9 +311,20 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                     <Select
                       defaultValue=''
                       value={field.value}
-                      onValueChange={field.onChange}
+                      onValueChange={(value) => {
+                        field.onChange(value)
+                        // Remove red border when user selects value
+                        const inputElement =
+                          document.querySelector(`[name="year"]`)
+                        if (inputElement) {
+                          inputElement.classList.remove('border-red-500')
+                        }
+                      }}
                     >
-                      <SelectTrigger className='h-9 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'>
+                      <SelectTrigger
+                        className='h-9 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'
+                        name='year'
+                      >
                         <SelectValue placeholder='ชั้นปี' />
                       </SelectTrigger>
                       <SelectContent position='popper' side='bottom'>
