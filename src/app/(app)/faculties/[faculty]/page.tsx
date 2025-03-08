@@ -8,14 +8,9 @@ import Notfound from '@/components/ui/notfound'
 import WorkshopList from '@/components/workshop/workshop-list'
 import { faculties } from '@/const/faculties'
 
-interface FacultyPageProps {
-  params: {
-    faculty: string
-  }
-}
-
-const FacultyPage: React.FC<FacultyPageProps> = () => {
-  const { faculty } = useParams()
+const FacultyPage: React.FC = () => {
+  const params = useParams()
+  const faculty = params.faculty as string
   const [step, setStep] = useState(1)
 
   const goToNextStep = (newStep: number): void => {
