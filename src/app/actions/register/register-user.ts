@@ -3,10 +3,15 @@
 import { config } from '@/app/config'
 import { type RegisterForm } from '@/types/register'
 
+interface RegisterUserResponse {
+  accessToken: string
+  userId: string
+}
+
 export async function registerUser(data: {
   id: string
   form: RegisterForm
-}): Promise<Response> {
+}): Promise<RegisterUserResponse> {
   const formData = new FormData()
 
   // Append form fields to formData, excluding 'status', 'name', and 'surname'
