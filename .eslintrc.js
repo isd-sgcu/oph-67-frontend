@@ -74,6 +74,8 @@ module.exports = {
     'sort-imports': ['warn', { ignoreDeclarationSort: true }],
     // allow console.log, etc.
     'no-console': 'off',
+    // Disable eslint-comments/require-description rule globally
+    'eslint-comments/require-description': 'off',
   },
   overrides: [
     {
@@ -98,6 +100,40 @@ module.exports = {
     {
       files: ['**/*.d.ts'],
       rules: { 'import/no-default-export': 'off' },
+    },
+    // Ignore shadcn UI components
+    {
+      files: ['src/components/ui/**/*.{ts,tsx}'],
+      rules: {
+        // Disable all rules for shadcn UI components
+        '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/explicit-function-return-type': 'off',
+        '@typescript-eslint/consistent-type-imports': 'off',
+        '@typescript-eslint/consistent-type-definitions': 'off',
+        '@typescript-eslint/no-unsafe-argument': 'off',
+        '@typescript-eslint/no-unsafe-assignment': 'off',
+        '@typescript-eslint/no-unsafe-member-access': 'off',
+        '@typescript-eslint/no-unnecessary-condition': 'off',
+        '@typescript-eslint/no-unused-vars': 'off',
+        '@typescript-eslint/ban-types': 'off',
+        '@typescript-eslint/no-shadow': 'off',
+        '@typescript-eslint/no-misused-promises': 'off',
+        '@typescript-eslint/restrict-template-expressions': 'off',
+        'import/no-default-export': 'off',
+        'react/function-component-definition': 'off',
+        'react/jsx-sort-props': 'off',
+        'react/jsx-no-leaked-render': 'off',
+        'import/order': 'off',
+        'sort-imports': 'off',
+        'react/prop-types': 'off',
+        'react/jsx-key': 'off',
+        'react/display-name': 'off',
+        'react/no-unknown-property': 'off',
+        'react-hooks/rules-of-hooks': 'off',
+        'react-hooks/exhaustive-deps': 'off',
+        'no-implicit-coercion': 'off',
+        'eslint-comments/require-description': 'off',
+      },
     },
   ],
 }

@@ -1,5 +1,4 @@
 'use client'
-import { format } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -9,11 +8,21 @@ import { Controller } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
+import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
 import { FacultyTH } from '@/const/faculties'
 import { news } from '@/const/news'
 import { provinces } from '@/const/province'
 import { status } from '@/const/status'
 import { type RegisterForm } from '@/types/register'
+import { formatDateSafe } from '@/utils/date'
 
 import CheckBox from '../policy/checkbox'
 
@@ -115,14 +124,14 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
                 ชื่อ - นามสกุล<span className='text-[#FF0000]'>*</span>
               </div>
               <div className='flex items-center justify-center gap-2'>
-                <input
-                  className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
+                <Input
+                  className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
                   placeholder='ชื่อ'
                   {...form.register('name')}
                   name='name'
                 />
-                <input
-                  className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
+                <Input
+                  className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
                   placeholder='นามสกุล'
                   {...form.register('surname')}
                   name='surname'
@@ -140,18 +149,13 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
                   defaultValue={undefined}
                   render={({ field }) => (
                     <div className='relative'>
-                      <input
+                      <Input
                         readOnly
-                        className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
+                        className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
                         name='dob'
                         placeholder='dd/mm/yyyy'
                         type='text'
-                        value={
-                          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- field.value can be undefined initially
-                          field.value
-                            ? format(new Date(field.value), 'dd/MM/yyyy')
-                            : ''
-                        }
+                        value={formatDateSafe(field.value)}
                         onClick={() => setIsCalendarOpen(!isCalendarOpen)}
                       />
                       <CalendarIcon className='absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 transform opacity-50' />
@@ -180,31 +184,36 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
                 <div className='text-xs font-normal text-[#064E41]'>
                   สถานภาพ<span className='text-[#FF0000]'>*</span>
                 </div>
-                <div className='flex items-center justify-center gap-2'>
-                  <select
-                    className='h-9 w-full rounded-md border border-[#064E41] p-1 text-sm font-light text-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
-                    {...form.register('status')}
-                    defaultValue=''
-                    name='status'
-                  >
-                    <option disabled value=''>
-                      สถานภาพ
-                    </option>
-                    {status.map((st) => (
-                      <option key={st} value={st}>
-                        {st}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                <Controller
+                  control={form.control}
+                  name='status'
+                  render={({ field }) => (
+                    <Select
+                      defaultValue=''
+                      value={field.value}
+                      onValueChange={field.onChange}
+                    >
+                      <SelectTrigger className='h-9 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'>
+                        <SelectValue placeholder='สถานภาพ' />
+                      </SelectTrigger>
+                      <SelectContent position='popper' side='bottom'>
+                        {status.map((st) => (
+                          <SelectItem key={st} value={st}>
+                            {st}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
               </div>
             </div>
             <div className='flex flex-col gap-1'>
               <div className='text-xs font-normal text-[#064E41]'>
                 Email<span className='text-[#FF0000]'>*</span>
               </div>
-              <input
-                className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
+              <Input
+                className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
                 placeholder='@email.com'
                 {...form.register('email')}
                 name='email'
@@ -214,21 +223,28 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
               <div className='text-xs font-normal text-[#064E41]'>
                 จังหวัดที่อยู่<span className='text-[#FF0000]'>*</span>
               </div>
-              <select
-                className='h-9 w-1/2 rounded-md border border-[#064E41] p-1 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
-                {...form.register('province')}
-                defaultValue=''
+              <Controller
+                control={form.control}
                 name='province'
-              >
-                <option disabled value=''>
-                  เลือกจังหวัดที่อยู่
-                </option>
-                {provinces.map((province) => (
-                  <option key={province} value={province}>
-                    {province}
-                  </option>
-                ))}
-              </select>
+                render={({ field }) => (
+                  <Select
+                    defaultValue=''
+                    value={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    <SelectTrigger className='h-9 w-1/2 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'>
+                      <SelectValue placeholder='เลือกจังหวัดที่อยู่' />
+                    </SelectTrigger>
+                    <SelectContent position='popper' side='bottom'>
+                      {provinces.map((province) => (
+                        <SelectItem key={province} value={province}>
+                          {province}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
             </div>
           </div>
         </div>
@@ -246,8 +262,8 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
             <div className='text-xs font-normal text-[#064E41]'>
               สถานศึกษา<span className='text-[#FF0000]'>*</span>
             </div>
-            <input
-              className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
+            <Input
+              className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
               placeholder='โรงเรียน'
               {...form.register('school')}
               name='school'
@@ -317,8 +333,8 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
                   ))}
                   <div className='flex gap-2'>
                     <div className='flex w-1/12' />
-                    <input
-                      className={`w-9/12 border-b border-[#064E41] bg-transparent text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-0 ${showOtherInput ? 'visible' : 'invisible'}`}
+                    <Input
+                      className={`w-9/12 border-x-0 border-b border-t-0 border-[#064E41] bg-transparent text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:border-b focus-visible:ring-0 ${showOtherInput ? 'visible' : 'invisible'}`}
                       placeholder='โปรดระบุ'
                       type='text'
                       {...form.register('otherNews')}
@@ -346,61 +362,82 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
               <div className='text-base font-light text-[#064E41]'>
                 อันดับ 1<span className='text-[#FF0000]'>*</span>
               </div>
-              <select
-                className='h-9 w-3/4 rounded-md border border-[#064E41] p-1 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
-                {...form.register('faculty1')}
-                defaultValue=''
+              <Controller
+                control={form.control}
                 name='faculty1'
-              >
-                <option disabled value=''>
-                  เลือกคณะที่สนใจ
-                </option>
-                {FacultyTH.map((faculty) => (
-                  <option key={faculty} value={faculty}>
-                    {faculty}
-                  </option>
-                ))}
-              </select>
+                render={({ field }) => (
+                  <Select
+                    defaultValue=''
+                    value={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    <SelectTrigger className='h-9 w-3/4 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'>
+                      <SelectValue placeholder='เลือกคณะที่สนใจ' />
+                    </SelectTrigger>
+                    <SelectContent position='popper' side='bottom'>
+                      {FacultyTH.map((faculty) => (
+                        <SelectItem key={faculty} value={faculty}>
+                          {faculty}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
             </div>
             <div className='flex items-center justify-center justify-between'>
               <div className='text-base font-light text-[#064E41]'>
                 อันดับ 2<span className='text-[#FF0000]'>*</span>
               </div>
-              <select
-                className='h-9 w-3/4 rounded-md border border-[#064E41] p-1 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
-                {...form.register('faculty2')}
-                defaultValue=''
+              <Controller
+                control={form.control}
                 name='faculty2'
-              >
-                <option disabled value=''>
-                  เลือกคณะที่สนใจ
-                </option>
-                {FacultyTH.map((faculty) => (
-                  <option key={faculty} value={faculty}>
-                    {faculty}
-                  </option>
-                ))}
-              </select>
+                render={({ field }) => (
+                  <Select
+                    defaultValue=''
+                    value={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    <SelectTrigger className='h-9 w-3/4 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'>
+                      <SelectValue placeholder='เลือกคณะที่สนใจ' />
+                    </SelectTrigger>
+                    <SelectContent position='popper' side='bottom'>
+                      {FacultyTH.map((faculty) => (
+                        <SelectItem key={faculty} value={faculty}>
+                          {faculty}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
             </div>
             <div className='flex items-center justify-center justify-between'>
               <div className='text-base font-light text-[#064E41]'>
                 อันดับ 3<span className='text-[#FF0000]'>*</span>
               </div>
-              <select
-                className='h-9 w-3/4 rounded-md border border-[#064E41] p-1 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
-                {...form.register('faculty3')}
-                defaultValue=''
+              <Controller
+                control={form.control}
                 name='faculty3'
-              >
-                <option disabled value=''>
-                  เลือกคณะที่สนใจ
-                </option>
-                {FacultyTH.map((faculty) => (
-                  <option key={faculty} value={faculty}>
-                    {faculty}
-                  </option>
-                ))}
-              </select>
+                render={({ field }) => (
+                  <Select
+                    defaultValue=''
+                    value={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    <SelectTrigger className='h-9 w-3/4 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'>
+                      <SelectValue placeholder='เลือกคณะที่สนใจ' />
+                    </SelectTrigger>
+                    <SelectContent position='popper' side='bottom'>
+                      {FacultyTH.map((faculty) => (
+                        <SelectItem key={faculty} value={faculty}>
+                          {faculty}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
             </div>
           </div>
           <div className='flex gap-2 border-b border-[#064E41] p-2 pb-1'>
@@ -409,8 +446,8 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
               <span className='text-[#FF0000]'>*</span>
             </div>
           </div>
-          <textarea
-            className='mt-2 h-32 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
+          <Textarea
+            className='mt-2 h-32 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
             placeholder='กรอกจุดประสงค์'
             {...form.register('purpose')}
             name='purpose'

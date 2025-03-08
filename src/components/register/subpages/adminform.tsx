@@ -99,13 +99,13 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
               </div>
               <div className='flex items-center justify-center gap-2'>
                 <Input
-                  className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
+                  className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
                   placeholder='ชื่อ'
                   {...form.register('name')}
                   name='name'
                 />
                 <Input
-                  className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
+                  className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
                   placeholder='นามสกุล'
                   {...form.register('surname')}
                   name='surname'
@@ -113,23 +113,23 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
               </div>
             </div>
             <div className='flex items-center justify-center gap-2'>
-              <div className='flex flex-col gap-1'>
+              <div className='flex w-full flex-col gap-1'>
                 <div className='text-xs font-normal text-[#064E41]'>
                   ชื่อเล่น<span className='text-[#FF0000]'>*</span>
                 </div>
                 <Input
-                  className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
+                  className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
                   placeholder='ชื่อเล่น'
                   {...form.register('nickname')}
                   name='nickname'
                 />
               </div>
-              <div className='flex flex-col gap-1'>
+              <div className='flex w-full flex-col gap-1'>
                 <div className='text-xs font-normal text-[#064E41]'>
                   รหัสนิสิต<span className='text-[#FF0000]'>*</span>
                 </div>
                 <Input
-                  className='h-9 w-full rounded-md border border-[#064E41] p-2.5 text-sm font-light text-[#064E41] placeholder-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
+                  className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
                   placeholder='รหัสนิสิต'
                   {...form.register('studentId')}
                   name='studentId'
@@ -138,6 +138,15 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
             </div>
             <div className='flex gap-2'>
               <div className='flex w-1/2 flex-col gap-1'>
+                <div className='text-xs font-normal text-[#064E41]'>
+                  Email<span className='text-[#FF0000]'>*</span>
+                </div>
+                <Input
+                  className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
+                  placeholder='@email.com'
+                  {...form.register('email')}
+                  name='email'
+                />
                 <div className='flex flex-col gap-1'>
                   <div className='text-xs font-normal text-[#064E41]'>
                     Email<span className='text-[#FF0000]'>*</span>
@@ -151,6 +160,15 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                 </div>
               </div>
               <div className='flex w-1/2 flex-col gap-1'>
+                <div className='text-xs font-normal text-[#064E41]'>
+                  เบอร์ติดต่อ<span className='text-[#FF0000]'>*</span>
+                </div>
+                <Input
+                  className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
+                  placeholder='0987654321'
+                  {...form.register('tel')}
+                  name='tel'
+                />
                 <div className='flex flex-col gap-1'>
                   <div className='text-xs font-normal text-[#064E41]'>
                     เบอร์ติดต่อ<span className='text-[#FF0000]'>*</span>
@@ -169,23 +187,28 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                 <div className='text-xs font-normal text-[#064E41]'>
                   สถานภาพ Staff<span className='text-[#FF0000]'>*</span>
                 </div>
-                <div className='flex items-center justify-center gap-2'>
-                  <select
-                    className='h-9 w-full rounded-md border border-[#064E41] p-1 text-sm font-light text-[#064E41] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#064E41]'
-                    {...form.register('status')}
-                    defaultValue=''
-                    name='status'
-                  >
-                    <option disabled value=''>
-                      Staff
-                    </option>
-                    {status.map((st) => (
-                      <option key={st} value={st}>
-                        {st}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                <Controller
+                  control={form.control}
+                  name='status'
+                  render={({ field }) => (
+                    <Select
+                      defaultValue=''
+                      value={field.value}
+                      onValueChange={field.onChange}
+                    >
+                      <SelectTrigger className='h-9 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'>
+                        <SelectValue placeholder='Staff' />
+                      </SelectTrigger>
+                      <SelectContent position='popper' side='bottom'>
+                        {status.map((st) => (
+                          <SelectItem key={st} value={st}>
+                            {st}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
               </div>
             </div>
             <div className='flex gap-2'>
@@ -193,6 +216,28 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                 <div className='text-xs font-normal text-[#064E41]'>
                   ชั้นปี<span className='text-[#FF0000]'>*</span>
                 </div>
+                <Controller
+                  control={form.control}
+                  name='year'
+                  render={({ field }) => (
+                    <Select
+                      defaultValue=''
+                      value={field.value}
+                      onValueChange={field.onChange}
+                    >
+                      <SelectTrigger className='h-9 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'>
+                        <SelectValue placeholder='ชั้นปี' />
+                      </SelectTrigger>
+                      <SelectContent position='popper' side='bottom'>
+                        {years.map((year) => (
+                          <SelectItem key={year} value={year}>
+                            {year}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
                 <div className='flex items-center justify-center gap-2'>
                   <Controller
                     control={form.control}
