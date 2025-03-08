@@ -4,14 +4,15 @@ import { type UseFormReturn } from 'react-hook-form'
 
 import { registerStaff } from '@/app/actions/register/register-staff'
 import { registerUser } from '@/app/actions/register/register-user'
+import { LiffError } from '@/components/liff/liff-error'
+import { LiffLoading } from '@/components/liff/liff-loading'
+import { useLiffContext } from '@/components/liff/liff-provider'
 import { Button } from '@/components/ui/button'
 import { PDPA, termAndCondition } from '@/const/policy'
 import { type AdminRegisterForm } from '@/types/admin-register'
 import { type RegisterForm } from '@/types/register'
 
-// import { useLiffContext } from '@/components/liff/liff-provider'
-// import { LiffError } from '@/components/liff/liff-error'
-// import { LiffLoading } from '@/components/liff/liff-loading'
+
 import Policy from '../policy/policy'
 
 interface PdpaProps {
@@ -33,30 +34,37 @@ const Pdpa: React.FC<PdpaProps> = ({
   form,
   isStaff,
 }) => {
-  // const { profile, isInit } = useLiffContext()
-  // const userId = profile?.userId
-  // const isValid = isPDPA && isTerm
-
-  // if (!isInit) {
-  //   return <LiffLoading />
-  // }
-
-  // if (!profile) {
-  //   return <LiffError error='Failed to load profile' />
-  // }
+  const { profile, isInit } = useLiffContext()
+  const userId = profile?.userId
   const isValid = isPDPA && isTerm
+
+  if (!isInit) {
+    return <LiffLoading />
+  }
+
+  if (!profile) {
+    return <LiffError error='Failed to load profile' />
+  }
+
+  if (!userId) {
+    return <LiffError error='Failed to load user ID' />
+  }
 
   async function onNext(): Promise<void> {
     if (isValid) {
       try {
         const formValues = form.getValues()
 
+        if (!userId) {
+          throw new Error('LINE LIFF User ID is undefined')
+        }
+
         if (isStaff) {
           const adminFormValues = formValues as AdminRegisterForm
-          await registerStaff({ id: '12', form: adminFormValues })
+          await registerStaff({ id: userId, form: adminFormValues })
         } else {
           const userFormValues = formValues as RegisterForm
-          await registerUser({ id: '13', form: userFormValues })
+          await registerUser({ id: userId, form: userFormValues })
         }
         setStep(3)
       } catch (error) {
