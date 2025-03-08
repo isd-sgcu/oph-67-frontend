@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation'
 import { type ReactNode, useEffect, useState } from 'react'
 
 import FacultyInfo from '@/components/faculties/faculty-info'
+import Notfound from '@/components/ui/notfound'
 import WorkshopList from '@/components/workshop/workshop-list'
 import { faculties } from '@/const/faculties'
 
@@ -35,7 +36,7 @@ const FacultyPage: React.FC<FacultyPageProps> = () => {
   }, [step])
 
   const _faculty = faculties.find((f) => f.id.toString() === faculty)
-  if (!_faculty) return <div>Faculty not found</div>
+  if (!_faculty) return <Notfound text='faculty' />
 
   const getPage = (): ReactNode => {
     switch (step) {
@@ -45,7 +46,7 @@ const FacultyPage: React.FC<FacultyPageProps> = () => {
         return <WorkshopList faculty={_faculty} />
 
       default:
-        return <div>404</div>
+        return <Notfound />
     }
   }
 

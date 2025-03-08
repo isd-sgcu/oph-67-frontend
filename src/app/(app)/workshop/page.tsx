@@ -1,6 +1,6 @@
 'use client'
 
-import Image from 'next/image'
+import { Bookmark } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
@@ -27,13 +27,8 @@ const WorkshopPage: React.FC = () => {
   return (
     <div className='flex h-full w-full grow flex-col items-center gap-3 overflow-hidden py-8'>
       <Link className='-my-2 -mt-4 ml-auto mr-2' href='/workshop/bookmark'>
-        <Button className='font-normal' size='sm' variant='outline'>
-          <Image
-            alt='bookmark'
-            height={12}
-            src='/assets/icons/bookmark.svg'
-            width={12}
-          />
+        <Button className='gap-2 font-normal' size='sm' variant='outline'>
+          <Bookmark />
           My Workshop
         </Button>
       </Link>

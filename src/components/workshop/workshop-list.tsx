@@ -2,6 +2,8 @@ import { type Faculty } from '@/const/faculties'
 import { workshops } from '@/const/workshops'
 import { isWorkshopBookmarked } from '@/utils/local-storage'
 
+import Notfound from '../ui/notfound'
+
 import WorkshopCard from './workshop-card'
 
 interface WorkshopListProps {
@@ -10,7 +12,7 @@ interface WorkshopListProps {
 
 const WorkshopList: React.FC<WorkshopListProps> = ({ faculty }) => {
   const _workshops = workshops[faculty.id]
-  if (!_workshops) return <div>Workshop not found</div>
+  if (!_workshops) return <Notfound text='workshop' />
 
   return (
     <div className='mt-2 flex w-full flex-col items-center justify-center gap-4'>

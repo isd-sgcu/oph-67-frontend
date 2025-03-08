@@ -4,6 +4,7 @@ import { type ReactNode, useState } from 'react'
 
 import CertificateGenerator from '@/components/profile/certificate-generator'
 import { Button } from '@/components/ui/button'
+import Notfound from '@/components/ui/notfound'
 
 const Certificate: React.FC = () => {
   const [step, setStep] = useState(1)
@@ -34,7 +35,7 @@ const Certificate: React.FC = () => {
       case 2:
         return <CertificateGenerator userName={userName} />
       default:
-        return <div>404</div>
+        return <Notfound />
     }
   }
 
