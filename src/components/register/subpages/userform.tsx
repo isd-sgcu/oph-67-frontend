@@ -32,9 +32,7 @@ interface UserFormProps {
 
 const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
   const [showOtherInput, setShowOtherInput] = useState(false)
-  const { trigger, watch } = form
   const [isCalendarOpen, setIsCalendarOpen] = useState(false)
-  watch('dob')
 
   function onNext(): void {
     const values = form.getValues()
@@ -120,12 +118,20 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                   placeholder='ชื่อ'
                   {...form.register('name')}
                   name='name'
+                  onInput={(e) => {
+                    const inputElement = e.currentTarget
+                    inputElement.classList.remove('border-red-500')
+                  }}
                 />
                 <Input
                   className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
                   placeholder='นามสกุล'
                   {...form.register('surname')}
                   name='surname'
+                  onInput={(e) => {
+                    const inputElement = e.currentTarget
+                    inputElement.classList.remove('border-red-500')
+                  }}
                 />
               </div>
             </div>
@@ -157,11 +163,20 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                             disabled={(date) => date > new Date()}
                             mode='single'
                             selected={field.value}
-                            onSelect={async (date: Date | undefined) => {
+                            onSelect={(date: Date | undefined) => {
                               if (date) {
                                 field.onChange(date)
+
+                                // Remove red border when user selects value
+                                const inputElement =
+                                  document.querySelector(`[name="dob"]`)
+                                if (inputElement) {
+                                  inputElement.classList.remove(
+                                    'border-red-500'
+                                  )
+                                }
+
                                 setIsCalendarOpen(false)
-                                await trigger('dob')
                               }
                             }}
                           />
@@ -182,12 +197,27 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                     <Select
                       defaultValue=''
                       value={field.value}
-                      onValueChange={field.onChange}
+                      onValueChange={(value) => {
+                        field.onChange(value)
+                        // Remove red border when user selects value
+                        const inputElement =
+                          document.querySelector(`[name="status"]`)
+                        if (inputElement) {
+                          inputElement.classList.remove('border-red-500')
+                        }
+                      }}
                     >
-                      <SelectTrigger className='h-9 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'>
+                      <SelectTrigger
+                        className='h-9 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'
+                        name='status'
+                      >
                         <SelectValue placeholder='สถานภาพ' />
                       </SelectTrigger>
-                      <SelectContent position='popper' side='bottom'>
+                      <SelectContent
+                        className='w-[var(--radix-select-trigger-width)]'
+                        position='popper'
+                        side='bottom'
+                      >
                         {status.map((st) => (
                           <SelectItem key={st} value={st}>
                             {st}
@@ -208,6 +238,10 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                 placeholder='@email.com'
                 {...form.register('email')}
                 name='email'
+                onInput={(e) => {
+                  const inputElement = e.currentTarget
+                  inputElement.classList.remove('border-red-500')
+                }}
               />
             </div>
             <div className='flex flex-col gap-1'>
@@ -221,9 +255,20 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                   <Select
                     defaultValue=''
                     value={field.value}
-                    onValueChange={field.onChange}
+                    onValueChange={(value) => {
+                      field.onChange(value)
+                      // Remove red border when user selects value
+                      const inputElement =
+                        document.querySelector(`[name="status"]`)
+                      if (inputElement) {
+                        inputElement.classList.remove('border-red-500')
+                      }
+                    }}
                   >
-                    <SelectTrigger className='h-9 w-1/2 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'>
+                    <SelectTrigger
+                      className='h-9 w-1/2 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'
+                      name='province'
+                    >
                       <SelectValue placeholder='เลือกจังหวัดที่อยู่' />
                     </SelectTrigger>
                     <SelectContent position='popper' side='bottom'>
@@ -258,6 +303,10 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
               placeholder='โรงเรียน'
               {...form.register('school')}
               name='school'
+              onInput={(e) => {
+                const inputElement = e.currentTarget
+                inputElement.classList.remove('border-red-500')
+              }}
             />
           </div>
           <div className='flex gap-2 border-b border-[#064E41] p-2 pb-1'>
@@ -360,12 +409,27 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                   <Select
                     defaultValue=''
                     value={field.value}
-                    onValueChange={field.onChange}
+                    onValueChange={(value) => {
+                      field.onChange(value)
+                      // Remove red border when user selects value
+                      const inputElement =
+                        document.querySelector(`[name="status"]`)
+                      if (inputElement) {
+                        inputElement.classList.remove('border-red-500')
+                      }
+                    }}
                   >
-                    <SelectTrigger className='h-9 w-3/4 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'>
+                    <SelectTrigger
+                      className='h-9 w-3/4 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'
+                      name='faculty1'
+                    >
                       <SelectValue placeholder='เลือกคณะที่สนใจ' />
                     </SelectTrigger>
-                    <SelectContent position='popper' side='bottom'>
+                    <SelectContent
+                      className='w-[var(--radix-select-trigger-width)]'
+                      position='popper'
+                      side='bottom'
+                    >
                       {FacultyTH.map((faculty) => (
                         <SelectItem key={faculty} value={faculty}>
                           {faculty}
@@ -387,12 +451,27 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                   <Select
                     defaultValue=''
                     value={field.value}
-                    onValueChange={field.onChange}
+                    onValueChange={(value) => {
+                      field.onChange(value)
+                      // Remove red border when user selects value
+                      const inputElement =
+                        document.querySelector(`[name="status"]`)
+                      if (inputElement) {
+                        inputElement.classList.remove('border-red-500')
+                      }
+                    }}
                   >
-                    <SelectTrigger className='h-9 w-3/4 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'>
+                    <SelectTrigger
+                      className='h-9 w-3/4 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'
+                      name='faculty2'
+                    >
                       <SelectValue placeholder='เลือกคณะที่สนใจ' />
                     </SelectTrigger>
-                    <SelectContent position='popper' side='bottom'>
+                    <SelectContent
+                      className='w-[var(--radix-select-trigger-width)]'
+                      position='popper'
+                      side='bottom'
+                    >
                       {FacultyTH.map((faculty) => (
                         <SelectItem key={faculty} value={faculty}>
                           {faculty}
@@ -414,12 +493,27 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                   <Select
                     defaultValue=''
                     value={field.value}
-                    onValueChange={field.onChange}
+                    onValueChange={(value) => {
+                      field.onChange(value)
+                      // Remove red border when user selects value
+                      const inputElement =
+                        document.querySelector(`[name="status"]`)
+                      if (inputElement) {
+                        inputElement.classList.remove('border-red-500')
+                      }
+                    }}
                   >
-                    <SelectTrigger className='h-9 w-3/4 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'>
+                    <SelectTrigger
+                      className='h-9 w-3/4 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'
+                      name='faculty3'
+                    >
                       <SelectValue placeholder='เลือกคณะที่สนใจ' />
                     </SelectTrigger>
-                    <SelectContent position='popper' side='bottom'>
+                    <SelectContent
+                      className='w-[var(--radix-select-trigger-width)]'
+                      position='popper'
+                      side='bottom'
+                    >
                       {FacultyTH.map((faculty) => (
                         <SelectItem key={faculty} value={faculty}>
                           {faculty}
@@ -442,6 +536,10 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
             placeholder='กรอกจุดประสงค์'
             {...form.register('purpose')}
             name='purpose'
+            onInput={(e) => {
+              const inputElement = e.currentTarget
+              inputElement.classList.remove('border-red-500')
+            }}
           />
         </div>
         <Button
