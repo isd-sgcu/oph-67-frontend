@@ -2,10 +2,12 @@
 
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
 
+import { updateUser } from '@/app/actions/edit-profile/edit-profile-staff'
+import { getUser } from '@/app/actions/get-profile/get-user'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -19,16 +21,69 @@ import { faculties } from '@/const/faculties'
 import { years } from '@/const/staff-year'
 import { status } from '@/const/status-staff'
 import { type AdminRegisterForm } from '@/types/admin-register'
+import { type StaffData } from '@/types/staff-data'
+import transformToStaffData from '@/utils/transform-staff-data'
 
-interface UserFormProps {
+interface StaffFormProps {
   form: UseFormReturn<AdminRegisterForm>
 }
 
-const AdminForm: React.FC<UserFormProps> = ({ form }) => {
+const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
   const router = useRouter()
   const [showFaculty, setShowFaculty] = useState(false)
+  const myid = '1'
+  const mytoken =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxIn0.gg5YDolY9ipbwGUDdk4nDSwYQ_jR_YXgON2ipV47ZqY'
 
-  function onNext(): void {
+  useEffect(() => {
+    const fetchData = async (): Promise<void> => {
+      try {
+        const data = await getUser(myid, mytoken)
+        if (data.role === 'staff') {
+          const staffData = data as StaffData
+
+          const [name, surname] = staffData.name.split(' ')
+
+          let status: 'Staff ส่วนกลาง' | 'Staff ประจำคณะ' | undefined
+          if (staffData.isCentralStaff) {
+            setShowFaculty(false)
+            status = 'Staff ส่วนกลาง'
+          } else {
+            setShowFaculty(true)
+            status = 'Staff ประจำคณะ'
+          }
+
+          form.reset({
+            name,
+            surname,
+            nickname: staffData.nickname,
+            studentId: staffData.studentId,
+            status,
+            email: staffData.email,
+            phone: staffData.phone,
+            year: staffData.year?.toString() as
+              | '1'
+              | '2'
+              | '3'
+              | '4'
+              | '5'
+              | '6'
+              | undefined,
+            faculty: staffData.faculty,
+          })
+        } else {
+          console.error('User is not a staff member')
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error)
+      }
+    }
+
+    void fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Reason: This effect should only run once when the component mounts
+  }, [])
+
+  async function onNext(): Promise<void> {
     const values = form.getValues()
     const requiredFields: (keyof AdminRegisterForm)[] = [
       'name',
@@ -77,8 +132,17 @@ const AdminForm: React.FC<UserFormProps> = ({ form }) => {
       })
       console.log('Form is invalid')
     } else {
-      console.log(form.getValues())
-      router.push('/profile')
+      try {
+        const updates = transformToStaffData(values)
+        await updateUser({
+          id: myid,
+          token: mytoken,
+          updates,
+        })
+        router.push('/admin')
+      } catch (error) {
+        console.error('Error updating user data:', error)
+      }
     }
   }
 
@@ -363,4 +427,4 @@ const AdminForm: React.FC<UserFormProps> = ({ form }) => {
   )
 }
 
-export default AdminForm
+export default AdminFormEdit
