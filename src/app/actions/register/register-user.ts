@@ -14,13 +14,16 @@ export async function registerUser(data: {
 }): Promise<RegisterUserResponse> {
   const formData = new FormData()
 
-  // Append form fields to formData, excluding 'status', 'name', and 'surname'
+  // Append form fields to formData, excluding 'name', and 'surname'
   Object.entries(data.form).forEach(([key, value]) => {
     if (key !== 'name' && key !== 'surname') {
       if (key === 'selectedSources' && Array.isArray(value)) {
-        formData.append(key, value.join(',').toString())
+        if (value.length > 0) {
+          formData.append(key, JSON.stringify(value))
+        }
       } else if (key === 'birthDate' && value instanceof Date) {
-        formData.append(key, value.toISOString()) // Convert date to ISO 8601 format
+        const date = new Date(value)
+        formData.append(key, date.toISOString().split('T')[0])
       } else {
         formData.append(key, String(value))
       }

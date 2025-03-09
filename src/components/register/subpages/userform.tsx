@@ -150,7 +150,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                       <Input
                         readOnly
                         className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
-                        name='dob'
+                        name='birthDate'
                         placeholder='dd/mm/yyyy'
                         type='text'
                         value={formatDateSafe(field.value)}
@@ -170,7 +170,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
 
                                 // Remove red border when user selects value
                                 const inputElement =
-                                  document.querySelector(`[name="dob"]`)
+                                  document.querySelector(`[name="birthDate"]`)
                                 if (inputElement) {
                                   inputElement.classList.remove(
                                     'border-red-500'

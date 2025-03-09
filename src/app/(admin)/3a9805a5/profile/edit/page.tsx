@@ -9,7 +9,6 @@ import {
   AdminRegisterSchema,
 } from '@/types/admin-register'
 
-
 const Register: React.FC = () => {
   const form = useForm<AdminRegisterForm>({
     resolver: zodResolver(AdminRegisterSchema),

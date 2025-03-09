@@ -27,7 +27,7 @@ const Adminhome: React.FC = () => {
           <Link
             key={adminbutton.title}
             className='flex h-[50px] w-full items-center justify-center gap-2 rounded-full bg-white text-lg font-medium text-[#064E41] hover:bg-white/90'
-            href={`/admin${adminbutton.path}`}
+            href={`/3a9805a5${adminbutton.path}`}
           >
             <Image
               alt={adminbutton.iconName}

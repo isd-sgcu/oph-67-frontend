@@ -12,23 +12,23 @@ import Timer from '@/components/homepage/timer'
 import { Button } from '@/components/ui/button'
 import {
   actionButtonsNotRegistered,
-  // actionButtonsRegistered,
+  actionButtonsRegistered,
 } from '@/const/actionbutton'
+import { useAuth } from '@/hooks/use-auth'
 import { getTimer } from '@/utils/timer'
 
 const Home: React.FC = () => {
-  // const isRegistered = true
+  const { isAuthenticated } = useAuth()
+  const isRegistered = isAuthenticated
   const [currentTimeLeft, setCurrentTimeLeft] = useState<number | null>(null)
 
   useEffect(() => {
     setCurrentTimeLeft(getTimer().time_left)
   }, [])
 
-  // const actionButtonsDetail = isRegistered
-  //   ? actionButtonsRegistered
-  //   : actionButtonsNotRegistered
-
-  const actionButtonsDetail = actionButtonsNotRegistered
+  const actionButtonsDetail = isRegistered
+    ? actionButtonsRegistered
+    : actionButtonsNotRegistered
 
   return (
     <div className='flex flex-col justify-center bg-[#FCF3F8]'>

@@ -2,6 +2,7 @@
 
 import { type UseFormReturn } from 'react-hook-form'
 
+import { setAdminAuthCookie } from '@/app/actions/admin-auth'
 import { setAuthCookie } from '@/app/actions/auth'
 import { registerStaff } from '@/app/actions/register/register-staff'
 import { registerUser } from '@/app/actions/register/register-user'
@@ -62,7 +63,7 @@ const Pdpa: React.FC<PdpaProps> = ({
         if (isStaff) {
           const adminFormValues = formValues as AdminRegisterForm
           const res = await registerStaff({ id: userId, form: adminFormValues })
-          await setAuthCookie(res.accessToken)
+          await setAdminAuthCookie(res.accessToken)
         } else {
           const userFormValues = formValues as RegisterForm
           const res = await registerUser({ id: userId, form: userFormValues })
