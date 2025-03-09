@@ -18,7 +18,7 @@ export const AdminRegisterSchema = z.object({
       message: 'เลือกคณะ',
     })
     .optional(),
-  year: z.enum(['1', '2', '3', '4'], {
+  year: z.enum(['1', '2', '3', '4', '5', '6'], {
     message: 'ชั้นปี',
   }),
 })
