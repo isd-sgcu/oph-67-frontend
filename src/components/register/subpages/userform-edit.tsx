@@ -1,5 +1,6 @@
 'use client'
 import { CalendarIcon } from 'lucide-react'
+import { cookies } from 'next/headers'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -42,6 +43,7 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
   const { profile, isInit } = useLiffContext()
   const [showOtherInput, setShowOtherInput] = useState(false)
   const [isCalendarOpen, setIsCalendarOpen] = useState(false)
+  const [token, setToken] = useState<string | undefined>(undefined)
   const userId = profile?.userId
 
   useEffect(() => {
@@ -50,7 +52,13 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
         if (!userId) {
           throw new Error('User ID is undefined')
         }
-        const data = await getUser(userId)
+        const cookieStore = await cookies()
+        const token = cookieStore.get('auth-token')?.value
+        setToken(token)
+        if (!token) {
+          throw new Error('Not authenticated')
+        }
+        const data = await getUser(userId, token)
         if (data.role === 'student') {
           const studentData = data as StudentData
 
@@ -153,6 +161,7 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
         const updates = transformToStudentData(values)
         await updateUser({
           id: userId ?? '',
+          token: token ?? '',
           updates,
         })
         router.push('/profile')

@@ -1,7 +1,5 @@
 'use server'
 
-import { cookies } from 'next/headers'
-
 import { config } from '@/app/config'
 import { type UserData } from '@/types/user-data'
 
@@ -12,16 +10,10 @@ interface UpdateUserResponse {
 
 export async function updateUser(data: {
   id: string
+  token: string
   updates: UserData
 }): Promise<UpdateUserResponse> {
-  const { id, updates } = data
-
-  const cookieStore = await cookies()
-
-  const token = cookieStore.get('auth-token')?.value
-  if (!token) {
-    throw new Error('Not authenticated')
-  }
+  const { id, token, updates } = data
 
   const res = await fetch(`${config.baseURL}/api/users/${id}`, {
     method: 'PATCH',
