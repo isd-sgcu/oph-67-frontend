@@ -6,9 +6,9 @@ export function middleware(request: NextRequest): NextResponse {
 
   const isPublicPath = path === '/' || path === '/register'
 
-  const authToken = request.cookies.get('auth-token')?.value
+  const userToken = request.cookies.get('auth-token')?.value
 
-  if (!isPublicPath && !authToken) {
+  if (!isPublicPath && !userToken) {
     const url = new URL('/register', request.url)
 
     url.searchParams.set('callbackUrl', encodeURI(request.url))
@@ -16,7 +16,7 @@ export function middleware(request: NextRequest): NextResponse {
     return NextResponse.redirect(url)
   }
 
-  if (authToken && path === '/register') {
+  if (userToken && path === '/register') {
     return NextResponse.redirect(new URL('/', request.url))
   }
 

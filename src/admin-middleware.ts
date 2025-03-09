@@ -2,9 +2,9 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest): NextResponse {
-  const authToken = request.cookies.get('auth-token')?.value
+  const adminToken = request.cookies.get('admin-token')?.value
 
-  if (!authToken) {
+  if (!adminToken) {
     const url = new URL('/3a9805a5/profile/register', request.url)
     url.searchParams.set('callbackUrl', encodeURI(request.url))
     return NextResponse.redirect(url)
