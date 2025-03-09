@@ -16,7 +16,7 @@ export function middleware(request: NextRequest): NextResponse {
     return NextResponse.redirect(url)
   }
 
-  if (authToken && (path === '/login' || path === '/register')) {
+  if (authToken && path === '/register') {
     return NextResponse.redirect(new URL('/', request.url))
   }
 
@@ -24,5 +24,9 @@ export function middleware(request: NextRequest): NextResponse {
 }
 
 export const config = {
-  matcher: ['/(app)/:path*', '/', '/register'],
+  matcher: [
+    '/((?!admin|api|_next/static|_next/image|favicon.ico|assets).*)',
+    '/',
+    '/register',
+  ],
 }
