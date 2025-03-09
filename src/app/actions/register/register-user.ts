@@ -19,7 +19,7 @@ export async function registerUser(data: {
     if (key !== 'name' && key !== 'surname') {
       if (key === 'selectedSources' && Array.isArray(value)) {
         if (value.length > 0) {
-          formData.append(key, JSON.stringify(value))
+          formData.append(key, value.join(','))
         }
       } else if (key === 'birthDate' && value instanceof Date) {
         const date = new Date(value)
