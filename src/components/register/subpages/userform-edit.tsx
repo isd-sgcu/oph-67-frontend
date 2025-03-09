@@ -8,6 +8,9 @@ import { Controller } from 'react-hook-form'
 
 import { updateUser } from '@/app/actions/edit-profile/edit-profile'
 import { getUser } from '@/app/actions/get-profile/get-user'
+import { LiffError } from '@/components/liff/liff-error'
+import { LiffLoading } from '@/components/liff/liff-loading'
+import { useLiffContext } from '@/components/liff/liff-provider'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Input } from '@/components/ui/input'
@@ -30,24 +33,24 @@ import transformToStudentData from '@/utils/transform-student-data'
 
 import CheckBox from '../policy/checkbox'
 
-
 interface UserFormProps {
   form: UseFormReturn<RegisterForm>
 }
 
 const UserForm: React.FC<UserFormProps> = ({ form }) => {
   const router = useRouter()
+  const { profile, isInit } = useLiffContext()
   const [showOtherInput, setShowOtherInput] = useState(false)
   const [isCalendarOpen, setIsCalendarOpen] = useState(false)
-
-  const myid = '22'
-  const mytoken =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMiJ9.7Zy-_aWG_rEuLRySlH3kFQcC6qygbnWxAiCbS8lNUDM'
+  const userId = profile?.userId
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
-        const data = await getUser(myid, mytoken)
+        if (!userId) {
+          throw new Error('User ID is undefined')
+        }
+        const data = await getUser(userId)
         if (data.role === 'student') {
           const studentData = data as StudentData
 
@@ -91,6 +94,18 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
     void fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Reason: This effect should only run once when the component mounts
   }, [])
+
+  if (!isInit) {
+    return <LiffLoading />
+  }
+
+  if (!profile) {
+    return <LiffError error='Failed to load profile' />
+  }
+
+  if (!userId) {
+    return <LiffError error='Failed to load user ID' />
+  }
 
   async function onNext(): Promise<void> {
     const values = form.getValues()
@@ -137,8 +152,7 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
       try {
         const updates = transformToStudentData(values)
         await updateUser({
-          id: myid,
-          token: mytoken,
+          id: userId ?? '',
           updates,
         })
         router.push('/profile')
