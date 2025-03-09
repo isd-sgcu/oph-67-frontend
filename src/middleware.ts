@@ -25,7 +25,7 @@ export function middleware(request: NextRequest): NextResponse {
 
 export const config = {
   matcher: [
-    '/((?!admin|api|_next/static|_next/image|favicon.ico|assets).*)',
+    '/((?!3a9805a5|admin|api|_next/static|_next/image|favicon.ico|assets).*)',
     '/',
     '/register',
   ],
