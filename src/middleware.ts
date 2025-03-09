@@ -4,28 +4,44 @@ import type { NextRequest } from 'next/server'
 export function middleware(request: NextRequest): NextResponse {
   const path = request.nextUrl.pathname
 
-  const isPublicPath = path === '/' || path === '/register'
+  const isAdminRoute = path.startsWith('/3a9805a5')
 
-  const userToken = request.cookies.get('auth-token')?.value
+  if (isAdminRoute) {
+    const adminToken = request.cookies.get('admin-token')?.value
 
-  if (!isPublicPath && !userToken) {
-    const url = new URL('/register', request.url)
+    if (path === '/3a9805a5/profile/register') {
+      return NextResponse.next()
+    }
 
-    url.searchParams.set('callbackUrl', encodeURI(request.url))
+    if (!adminToken) {
+      const url = new URL('/3a9805a5/profile/register', request.url)
+      url.searchParams.set('callbackUrl', encodeURI(request.url))
+      return NextResponse.redirect(url)
+    }
 
-    return NextResponse.redirect(url)
-  }
+    return NextResponse.next()
+  } 
+    const isPublicPath = path === '/' || path === '/register'
+    const userToken = request.cookies.get('auth-token')?.value
 
-  if (userToken && path === '/register') {
-    return NextResponse.redirect(new URL('/', request.url))
-  }
+    if (!isPublicPath && !userToken) {
+      const url = new URL('/register', request.url)
+      url.searchParams.set('callbackUrl', encodeURI(request.url))
+      return NextResponse.redirect(url)
+    }
 
-  return NextResponse.next()
+    if (userToken && path === '/register') {
+      return NextResponse.redirect(new URL('/', request.url))
+    }
+
+    return NextResponse.next()
+  
 }
 
 export const config = {
   matcher: [
-    '/((?!3a9805a5|admin|api|_next/static|_next/image|favicon.ico|assets).*)',
+    '/((?!_next/static|_next/image|favicon.ico|assets).*)',
+    '/3a9805a5/:path*',
     '/',
     '/register',
   ],
