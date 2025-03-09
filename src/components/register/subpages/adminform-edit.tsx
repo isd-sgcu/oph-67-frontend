@@ -1,5 +1,6 @@
 'use client'
 
+import { cookies } from 'next/headers'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -35,6 +36,7 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
   const router = useRouter()
   const { profile, isInit } = useLiffContext()
   const [showFaculty, setShowFaculty] = useState(false)
+  const [token, setToken] = useState<string | undefined>(undefined)
   const userId = profile?.userId
 
   useEffect(() => {
@@ -43,7 +45,13 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
         if (!userId) {
           throw new Error('User ID is undefined')
         }
-        const data = await getUser(userId)
+        const cookieStore = await cookies()
+        const token = cookieStore.get('admin-token')?.value
+        setToken(token)
+        if (!token) {
+          throw new Error('Not authenticated')
+        }
+        const data = await getUser(userId, token)
         if (data.role === 'staff') {
           const staffData = data as StaffData
 
@@ -153,6 +161,7 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
         const updates = transformToStaffData(values)
         await updateUser({
           id: userId ?? '',
+          token: token ?? '',
           updates,
         })
         router.push('/3a9805a5')
