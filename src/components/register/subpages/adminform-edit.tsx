@@ -8,6 +8,9 @@ import { Controller } from 'react-hook-form'
 
 import { updateUser } from '@/app/actions/edit-profile/edit-profile'
 import { getUser } from '@/app/actions/get-profile/get-user'
+import { LiffError } from '@/components/liff/liff-error'
+import { LiffLoading } from '@/components/liff/liff-loading'
+import { useLiffContext } from '@/components/liff/liff-provider'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -30,15 +33,17 @@ interface StaffFormProps {
 
 const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
   const router = useRouter()
+  const { profile, isInit } = useLiffContext()
   const [showFaculty, setShowFaculty] = useState(false)
-  const myid = '1'
-  const mytoken =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxIn0.gg5YDolY9ipbwGUDdk4nDSwYQ_jR_YXgON2ipV47ZqY'
+  const userId = profile?.userId
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
-        const data = await getUser(myid, mytoken)
+        if (!userId) {
+          throw new Error('User ID is undefined')
+        }
+        const data = await getUser(userId)
         if (data.role === 'staff') {
           const staffData = data as StaffData
 
@@ -82,6 +87,18 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
     void fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Reason: This effect should only run once when the component mounts
   }, [])
+
+  if (!isInit) {
+    return <LiffLoading />
+  }
+
+  if (!profile) {
+    return <LiffError error='Failed to load profile' />
+  }
+
+  if (!userId) {
+    return <LiffError error='Failed to load user ID' />
+  }
 
   async function onNext(): Promise<void> {
     const values = form.getValues()
@@ -135,8 +152,7 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
       try {
         const updates = transformToStaffData(values)
         await updateUser({
-          id: myid,
-          token: mytoken,
+          id: userId ?? '',
           updates,
         })
         router.push('/3a9805a5')

@@ -1,9 +1,18 @@
 'use server'
 
+import { cookies } from 'next/headers'
+
 import { config } from '@/app/config'
 import { type UserData } from '@/types/user-data'
 
-export async function getUser(id: string, token: string): Promise<UserData> {
+export async function getUser(id: string): Promise<UserData> {
+  const cookieStore = await cookies()
+
+  const token = cookieStore.get('auth-token')?.value
+  if (!token) {
+    throw new Error('Not authenticated')
+  }
+
   const res = await fetch(`${config.baseURL}/api/users/${id}`, {
     method: 'GET',
     headers: {
