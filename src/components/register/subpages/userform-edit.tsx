@@ -2,10 +2,12 @@
 import { CalendarIcon } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
 
+import { updateUser } from '@/app/actions/edit-profile/edit-profile'
+import { getUser } from '@/app/actions/get-profile/get-user'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Input } from '@/components/ui/input'
@@ -22,22 +24,75 @@ import { news } from '@/const/news'
 import { provinces } from '@/const/province'
 import { status } from '@/const/status'
 import { type RegisterForm } from '@/types/register'
+import { type StudentData } from '@/types/student-data'
 import { formatDateSafe } from '@/utils/date'
+import transformToStudentData from '@/utils/transform-student-data'
 
 import CheckBox from '../policy/checkbox'
+
 
 interface UserFormProps {
   form: UseFormReturn<RegisterForm>
 }
 
-const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
+const UserForm: React.FC<UserFormProps> = ({ form }) => {
   const router = useRouter()
   const [showOtherInput, setShowOtherInput] = useState(false)
-  const { trigger, watch } = form
   const [isCalendarOpen, setIsCalendarOpen] = useState(false)
-  watch('birthDate')
 
-  function onNext(): void {
+  const myid = '22'
+  const mytoken =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMiJ9.7Zy-_aWG_rEuLRySlH3kFQcC6qygbnWxAiCbS8lNUDM'
+
+  useEffect(() => {
+    const fetchData = async (): Promise<void> => {
+      try {
+        const data = await getUser(myid, mytoken)
+        if (data.role === 'student') {
+          const studentData = data as StudentData
+
+          const [name, surname] = studentData.name.split(' ')
+          const st = status.includes(
+            studentData.status as (typeof status)[number]
+          )
+            ? studentData.status
+            : undefined
+          const pv = provinces.includes(
+            studentData.province as (typeof provinces)[number]
+          )
+            ? studentData.province
+            : undefined
+
+          form.reset({
+            name,
+            surname,
+            birthDate: studentData.birthDate
+              ? new Date(studentData.birthDate)
+              : undefined,
+            status: st as RegisterForm['status'],
+            email: studentData.email,
+            phone: studentData.phone,
+            province: pv as RegisterForm['province'],
+            school: studentData.school,
+            otherSource: studentData.otherSource,
+            firstInterest: studentData.firstInterest,
+            secondInterest: studentData.secondInterest,
+            thirdInterest: studentData.thirdInterest,
+            objective: studentData.objective,
+          })
+        } else {
+          console.error('User is not a staff member')
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error)
+      }
+    }
+
+    void fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Reason: This effect should only run once when the component mounts
+  }, [])
+
+  async function onNext(): Promise<void> {
     const values = form.getValues()
     const requiredFields: (keyof RegisterForm)[] = [
       'name',
@@ -79,8 +134,17 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
       })
       console.log('Form is invalid')
     } else {
-      console.log(form.getValues())
-      router.push('/profile')
+      try {
+        const updates = transformToStudentData(values)
+        await updateUser({
+          id: myid,
+          token: mytoken,
+          updates,
+        })
+        router.push('/profile')
+      } catch (error) {
+        console.error('Error updating user data:', error)
+      }
     }
   }
 
@@ -130,12 +194,20 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
                   placeholder='ชื่อ'
                   {...form.register('name')}
                   name='name'
+                  onInput={(e) => {
+                    const inputElement = e.currentTarget
+                    inputElement.classList.remove('border-red-500')
+                  }}
                 />
                 <Input
                   className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
                   placeholder='นามสกุล'
                   {...form.register('surname')}
                   name='surname'
+                  onInput={(e) => {
+                    const inputElement = e.currentTarget
+                    inputElement.classList.remove('border-red-500')
+                  }}
                 />
               </div>
             </div>
@@ -167,11 +239,20 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
                             disabled={(date) => date > new Date()}
                             mode='single'
                             selected={field.value}
-                            onSelect={async (date: Date | undefined) => {
+                            onSelect={(date: Date | undefined) => {
                               if (date) {
                                 field.onChange(date)
+
+                                // Remove red border when user selects value
+                                const inputElement =
+                                  document.querySelector(`[name="birthDate"]`)
+                                if (inputElement) {
+                                  inputElement.classList.remove(
+                                    'border-red-500'
+                                  )
+                                }
+
                                 setIsCalendarOpen(false)
-                                await trigger('birthDate')
                               }
                             }}
                           />
@@ -192,12 +273,27 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
                     <Select
                       defaultValue=''
                       value={field.value}
-                      onValueChange={field.onChange}
+                      onValueChange={(value) => {
+                        field.onChange(value)
+                        // Remove red border when user selects value
+                        const inputElement =
+                          document.querySelector(`[name="status"]`)
+                        if (inputElement) {
+                          inputElement.classList.remove('border-red-500')
+                        }
+                      }}
                     >
-                      <SelectTrigger className='h-9 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'>
+                      <SelectTrigger
+                        className='h-9 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'
+                        name='status'
+                      >
                         <SelectValue placeholder='สถานภาพ' />
                       </SelectTrigger>
-                      <SelectContent position='popper' side='bottom'>
+                      <SelectContent
+                        className='w-[var(--radix-select-trigger-width)]'
+                        position='popper'
+                        side='bottom'
+                      >
                         {status.map((st) => (
                           <SelectItem key={st} value={st}>
                             {st}
@@ -209,16 +305,37 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
                 />
               </div>
             </div>
-            <div className='flex flex-col gap-1'>
-              <div className='text-xs font-normal text-[#064E41]'>
-                Email<span className='text-[#FF0000]'>*</span>
+            <div className='flex gap-2'>
+              <div className='flex w-1/2 flex-col gap-1'>
+                <div className='text-xs font-normal text-[#064E41]'>
+                  Email<span className='text-[#FF0000]'>*</span>
+                </div>
+                <Input
+                  className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
+                  placeholder='@email.com'
+                  {...form.register('email')}
+                  name='email'
+                  onInput={(e) => {
+                    const inputElement = e.currentTarget
+                    inputElement.classList.remove('border-red-500')
+                  }}
+                />
               </div>
-              <Input
-                className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
-                placeholder='@email.com'
-                {...form.register('email')}
-                name='email'
-              />
+              <div className='flex w-1/2 flex-col gap-1'>
+                <div className='text-xs font-normal text-[#064E41]'>
+                  เบอร์ติดต่อ<span className='text-[#FF0000]'>*</span>
+                </div>
+                <Input
+                  className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
+                  placeholder='09xxxxxxxx'
+                  {...form.register('phone')}
+                  name='phone'
+                  onInput={(e) => {
+                    const inputElement = e.currentTarget
+                    inputElement.classList.remove('border-red-500')
+                  }}
+                />
+              </div>
             </div>
             <div className='flex flex-col gap-1'>
               <div className='text-xs font-normal text-[#064E41]'>
@@ -231,9 +348,20 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
                   <Select
                     defaultValue=''
                     value={field.value}
-                    onValueChange={field.onChange}
+                    onValueChange={(value) => {
+                      field.onChange(value)
+                      // Remove red border when user selects value
+                      const inputElement =
+                        document.querySelector(`[name="status"]`)
+                      if (inputElement) {
+                        inputElement.classList.remove('border-red-500')
+                      }
+                    }}
                   >
-                    <SelectTrigger className='h-9 w-1/2 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'>
+                    <SelectTrigger
+                      className='h-9 w-1/2 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'
+                      name='province'
+                    >
                       <SelectValue placeholder='เลือกจังหวัดที่อยู่' />
                     </SelectTrigger>
                     <SelectContent position='popper' side='bottom'>
@@ -268,6 +396,10 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
               placeholder='โรงเรียน'
               {...form.register('school')}
               name='school'
+              onInput={(e) => {
+                const inputElement = e.currentTarget
+                inputElement.classList.remove('border-red-500')
+              }}
             />
           </div>
           <div className='flex gap-2 border-b border-[#064E41] p-2 pb-1'>
@@ -277,81 +409,85 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
           </div>
           <table className='w-full'>
             <tbody>
-              <tr>
-                <td className='w-1/2'>
-                  {news.slice(0, 3).map((option) => (
-                    <label
-                      key={option}
-                      className='mb-1.5 flex items-center gap-1.5'
-                    >
-                      <CheckBox
-                        isChecked={(
-                          form.watch('selectedSources') ?? []
-                        ).includes(option)}
-                        setIsChecked={(checked) => {
-                          const currentNews =
-                            form.getValues('selectedSources') ?? []
-                          if (checked) {
-                            form.setValue('selectedSources', [
-                              ...currentNews,
-                              option,
-                            ])
-                          } else {
-                            form.setValue(
-                              'selectedSources',
-                              currentNews.filter((item) => item !== option)
-                            )
-                          }
-                        }}
-                      />
-                      <span className='text-sm font-light leading-4 text-[#064E41]'>
-                        {option}
-                      </span>
-                    </label>
-                  ))}
+              <tr className='align-top'>
+                <td className='h-full w-1/2'>
+                  <div className='flex h-full flex-col justify-between'>
+                    {news.slice(0, 3).map((option) => (
+                      <label
+                        key={option}
+                        className='mb-1.5 flex items-center gap-1.5'
+                      >
+                        <CheckBox
+                          isChecked={(
+                            form.watch('selectedSources') ?? []
+                          ).includes(option)}
+                          setIsChecked={(checked) => {
+                            const currentNews =
+                              form.getValues('selectedSources') ?? []
+                            if (checked) {
+                              form.setValue('selectedSources', [
+                                ...currentNews,
+                                option,
+                              ])
+                            } else {
+                              form.setValue(
+                                'selectedSources',
+                                currentNews.filter((item) => item !== option)
+                              )
+                            }
+                          }}
+                        />
+                        <span className='text-sm font-light leading-4 text-[#064E41]'>
+                          {option}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
                 </td>
-                <td className='w-1/2'>
-                  {news.slice(3).map((option) => (
-                    <label
-                      key={option}
-                      className='mb-1.5 flex items-center gap-1.5'
-                    >
-                      <CheckBox
-                        isChecked={(
-                          form.watch('selectedSources') ?? []
-                        ).includes(option)}
-                        setIsChecked={(checked) => {
-                          const currentNews =
-                            form.getValues('selectedSources') ?? []
-                          if (checked) {
-                            form.setValue('selectedSources', [
-                              ...currentNews,
-                              option,
-                            ])
-                          } else {
-                            form.setValue(
-                              'selectedSources',
-                              currentNews.filter((item) => item !== option)
-                            )
-                          }
-                          if (option === 'อื่น ๆ') {
-                            setShowOtherInput(checked)
-                          }
-                        }}
+                <td className='h-full w-1/2'>
+                  <div className='flex h-full flex-col justify-between'>
+                    {news.slice(3).map((option) => (
+                      <label
+                        key={option}
+                        className='mb-1.5 flex items-center gap-1.5'
+                      >
+                        <CheckBox
+                          isChecked={(
+                            form.watch('selectedSources') ?? []
+                          ).includes(option)}
+                          setIsChecked={(checked) => {
+                            const currentNews =
+                              form.getValues('selectedSources') ?? []
+                            if (checked) {
+                              form.setValue('selectedSources', [
+                                ...currentNews,
+                                option,
+                              ])
+                            } else {
+                              form.setValue(
+                                'selectedSources',
+                                currentNews.filter((item) => item !== option)
+                              )
+                            }
+                            if (option === 'อื่น ๆ') {
+                              setShowOtherInput(checked)
+                            }
+                          }}
+                        />
+                        <span className='text-sm font-light leading-4 text-[#064E41]'>
+                          {option}
+                        </span>
+                      </label>
+                    ))}
+                    <div className='flex gap-2'>
+                      <div className='flex w-1/12' />
+                      <Input
+                        className={`h-4 w-9/12 rounded-none border-x-0 border-b border-t-0 border-[#064E41] bg-transparent px-1 text-xs font-light text-[#064E41] shadow-none placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:border-b focus-visible:ring-0 ${showOtherInput ? 'visible' : 'invisible'}`}
+                        placeholder='โปรดระบุ'
+                        type='text'
+                        {...form.register('otherSource')}
                       />
-                      <span className='text-sm font-light leading-4 text-[#064E41]'>
-                        {option}
-                      </span>
-                    </label>
-                  ))}
-                  <div className='flex gap-2'>
-                    <div className='flex w-1/12' />
-                    <Input
-                      className={`w-9/12 border-x-0 border-b border-t-0 border-[#064E41] bg-transparent text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:border-b focus-visible:ring-0 ${showOtherInput ? 'visible' : 'invisible'}`}
-                      placeholder='โปรดระบุ'
-                      type='text'
-                      {...form.register('otherSource')}
-                    />
+                    </div>
                   </div>
                 </td>
               </tr>
@@ -382,12 +518,27 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
                   <Select
                     defaultValue=''
                     value={field.value}
-                    onValueChange={field.onChange}
+                    onValueChange={(value) => {
+                      field.onChange(value)
+                      // Remove red border when user selects value
+                      const inputElement =
+                        document.querySelector(`[name="status"]`)
+                      if (inputElement) {
+                        inputElement.classList.remove('border-red-500')
+                      }
+                    }}
                   >
-                    <SelectTrigger className='h-9 w-3/4 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'>
+                    <SelectTrigger
+                      className='h-9 w-3/4 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'
+                      name='firstInterest'
+                    >
                       <SelectValue placeholder='เลือกคณะที่สนใจ' />
                     </SelectTrigger>
-                    <SelectContent position='popper' side='bottom'>
+                    <SelectContent
+                      className='w-[var(--radix-select-trigger-width)]'
+                      position='popper'
+                      side='bottom'
+                    >
                       {FacultyTH.map((faculty) => (
                         <SelectItem key={faculty} value={faculty}>
                           {faculty}
@@ -409,12 +560,27 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
                   <Select
                     defaultValue=''
                     value={field.value}
-                    onValueChange={field.onChange}
+                    onValueChange={(value) => {
+                      field.onChange(value)
+                      // Remove red border when user selects value
+                      const inputElement =
+                        document.querySelector(`[name="status"]`)
+                      if (inputElement) {
+                        inputElement.classList.remove('border-red-500')
+                      }
+                    }}
                   >
-                    <SelectTrigger className='h-9 w-3/4 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'>
+                    <SelectTrigger
+                      className='h-9 w-3/4 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'
+                      name='secondInterest'
+                    >
                       <SelectValue placeholder='เลือกคณะที่สนใจ' />
                     </SelectTrigger>
-                    <SelectContent position='popper' side='bottom'>
+                    <SelectContent
+                      className='w-[var(--radix-select-trigger-width)]'
+                      position='popper'
+                      side='bottom'
+                    >
                       {FacultyTH.map((faculty) => (
                         <SelectItem key={faculty} value={faculty}>
                           {faculty}
@@ -436,12 +602,27 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
                   <Select
                     defaultValue=''
                     value={field.value}
-                    onValueChange={field.onChange}
+                    onValueChange={(value) => {
+                      field.onChange(value)
+                      // Remove red border when user selects value
+                      const inputElement =
+                        document.querySelector(`[name="status"]`)
+                      if (inputElement) {
+                        inputElement.classList.remove('border-red-500')
+                      }
+                    }}
                   >
-                    <SelectTrigger className='h-9 w-3/4 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'>
+                    <SelectTrigger
+                      className='h-9 w-3/4 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'
+                      name='thirdInterest'
+                    >
                       <SelectValue placeholder='เลือกคณะที่สนใจ' />
                     </SelectTrigger>
-                    <SelectContent position='popper' side='bottom'>
+                    <SelectContent
+                      className='w-[var(--radix-select-trigger-width)]'
+                      position='popper'
+                      side='bottom'
+                    >
                       {FacultyTH.map((faculty) => (
                         <SelectItem key={faculty} value={faculty}>
                           {faculty}
@@ -464,6 +645,10 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
             placeholder='กรอกจุดประสงค์'
             {...form.register('objective')}
             name='objective'
+            onInput={(e) => {
+              const inputElement = e.currentTarget
+              inputElement.classList.remove('border-red-500')
+            }}
           />
         </div>
         <Button
@@ -478,4 +663,4 @@ const UserFormEdit: React.FC<UserFormProps> = ({ form }) => {
   )
 }
 
-export default UserFormEdit
+export default UserForm

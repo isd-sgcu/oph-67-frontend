@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
 
-import { updateUser } from '@/app/actions/edit-profile/edit-profile-staff'
+import { updateUser } from '@/app/actions/edit-profile/edit-profile'
 import { getUser } from '@/app/actions/get-profile/get-user'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -139,7 +139,7 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
           token: mytoken,
           updates,
         })
-        router.push('/admin')
+        router.push('/3a9805a5')
       } catch (error) {
         console.error('Error updating user data:', error)
       }
