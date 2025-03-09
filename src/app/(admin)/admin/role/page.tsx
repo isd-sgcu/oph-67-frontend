@@ -61,9 +61,32 @@ const Adminrole: React.FC = () => {
 
       {/* Content */}
       <div className='w-full bg-white'>
+        {/* Add Role */}
+        <div className='mx-12 my-4 flex items-center justify-center gap-4'>
+          <input
+            className='w-full rounded-full border p-2'
+            placeholder='add phone number'
+            type='tel'
+          />
+          <Button
+            className='flex items-center justify-center rounded-full p-5'
+            size='sm'
+            type='button'
+            variant='outline'
+          >
+            <Image
+              alt='add_role'
+              height={20}
+              src='/assets/admin/add_role.svg'
+              width={20}
+            />
+            Add Role
+          </Button>
+        </div>
         {/* Search Box */}
         <div className='relative m-4'>
           <Input
+            className='rounded-full'
             placeholder='searching staff'
             type='text'
             value={searchInput}
