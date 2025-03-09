@@ -1,14 +1,19 @@
+'use client'
+
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import React from 'react'
 
 import { Button } from '@/components/ui/button'
 
 const Success: React.FC = () => {
   const router = useRouter()
+  const searchParams = useSearchParams()
 
   const onNext = (): void => {
-    router.push('/')
+    const callbackUrl = searchParams.get('callbackUrl') ?? '/'
+    const decodedUrl = decodeURI(callbackUrl)
+    router.push(decodedUrl)
   }
 
   return (
