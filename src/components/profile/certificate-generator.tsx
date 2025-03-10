@@ -22,7 +22,7 @@ const CertificateGenerator: React.FC<CertificateGeneratorProps> = ({
       if (!ctx) return
 
       const image = new Image()
-      image.src = '/certificate/template.jpg' // Ensure this file is in your public folder
+      image.src = '/assets/certificate/template.jpg' // Ensure this file is in your public folder
 
       image.onload = () => {
         canvas.width = image.width
