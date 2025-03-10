@@ -7,7 +7,6 @@ import Sidebar from '@/components/homepage/sidebar'
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
-  // const isRegistered = false
 
   const toggleSidebar = (): void => {
     setIsOpen(!isOpen)
@@ -31,7 +30,6 @@ const Navbar: React.FC = () => {
 
           {/* Burger Button is at the right */}
           <div className='flex gap-4'>
-            {/* {isRegistered && ( */}
             <Link
               className='h-[31.5px] w-[31.5px]'
               href='/profile'

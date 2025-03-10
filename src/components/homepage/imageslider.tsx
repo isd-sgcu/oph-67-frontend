@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { ImageSliderImages } from '@/const/imageslider'
 
@@ -23,49 +23,35 @@ const Imageslider: React.FC = () => {
     setCurrentIndex(index)
   }
 
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 3000)
+
+    return () => clearInterval(interval)
+  }, [currentIndex])
+
   return (
-    <div className='relative flex w-full flex-col items-center justify-center py-2 sm:py-6'>
-      <div className='relative flex min-h-[200px] w-full justify-center'>
+    <div className='relative flex w-full items-center justify-center overflow-hidden py-2 sm:py-6'>
+      {/* Images */}
+      <div className='relative flex min-h-[280px] w-full justify-center'>
         {ImageSliderImages.length > 0 ? (
           ImageSliderImages.map((img, index) => (
-            <div
+            <Image
               key={img}
-              className={`relative flex h-full w-full items-center justify-center transition-opacity duration-700 ease-in-out ${
-                index === currentIndex ? 'opacity-100' : 'absolute opacity-0'
-              }`}
-            >
-              <Image
-                alt={`Slide ${index + 1}`}
-                className='max-h-[50vh] w-auto sm:max-h-[60vh] md:max-h-[70vh] lg:max-h-[80vh]'
-                height={600}
-                priority={index === currentIndex}
-                src={`/assets/homepage/${img}`}
-                width={1200}
-                style={{
-                  maxWidth: '100%',
-                  height: 'auto',
-                  objectFit: 'contain',
-                  objectPosition: 'center',
-                }}
-              />
-            </div>
+              alt={`Slide ${index + 1}`}
+              className={`relative flex w-full bg-[#CCB9C4] transition-opacity duration-700 ease-in-out ${index === currentIndex ? 'opacity-100' : 'opacity-0'}`}
+              layout='fill'
+              objectFit='contain'
+              src={`/assets/homepage/${img}`}
+            />
           ))
         ) : (
-          <div className='relative flex h-full w-full items-center justify-center'>
-            <Image
-              key='banner_null'
-              alt='banner_null'
-              height={400}
-              src='/assets/homepage/banner_null.png'
-              width={800}
-              style={{
-                maxWidth: '100%',
-                height: 'auto',
-                objectFit: 'contain',
-                objectPosition: 'center',
-              }}
-            />
-          </div>
+          <Image
+            key='first_banner'
+            alt='first_banner'
+            layout='fill'
+            objectFit='contain'
+            src='/assets/homepage/first_banner.png'
+          />
         )}
       </div>
 
@@ -73,7 +59,7 @@ const Imageslider: React.FC = () => {
         <>
           {/* Previous Button */}
           <button
-            aria-label='Previous slide'
+            aria-label='Previous Slide'
             className='absolute left-[8px] top-[50%] flex -translate-y-1/2 flex-col items-center justify-center rounded-full bg-black/20 p-2 sm:left-[16px] sm:p-3'
             type='button'
             onClick={prevSlide}
@@ -84,7 +70,7 @@ const Imageslider: React.FC = () => {
 
           {/* Next Button */}
           <button
-            aria-label='Next slide'
+            aria-label='Next Slide'
             className='absolute right-[8px] top-[50%] flex -translate-y-1/2 flex-col items-center justify-center rounded-full bg-black/20 p-2 sm:right-[16px] sm:p-3'
             type='button'
             onClick={nextSlide}
@@ -94,7 +80,7 @@ const Imageslider: React.FC = () => {
           </button>
 
           {/* Dots */}
-          <div className='mt-2 flex space-x-2 sm:mt-4'>
+          <div className='absolute bottom-3 left-1/2 flex -translate-x-1/2 justify-center space-x-2 sm:bottom-7'>
             {ImageSliderImages.map((img, index) => (
               <Image
                 key={img}

@@ -48,12 +48,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         <ul className='flex flex-col'>
           {NavbarItems.map((item) => (
             <Link
-              key={item.title}
-              className='cursor-pointer py-4 pl-6 font-anuphan text-xl font-semibold text-white transition-colors hover:bg-[#064E41]'
+              key={item.en}
+              className='cursor-pointer py-4 pl-6 font-anuphan text-white transition-colors hover:bg-[#064E41]'
               href={item.link}
               onClick={onClose}
             >
-              {item.title}
+              <div className='flex flex-col gap-1'>
+                <p className='text-xl font-semibold'>{item.en}</p>
+                <p className='text-sm font-medium'>{item.th}</p>
+              </div>
             </Link>
           ))}
         </ul>

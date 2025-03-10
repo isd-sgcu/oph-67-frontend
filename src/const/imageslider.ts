@@ -1,3 +1,21 @@
-export const ImageSliderImages: string[] = ['banner_null.png']
-
+export const ImageSliderImages: string[] = [
+  'first_banner.png',
+  'bascii.png',
+  'sar.png',
+  'edu.JPG',
+  'psyche.PNG',
+  'arch.jpg',
+  'dent.png',
+  'law.PNG',
+  'nitade.png',
+  'banshee.png',
+  'polsci.png',
+  'intania.png',
+  'spsc.png',
+  'sci.png',
+  'ahscu.png',
+  'arts.png',
+  'rxcu.PNG',
+  'econ.jpg',
+]
 // Put only the name.type such as random1.jpg

@@ -1,4 +1,4 @@
-import { Anuphan , Mitr, Ubuntu } from 'next/font/google'
+import { Anuphan, Mitr, Ubuntu } from 'next/font/google'
 import localFont from 'next/font/local'
 
 export const cloudSoft = localFont({

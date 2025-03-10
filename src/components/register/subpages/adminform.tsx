@@ -69,9 +69,8 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
       }
     }
 
-     
     if (!isFormValid && firstInvalidField) {
-      ;(firstInvalidField).scrollIntoView({
+      firstInvalidField.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
       })
@@ -250,7 +249,8 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                 />
               </div>
             </div>
-            {showFaculty ? <div className='flex gap-2'>
+            {showFaculty ? (
+              <div className='flex gap-2'>
                 <div className='flex w-full flex-col gap-1'>
                   <div className='text-xs font-normal text-[#064E41]'>
                     คณะ<span className='text-[#FF0000]'>*</span>
@@ -298,7 +298,8 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                     )}
                   />
                 </div>
-              </div> : null}
+              </div>
+            ) : null}
             <div className='flex gap-2'>
               <div className='flex w-full flex-col gap-1'>
                 <div className='text-xs font-normal text-[#064E41]'>
