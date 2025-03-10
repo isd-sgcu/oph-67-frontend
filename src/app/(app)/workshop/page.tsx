@@ -27,7 +27,11 @@ const WorkshopPage: React.FC = () => {
   return (
     <div className='flex h-full w-full grow flex-col items-center gap-3 overflow-hidden py-8'>
       <Link className='-my-2 -mt-4 ml-auto mr-2' href='/workshop/bookmark'>
-        <Button className='gap-2 font-normal' size='sm' variant='outline'>
+        <Button
+          className='gap-2 border-none font-normal'
+          size='sm'
+          variant='outline'
+        >
           <Bookmark />
           My Workshop
         </Button>

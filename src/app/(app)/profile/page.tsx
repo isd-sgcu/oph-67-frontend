@@ -1,6 +1,7 @@
 'use client'
 import { EditSolid } from '@mynaui/icons-react'
 import { IconFlowerFilled } from '@tabler/icons-react'
+import { Bookmark } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import QRCode from 'react-qr-code'
@@ -27,7 +28,17 @@ const Profile: React.FC = () => {
   }
 
   return (
-    <div className='flex h-full w-full grow flex-col items-center gap-3 py-8'>
+    <div className='relative flex h-full w-full grow flex-col items-center gap-3 py-8'>
+      <Link className='-my-2 -mt-4 ml-auto mr-2' href='/workshop/bookmark'>
+        <Button
+          className='gap-2 border-none font-normal'
+          size='sm'
+          variant='outline'
+        >
+          <Bookmark />
+          My Workshop
+        </Button>
+      </Link>
       <div className='flex items-center'>
         <IconFlowerFilled className='text-dark-pink' />
         <h1 className='text-2xl font-normal tracking-tight text-primary-green'>
