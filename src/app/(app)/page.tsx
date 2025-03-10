@@ -12,23 +12,23 @@ import Timer from '@/components/homepage/timer'
 import { Button } from '@/components/ui/button'
 import {
   actionButtonsNotRegistered,
-  // actionButtonsRegistered,
+  actionButtonsRegistered,
 } from '@/const/actionbutton'
+import { useAuth } from '@/hooks/use-auth'
 import { getTimer } from '@/utils/timer'
 
 const Home: React.FC = () => {
-  // const isRegistered = true
+  const { isAuthenticated } = useAuth()
+  const isRegistered = isAuthenticated
   const [currentTimeLeft, setCurrentTimeLeft] = useState<number | null>(null)
 
   useEffect(() => {
     setCurrentTimeLeft(getTimer().time_left)
   }, [])
 
-  // const actionButtonsDetail = isRegistered
-  //   ? actionButtonsRegistered
-  //   : actionButtonsNotRegistered
-
-  const actionButtonsDetail = actionButtonsNotRegistered
+  const actionButtonsDetail = isRegistered
+    ? actionButtonsRegistered
+    : actionButtonsNotRegistered
 
   return (
     <div className='flex flex-col justify-center bg-[#FCF3F8]'>
@@ -37,16 +37,21 @@ const Home: React.FC = () => {
       <Timer />
       <div className='flex flex-col items-center justify-center gap-4 p-[20px]'>
         {/* Register Button */}
-        {/* {!isRegistered && ( */}
-        <Button className='px-11 py-4 shadow-xl'>
-          <Link href='/register'>
-            <p className='font-cloud-soft text-2xl text-white'>ลงทะเบียนเลย!</p>
-          </Link>
-        </Button>
-        {currentTimeLeft !== 0 && (
-          <p className='font-mitr text-[15px] font-normal text-[#064E41]'>
-            พร้อมลงทะเบียนวันที่ 14 มีนาคมนี้
-          </p>
+        {!isRegistered && (
+          <>
+            <Button className='px-11 py-4 shadow-xl'>
+              <Link href='/register'>
+                <p className='font-cloud-soft text-2xl text-white'>
+                  ลงทะเบียนเลย!
+                </p>
+              </Link>
+            </Button>
+            {currentTimeLeft !== 0 && (
+              <p className='font-mitr text-[15px] font-normal text-[#064E41]'>
+                พร้อมลงทะเบียนวันที่ 14 มีนาคมนี้
+              </p>
+            )}
+          </>
         )}
         <div className='grid w-full grid-cols-2 gap-2'>
           {actionButtonsDetail.map((item) => (
