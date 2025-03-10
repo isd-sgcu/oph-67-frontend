@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { useState } from 'react'
 
+import { config } from '@/app/config'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -52,7 +53,7 @@ const Adminrole: React.FC = () => {
           alt='logo'
           className='relative z-10'
           height={105}
-          src='/assets/admin/oph_logo-04.svg'
+          src={`${config.cdnURL}/assets/admin/oph_logo-04.svg`}
           width={118}
         />
       </div>
@@ -77,7 +78,7 @@ const Adminrole: React.FC = () => {
             <Image
               alt='add_role'
               height={20}
-              src='/assets/admin/add_role.svg'
+              src={`${config.cdnURL}/assets/admin/add_role.svg`}
               width={20}
             />
             Add Role
@@ -99,7 +100,7 @@ const Adminrole: React.FC = () => {
             <Image
               alt='Search Icon'
               height={20}
-              src='/assets/admin/search.svg'
+              src={`${config.cdnURL}/assets/admin/search.svg`}
               width={20}
             />
           </Button>
@@ -168,7 +169,7 @@ const Adminrole: React.FC = () => {
                       alt='remove'
                       className='mr-2'
                       height={16}
-                      src='/assets/admin/remove.svg'
+                      src={`${config.cdnURL}/assets/admin/remove.svg`}
                       width={16}
                     />
                     Remove
@@ -180,7 +181,7 @@ const Adminrole: React.FC = () => {
                       alt='staff'
                       className='mr-2'
                       height={16}
-                      src='/assets/admin/staff.svg'
+                      src={`${config.cdnURL}/assets/admin/staff.svg`}
                       width={16}
                     />
                     Change to Staff
@@ -192,7 +193,7 @@ const Adminrole: React.FC = () => {
                       alt='admin'
                       className='mr-2'
                       height={16}
-                      src='/assets/admin/admin.svg'
+                      src={`${config.cdnURL}/assets/admin/admin.svg`}
                       width={16}
                     />
                     Change to Admin

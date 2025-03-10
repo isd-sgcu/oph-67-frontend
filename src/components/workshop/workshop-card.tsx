@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 
+import { config } from '@/app/config'
 import { type Workshop } from '@/const/workshops'
 import { toggleWorkshopBookmark } from '@/utils/local-storage'
 
@@ -56,7 +57,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
                   <Image
                     alt='link icon'
                     height={16}
-                    src='/assets/icons/link.svg'
+                    src={`${config.cdnURL}/assets/icons/link.svg`}
                     width={16}
                   />
                   ลงทะเบียนเข้าร่วม

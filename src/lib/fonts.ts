@@ -2,7 +2,7 @@ import { Anuphan, Mitr, Ubuntu } from 'next/font/google'
 import localFont from 'next/font/local'
 
 export const cloudSoft = localFont({
-  src: '../fonts/cloud-soft.otf',
+  src: '../../public/fonts/cloud-soft.otf',
   display: 'swap',
   variable: '--font-cloud-soft',
 })

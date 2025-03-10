@@ -2,6 +2,8 @@
 
 import Link from 'next/link'
 
+import { config } from '@/app/config'
+
 interface ImageItem {
   title: string
   url: string
@@ -14,7 +16,7 @@ const Actionbutton: React.FC<ImageItem> = ({ title, url }) => {
       className='h-[160px] w-full rounded-lg bg-cover bg-center'
       href={url}
       style={{
-        backgroundImage: `url(/assets/homepage/${title}.svg)`,
+        backgroundImage: `url(${config.cdnURL}/assets/homepage/${title}.svg)`,
       }}
     />
   )

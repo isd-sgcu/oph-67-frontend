@@ -2,6 +2,7 @@ import { ImageIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { config } from '@/app/config'
 import { type Workshop } from '@/const/workshops'
 
 import { Button } from '../ui/button'
@@ -32,7 +33,7 @@ const WorkshopSmallCard: React.FC<WorkshopSmallCardProps> = ({
             alt='trash'
             className='absolute'
             height={20}
-            src='/assets/icons/trash.svg'
+            src={`${config.cdnURL}/assets/icons/trash.svg`}
             width={20}
           />
         ) : null}

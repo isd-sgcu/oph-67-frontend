@@ -4,6 +4,7 @@ import { EditSolid } from '@mynaui/icons-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { config } from '@/app/config'
 import QrButton from '@/components/scan-qr-code/qr-button'
 import { Button } from '@/components/ui/button'
 
@@ -17,7 +18,7 @@ const ScanQrCodePage: React.FC = () => {
             alt='oph logo'
             className='z-10'
             height={89}
-            src='/assets/scan_qr_code/oph-logo.png'
+            src={`${config.cdnURL}/assets/scan_qr_code/oph-logo.png`}
             width={97}
           />
         </div>

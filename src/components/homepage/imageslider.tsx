@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
+import { config } from '@/app/config'
 import { ImageSliderImages } from '@/const/imageslider'
 
 const Imageslider: React.FC = () => {
@@ -41,7 +42,7 @@ const Imageslider: React.FC = () => {
               className={`relative flex w-full bg-[#CCB9C4] transition-opacity duration-700 ease-in-out ${index === currentIndex ? 'opacity-100' : 'opacity-0'}`}
               layout='fill'
               objectFit='contain'
-              src={`/assets/homepage/${img}`}
+              src={`${config.cdnURL}/assets/homepage/${img}`}
             />
           ))
         ) : (
@@ -50,7 +51,7 @@ const Imageslider: React.FC = () => {
             alt='first_banner'
             layout='fill'
             objectFit='contain'
-            src='/assets/homepage/first_banner.png'
+            src={`${config.cdnURL}/assets/homepage/first_banner.png`}
           />
         )}
       </div>
@@ -87,7 +88,7 @@ const Imageslider: React.FC = () => {
                 alt={img}
                 className='cursor-pointer'
                 height={12}
-                src={`/assets/homepage/flower_icon${index === currentIndex ? '_selected' : ''}.svg`}
+                src={`${config.cdnURL}/assets/homepage/flower_icon${index === currentIndex ? '_selected' : ''}.svg`}
                 width={12}
                 onClick={() => goToSlide(index)}
               />

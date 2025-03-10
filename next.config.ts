@@ -6,10 +6,6 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_LIFF_ID: process.env.NEXT_PUBLIC_LIFF_ID,
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
   },
-  assetPrefix:
-    process.env.NODE_ENV === 'production'
-      ? 'https://cdn.cuopenhouse2025.com/'
-      : '',
   images: {
     domains: ['cdn.cuopenhouse2025.com', 'storage.googleapis.com'],
     remotePatterns: [

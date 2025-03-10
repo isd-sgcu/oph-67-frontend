@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { config } from '@/app/config'
+
 import { FacultyId, facultyMap } from './faculties'
 
 // Define the Zod schema for a workshop
@@ -27,7 +29,7 @@ const _allWorkshops: Workshop[] = [
     description:
       'Lorem ipsum dolor sit amet consectetur. Ultrices tortor egestas viverra placerat volutpat vulputate ',
     major: 'เอกภาษาเกาหลี',
-    thumbnail: '/assets/workshop/workshop.png',
+    thumbnail: `${config.cdnURL}/assets/workshop/workshop.png`,
     registerUrl: '/register1',
   },
   {
@@ -38,7 +40,7 @@ const _allWorkshops: Workshop[] = [
     description:
       'Lorem ipsum dolor sit amet consectetur. Ultrices tortor egestas viverra placerat volutpat vulputate ',
     major: 'เอกภาษาญี่ปุ่น',
-    thumbnail: '/assets/workshop/workshop.png',
+    thumbnail: `${config.cdnURL}/assets/workshop/workshop.png`,
     registerUrl: '/register2',
   },
   {
@@ -49,7 +51,7 @@ const _allWorkshops: Workshop[] = [
     description:
       'Lorem ipsum dolor sit amet consectetur. Ultrices tortor egestas viverra placerat volutpat vulputate ',
     major: 'เอกภาษาจีน',
-    thumbnail: '/assets/workshop/workshop.png',
+    thumbnail: `${config.cdnURL}/assets/workshop/workshop.png`,
     registerUrl: '/register3',
   },
   {
@@ -60,7 +62,7 @@ const _allWorkshops: Workshop[] = [
     description:
       'Lorem ipsum dolor sit amet consectetur. Ultrices tortor egestas viverra placerat volutpat vulputate ',
     major: 'เอกภาษาอังกฤษ',
-    thumbnail: '/assets/workshop/workshop.png',
+    thumbnail: `${config.cdnURL}/assets/workshop/workshop.png`,
     registerUrl: '/register4',
   },
   {
@@ -71,7 +73,7 @@ const _allWorkshops: Workshop[] = [
     description:
       'Lorem ipsum dolor sit amet consectetur. Ultrices tortor egestas viverra placerat volutpat vulputate ',
     major: 'เอกภาษาฝรั่งเศส',
-    thumbnail: '/assets/workshop/workshop.png',
+    thumbnail: `${config.cdnURL}/assets/workshop/workshop.png`,
     registerUrl: '/register5',
   },
 ]

@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
 
+import { config } from '@/app/config'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Input } from '@/components/ui/input'
@@ -87,7 +88,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
         <Image
           alt='logo'
           height={125}
-          src='/assets/register/oph-logo.svg'
+          src={`${config.cdnURL}/assets/register/oph-logo.svg`}
           width={125}
         />
         <div className='flex flex-col items-center justify-center gap-0 font-mitr tracking-tight text-[#064E41]'>
@@ -101,7 +102,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
             <Image
               alt='person pin'
               height={20}
-              src='/assets/register/person-pin.svg'
+              src={`${config.cdnURL}/assets/register/person-pin.svg`}
               width={20}
             />
             <div className='text-base font-normal text-[#064E41]'>
@@ -307,7 +308,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
             <Image
               alt='person pin'
               height={20}
-              src='/assets/register/school.svg'
+              src={`${config.cdnURL}/assets/register/school.svg`}
               width={20}
             />
             <div className='text-base font-normal text-[#064E41]'>การศึกษา</div>
@@ -424,7 +425,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
             <Image
               alt='person pin'
               height={13}
-              src='/assets/register/lightbulb.svg'
+              src={`${config.cdnURL}/assets/register/lightbulb.svg`}
               width={13}
             />
             <div className='text-base font-normal text-[#064E41]'>

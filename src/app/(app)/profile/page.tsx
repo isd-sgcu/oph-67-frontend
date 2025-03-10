@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import QRCode from 'react-qr-code'
 
+import { config } from '@/app/config'
 import { LiffError } from '@/components/liff/liff-error'
 import { LiffLoading } from '@/components/liff/liff-loading'
 import { useLiffContext } from '@/components/liff/liff-provider'
@@ -45,7 +46,7 @@ const Profile: React.FC = () => {
           alt='mascot'
           className='absolute bottom-[-15px] left-[-30px]'
           height={86}
-          src='/assets/profile/girl_mascot.png'
+          src={`${config.cdnURL}/assets/profile/girl_mascot.png`}
           width={57}
         />
         <div className='flex flex-col items-center overflow-hidden rounded-lg border-2 border-dark-pink bg-white p-1'>
@@ -68,7 +69,7 @@ const Profile: React.FC = () => {
             alt='cert'
             className='mb-1'
             height={24}
-            src='/assets/icons/cert.svg'
+            src={`${config.cdnURL}/assets/icons/cert.svg`}
             width={24}
           />
           รับเกียรติบัตร

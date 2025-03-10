@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 
+import { config } from '@/app/config'
 import Sidebar from '@/components/homepage/sidebar'
 
 const Navbar: React.FC = () => {
@@ -24,7 +25,7 @@ const Navbar: React.FC = () => {
             className='h-[64px] w-[64px]'
             href='/'
             style={{
-              backgroundImage: 'url(/assets/homepage/oph_logo-01.svg)',
+              backgroundImage: `url(${config.cdnURL}/assets/homepage/oph_logo-01.svg)`,
             }}
           />
 
@@ -34,7 +35,7 @@ const Navbar: React.FC = () => {
               className='h-[31.5px] w-[31.5px]'
               href='/profile'
               style={{
-                backgroundImage: 'url(/assets/homepage/profile.svg)',
+                backgroundImage: `url(${config.cdnURL}/assets/homepage/profile.svg)`,
               }}
             />
             <button type='button' onClick={toggleSidebar}>

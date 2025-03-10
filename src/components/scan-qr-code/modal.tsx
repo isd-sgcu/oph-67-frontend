@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import React, { type JSX, useCallback, useEffect, useRef } from 'react'
 
+import { config } from '@/app/config'
+
 interface ModalProps {
   modalType: 'confirm' | 'invalid' | 'already'
   userInfo: string | undefined
@@ -53,7 +55,7 @@ const Modal: React.FC<ModalProps> = ({
               <Image
                 alt='confirm'
                 height={40}
-                src='/assets/scan_qr_code/confirm-icon.svg'
+                src={`${config.cdnURL}/assets/scan_qr_code/confirm-icon.svg`}
                 width={40}
               />
             </div>
@@ -92,7 +94,7 @@ const Modal: React.FC<ModalProps> = ({
               <Image
                 alt='invalid'
                 height={40}
-                src='/assets/scan_qr_code/disable-icon.svg'
+                src={`${config.cdnURL}/assets/scan_qr_code/disable-icon.svg`}
                 width={40}
               />
             </div>
@@ -126,7 +128,7 @@ const Modal: React.FC<ModalProps> = ({
               <Image
                 alt='already'
                 height={40}
-                src='/assets/scan_qr_code/disable-icon.svg'
+                src={`${config.cdnURL}/assets/scan_qr_code/disable-icon.svg`}
                 width={40}
               />
             </div>

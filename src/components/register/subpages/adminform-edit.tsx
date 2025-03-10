@@ -9,6 +9,7 @@ import { Controller } from 'react-hook-form'
 import { getAdminAuthToken } from '@/app/actions/admin-auth'
 import { updateUser } from '@/app/actions/edit-profile/edit-profile'
 import { getUser } from '@/app/actions/get-profile/get-user'
+import { config } from '@/app/config'
 import { LiffError } from '@/components/liff/liff-error'
 import { LiffLoading } from '@/components/liff/liff-loading'
 import { useLiffContext } from '@/components/liff/liff-provider'
@@ -179,7 +180,7 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
         <Image
           alt='logo'
           height={125}
-          src='/assets/register/oph-logo.svg'
+          src={`${config.cdnURL}/assets/register/oph-logo.svg`}
           width={125}
         />
         <div className='flex flex-col items-center justify-center gap-0 font-mitr tracking-tight text-[#064E41]'>
@@ -187,7 +188,7 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
             <Image
               alt='edit'
               height={16}
-              src='/assets/register/edit.svg'
+              src={`${config.cdnURL}/assets/register/edit.svg`}
               width={16}
             />
             <div>แก้ไขข้อมูล</div>
@@ -201,7 +202,7 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
             <Image
               alt='person pin'
               height={20}
-              src='/assets/register/person-pin.svg'
+              src={`${config.cdnURL}/assets/register/person-pin.svg`}
               width={20}
             />
             <div className='text-base font-normal text-[#064E41]'>

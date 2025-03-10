@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 
+import { config } from '@/app/config'
 import Frame from '@/components/event-and-map/frame'
 import ToggleButtons from '@/components/event-and-map/togglebutton'
 import Footer from '@/components/homepage/footer'
@@ -27,7 +28,10 @@ const Event: React.FC = () => {
                 setSelectedOption
               }}
             />
-            <Frame hasBorder={false} imgPath='/assets/event_map/null.png' />
+            <Frame
+              hasBorder={false}
+              imgPath={`${config.cdnURL}/assets/event_map/null.png`}
+            />
           </div>
         </div>
       </div>
