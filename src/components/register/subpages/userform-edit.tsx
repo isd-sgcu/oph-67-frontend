@@ -24,15 +24,12 @@ import {
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { FacultyTH } from '@/const/faculties'
-import { news } from '@/const/news'
 import { provinces } from '@/const/province'
 import { status } from '@/const/status'
 import { type RegisterForm } from '@/types/register'
 import { type StudentData } from '@/types/student-data'
 import { formatDateSafe } from '@/utils/date'
 import transformToStudentData from '@/utils/transform-student-data'
-
-import CheckBox from '../policy/checkbox'
 
 interface UserFormProps {
   form: UseFormReturn<RegisterForm>
@@ -41,7 +38,6 @@ interface UserFormProps {
 const UserForm: React.FC<UserFormProps> = ({ form }) => {
   const router = useRouter()
   const { profile, isInit } = useLiffContext()
-  const [showOtherInput, setShowOtherInput] = useState(false)
   const [isCalendarOpen, setIsCalendarOpen] = useState(false)
   const [token, setToken] = useState<string | undefined>(undefined)
   const userId = profile?.userId
@@ -173,7 +169,7 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
 
   return (
     <div className='flex flex-col'>
-      <div className='flex flex-col items-center justify-center gap-2 bg-[#FAE9F3] py-6'>
+      <div className='flex flex-col items-center justify-center gap-4 bg-[#FAE9F3] py-6'>
         <Image
           alt='logo'
           height={125}
@@ -362,7 +358,8 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
             </div>
             <div className='flex flex-col gap-1'>
               <div className='text-xs font-normal text-[#064E41]'>
-                จังหวัดที่อยู่<span className='text-[#FF0000]'>*</span>
+                จังหวัดที่อยู่ (ที่อยู่อาศัยปัจจุบัน)
+                <span className='text-[#FF0000]'>*</span>
               </div>
               <Controller
                 control={form.control}
@@ -375,7 +372,7 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
                       field.onChange(value)
                       // Remove red border when user selects value
                       const inputElement =
-                        document.querySelector(`[name="status"]`)
+                        document.querySelector(`[name="province"]`)
                       if (inputElement) {
                         inputElement.classList.remove('border-red-500')
                       }
@@ -425,97 +422,6 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
               }}
             />
           </div>
-          <div className='flex gap-2 border-b border-[#064E41] p-2 pb-1'>
-            <div className='text-base font-normal text-[#064E41]'>
-              ทราบข่าวการประชาสัมพันธ์ได้อย่างไร?
-            </div>
-          </div>
-          <table className='w-full'>
-            <tbody>
-              <tr className='align-top'>
-                <td className='h-full w-1/2'>
-                  <div className='flex h-full flex-col justify-between'>
-                    {news.slice(0, 3).map((option) => (
-                      <label
-                        key={option}
-                        className='mb-1.5 flex items-center gap-1.5'
-                      >
-                        <CheckBox
-                          isChecked={(
-                            form.watch('selectedSources') ?? []
-                          ).includes(option)}
-                          setIsChecked={(checked) => {
-                            const currentNews =
-                              form.getValues('selectedSources') ?? []
-                            if (checked) {
-                              form.setValue('selectedSources', [
-                                ...currentNews,
-                                option,
-                              ])
-                            } else {
-                              form.setValue(
-                                'selectedSources',
-                                currentNews.filter((item) => item !== option)
-                              )
-                            }
-                          }}
-                        />
-                        <span className='text-sm font-light leading-4 text-[#064E41]'>
-                          {option}
-                        </span>
-                      </label>
-                    ))}
-                  </div>
-                </td>
-                <td className='h-full w-1/2'>
-                  <div className='flex h-full flex-col justify-between'>
-                    {news.slice(3).map((option) => (
-                      <label
-                        key={option}
-                        className='mb-1.5 flex items-center gap-1.5'
-                      >
-                        <CheckBox
-                          isChecked={(
-                            form.watch('selectedSources') ?? []
-                          ).includes(option)}
-                          setIsChecked={(checked) => {
-                            const currentNews =
-                              form.getValues('selectedSources') ?? []
-                            if (checked) {
-                              form.setValue('selectedSources', [
-                                ...currentNews,
-                                option,
-                              ])
-                            } else {
-                              form.setValue(
-                                'selectedSources',
-                                currentNews.filter((item) => item !== option)
-                              )
-                            }
-                            if (option === 'อื่น ๆ') {
-                              setShowOtherInput(checked)
-                            }
-                          }}
-                        />
-                        <span className='text-sm font-light leading-4 text-[#064E41]'>
-                          {option}
-                        </span>
-                      </label>
-                    ))}
-                    <div className='flex gap-2'>
-                      <div className='flex w-1/12' />
-                      <Input
-                        className={`h-4 w-9/12 rounded-none border-x-0 border-b border-t-0 border-[#064E41] bg-transparent px-1 text-xs font-light text-[#064E41] shadow-none placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:border-b focus-visible:ring-0 ${showOtherInput ? 'visible' : 'invisible'}`}
-                        placeholder='โปรดระบุ'
-                        type='text'
-                        {...form.register('otherSource')}
-                      />
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
         </div>
         <div className='flex flex-col gap-2'>
           <div className='flex gap-2 border-b border-[#064E41] pb-1'>
@@ -544,8 +450,9 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
                     onValueChange={(value) => {
                       field.onChange(value)
                       // Remove red border when user selects value
-                      const inputElement =
-                        document.querySelector(`[name="status"]`)
+                      const inputElement = document.querySelector(
+                        `[name="firstInterest"]`
+                      )
                       if (inputElement) {
                         inputElement.classList.remove('border-red-500')
                       }
@@ -586,8 +493,9 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
                     onValueChange={(value) => {
                       field.onChange(value)
                       // Remove red border when user selects value
-                      const inputElement =
-                        document.querySelector(`[name="status"]`)
+                      const inputElement = document.querySelector(
+                        `[name="secondInterest"]`
+                      )
                       if (inputElement) {
                         inputElement.classList.remove('border-red-500')
                       }
@@ -628,8 +536,9 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
                     onValueChange={(value) => {
                       field.onChange(value)
                       // Remove red border when user selects value
-                      const inputElement =
-                        document.querySelector(`[name="status"]`)
+                      const inputElement = document.querySelector(
+                        `[name="thirdInterest"]`
+                      )
                       if (inputElement) {
                         inputElement.classList.remove('border-red-500')
                       }

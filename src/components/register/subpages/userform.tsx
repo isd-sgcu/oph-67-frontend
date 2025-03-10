@@ -83,7 +83,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
 
   return (
     <div className='flex flex-col'>
-      <div className='flex flex-col items-center justify-center gap-2 bg-[#FAE9F3] py-6'>
+      <div className='flex flex-col items-center justify-center gap-4 bg-[#FAE9F3] py-6'>
         <Image
           alt='logo'
           height={125}
@@ -264,7 +264,8 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
             </div>
             <div className='flex flex-col gap-1'>
               <div className='text-xs font-normal text-[#064E41]'>
-                จังหวัดที่อยู่<span className='text-[#FF0000]'>*</span>
+                จังหวัดที่อยู่ (ที่อยู่อาศัยปัจจุบัน)
+                <span className='text-[#FF0000]'>*</span>
               </div>
               <Controller
                 control={form.control}
@@ -277,7 +278,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                       field.onChange(value)
                       // Remove red border when user selects value
                       const inputElement =
-                        document.querySelector(`[name="status"]`)
+                        document.querySelector(`[name="province"]`)
                       if (inputElement) {
                         inputElement.classList.remove('border-red-500')
                       }
@@ -446,8 +447,9 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                     onValueChange={(value) => {
                       field.onChange(value)
                       // Remove red border when user selects value
-                      const inputElement =
-                        document.querySelector(`[name="status"]`)
+                      const inputElement = document.querySelector(
+                        `[name="firstInterest"]`
+                      )
                       if (inputElement) {
                         inputElement.classList.remove('border-red-500')
                       }
@@ -488,8 +490,9 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                     onValueChange={(value) => {
                       field.onChange(value)
                       // Remove red border when user selects value
-                      const inputElement =
-                        document.querySelector(`[name="status"]`)
+                      const inputElement = document.querySelector(
+                        `[name="secondInterest"]`
+                      )
                       if (inputElement) {
                         inputElement.classList.remove('border-red-500')
                       }
@@ -530,8 +533,9 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                     onValueChange={(value) => {
                       field.onChange(value)
                       // Remove red border when user selects value
-                      const inputElement =
-                        document.querySelector(`[name="status"]`)
+                      const inputElement = document.querySelector(
+                        `[name="thirdInterest"]`
+                      )
                       if (inputElement) {
                         inputElement.classList.remove('border-red-500')
                       }
