@@ -1,12 +1,12 @@
 'use client'
 
-import { cookies } from 'next/headers'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
 
+import { getAdminAuthToken } from '@/app/actions/admin-auth'
 import { updateUser } from '@/app/actions/edit-profile/edit-profile'
 import { getUser } from '@/app/actions/get-profile/get-user'
 import { LiffError } from '@/components/liff/liff-error'
@@ -45,12 +45,14 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
         if (!userId) {
           throw new Error('User ID is undefined')
         }
-        const cookieStore = await cookies()
-        const token = cookieStore.get('admin-token')?.value
-        setToken(token)
+
+        const token = await getAdminAuthToken()
+
         if (!token) {
           throw new Error('Not authenticated')
         }
+        setToken(token)
+
         const data = await getUser(userId, token)
         if (data.role === 'staff') {
           const staffData = data as StaffData

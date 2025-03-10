@@ -13,3 +13,8 @@ export async function setAdminAuthCookie(token: string): Promise<void> {
     maxAge: 60 * 60 * 24 * 7, // 7 days
   })
 }
+
+export async function getAdminAuthToken(): Promise<string | null> {
+  const cookieStore = await cookies()
+  return cookieStore.get('admin-token')?.value ?? null
+}
