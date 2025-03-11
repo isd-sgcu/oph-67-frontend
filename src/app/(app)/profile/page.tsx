@@ -7,9 +7,9 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import QRCode from 'react-qr-code'
 
-import { config } from '@/app/config'
-import { getCookies } from '@/app/actions/auth'
+import { getAuthToken } from '@/app/actions/auth'
 import { getUser } from '@/app/actions/get-profile/get-user'
+import { config } from '@/app/config'
 import { LiffError } from '@/components/liff/liff-error'
 import { LiffLoading } from '@/components/liff/liff-loading'
 import { useLiffContext } from '@/components/liff/liff-provider'
@@ -24,7 +24,7 @@ const Profile: React.FC = () => {
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
-        const token = await getCookies('auth-token')
+        const token = await getAuthToken()
         if (!token) {
           throw new Error('Not authenticated')
         }

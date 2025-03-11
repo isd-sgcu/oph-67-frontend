@@ -60,9 +60,3 @@ export async function setAuthCookie(token: string): Promise<void> {
     maxAge: 60 * 60 * 24 * 7, // 7 days
   })
 }
-
-export async function getCookies(key: string): Promise<string | undefined> {
-  const cookieStore = await cookies()
-
-  return cookieStore.get(key)?.value
-}
