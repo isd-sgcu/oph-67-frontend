@@ -107,16 +107,16 @@ const Adminrole: React.FC = () => {
               onChange={(e) => setPhoneNumber(e.target.value)}
             />
             <Button
-              className='border-dark-green text-dark-green h-12 rounded-full border bg-white px-6 hover:bg-white/90'
+              className='flex h-12 items-center justify-center gap-2 rounded-full border-2 border-[#245E45] bg-white px-6 font-medium text-[#245E45] hover:bg-white/90'
               disabled={isAddingRole || !phoneNumber}
               variant='outline'
               onClick={handleAddRole}
             >
               {isAddingRole ? (
-                <div className='border-dark-green mr-2 h-4 w-4 animate-spin rounded-full border-2 border-t-transparent' />
+                <div className='h-4 w-4 animate-spin rounded-full border-2 border-[#245E45] border-t-transparent' />
               ) : (
                 <svg
-                  className='mr-2 h-5 w-5'
+                  className='h-5 w-5'
                   fill='currentColor'
                   viewBox='0 0 20 20'
                   xmlns='http://www.w3.org/2000/svg'
@@ -133,21 +133,18 @@ const Adminrole: React.FC = () => {
         <div className='bg-white shadow-lg'>
           {/* Search Bar */}
           <div className='border-b p-4'>
-            <form className='relative' onSubmit={handleSearch}>
-              <Input
-                className='pr-10'
-                placeholder='Search staff by name...'
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-              />
-              <Button
-                className='absolute right-2 top-1/2 -translate-y-1/2'
-                size='icon'
-                type='submit'
-                variant='ghost'
-              >
-                <Search className='h-4 w-4' />
-              </Button>
+            <form className='flex space-x-1' onSubmit={handleSearch}>
+              <div className='relative w-full'>
+                <Input
+                  className='h-12 w-full rounded-full border border-gray-200 bg-white pl-4 pr-12 text-gray-600 placeholder-gray-400 shadow-sm'
+                  placeholder='Search staff by name...'
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
+                />
+                <div className='absolute right-4 top-1/2 -translate-y-1/2 text-gray-400'>
+                  <Search className='h-4 w-4' />
+                </div>
+              </div>
             </form>
           </div>
 
@@ -187,8 +184,8 @@ const Adminrole: React.FC = () => {
                         variant='outline'
                         className={
                           item.faculty === 'ส่วนกลาง'
-                            ? 'border-[#4E2406] text-[#4E2406]'
-                            : 'border-[#D8894F] text-[#D8894F]'
+                            ? 'text-nowrap border-[#4E2406] text-[#4E2406]'
+                            : 'text-nowrap border-[#D8894F] text-[#D8894F]'
                         }
                       >
                         {item.faculty}
