@@ -84,7 +84,7 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
 
   return (
     <div className='flex flex-col'>
-      <div className='flex flex-col items-center justify-center gap-2 bg-[#FAE9F3] py-6'>
+      <div className='flex flex-col items-center justify-center gap-4 bg-[#FAE9F3] py-6'>
         <Image
           alt='logo'
           height={125}

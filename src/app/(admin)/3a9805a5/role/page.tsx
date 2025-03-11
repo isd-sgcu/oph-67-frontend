@@ -3,7 +3,7 @@
 import { Search } from 'lucide-react'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
-import { Toaster , toast } from 'react-hot-toast'
+import { Toaster, toast } from 'react-hot-toast'
 
 import { getAdminAuthToken } from '@/app/actions/admin-auth'
 import { addStaff } from '@/app/actions/staff/add-staff'
