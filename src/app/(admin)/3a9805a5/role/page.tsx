@@ -7,6 +7,7 @@ import { Toaster, toast } from 'react-hot-toast'
 
 import { getAdminAuthToken } from '@/app/actions/admin-auth'
 import { addStaff } from '@/app/actions/staff/add-staff'
+import { changeRole } from '@/app/actions/staff/change-role'
 import { deleteStaff } from '@/app/actions/staff/delete-staff'
 import { getStaff } from '@/app/actions/staff/get-staff'
 import { config } from '@/app/config'
@@ -44,6 +45,10 @@ const Adminrole: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [isSearching, setIsSearching] = useState(false)
   const [isRemovingStaff, setIsRemovingStaff] = useState<number | null>(null)
+  const [isChangingRole, setIsChangingRole] = useState<{
+    uid: number
+    role: string
+  } | null>(null)
   const [token, setToken] = useState<string | null>(null)
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
@@ -162,9 +167,20 @@ const Adminrole: React.FC = () => {
     }
   }
 
-  const handleRoleChange = (uid: number, newRole: string): void => {
+  const handleRoleChange = async (
+    uid: number,
+    newRole: string
+  ): Promise<void> => {
+    if (!token) {
+      toast.error('Authentication failed. Please log in again.')
+      return
+    }
+
     try {
-      // TODO: Implement API call to change role
+      setIsChangingRole({ uid, role: newRole })
+
+      await changeRole(token, uid, newRole)
+
       const updatedItems = items.map((item) =>
         item.uid === uid ? { ...item, role: newRole } : item
       )
@@ -174,6 +190,8 @@ const Adminrole: React.FC = () => {
     } catch (error) {
       console.error('Error changing role:', error)
       toast.error('Failed to update role. Please try again.')
+    } finally {
+      setIsChangingRole(null)
     }
   }
 
@@ -346,33 +364,61 @@ const Adminrole: React.FC = () => {
                             >
                               <DropdownMenuItem
                                 className='bg-green-800 text-white'
+                                disabled={
+                                  isChangingRole?.uid === item.uid ||
+                                  item.role === 'admin'
+                                }
                                 onClick={() =>
-                                  handleRoleChange(item.uid, 'admin')
+                                  void handleRoleChange(item.uid, 'admin')
                                 }
                               >
-                                <Image
-                                  alt='admin'
-                                  className='mr-2'
-                                  height={16}
-                                  src={`${config.cdnURL}/assets/admin/admin.svg`}
-                                  width={16}
-                                />
-                                Make Admin
+                                {isChangingRole?.uid === item.uid &&
+                                isChangingRole.role === 'admin' ? (
+                                  <>
+                                    <div className='mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent' />
+                                    Updating...
+                                  </>
+                                ) : (
+                                  <>
+                                    <Image
+                                      alt='admin'
+                                      className='mr-2'
+                                      height={16}
+                                      src={`${config.cdnURL}/assets/admin/admin.svg`}
+                                      width={16}
+                                    />
+                                    Make Admin
+                                  </>
+                                )}
                               </DropdownMenuItem>
                               <DropdownMenuItem
                                 className='bg-pink-500 text-white'
+                                disabled={
+                                  isChangingRole?.uid === item.uid ||
+                                  item.role === 'staff'
+                                }
                                 onClick={() =>
-                                  handleRoleChange(item.uid, 'staff')
+                                  void handleRoleChange(item.uid, 'staff')
                                 }
                               >
-                                <Image
-                                  alt='staff'
-                                  className='mr-2'
-                                  height={16}
-                                  src={`${config.cdnURL}/assets/admin/staff.svg`}
-                                  width={16}
-                                />
-                                Make Staff
+                                {isChangingRole?.uid === item.uid &&
+                                isChangingRole.role === 'staff' ? (
+                                  <>
+                                    <div className='mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent' />
+                                    Updating...
+                                  </>
+                                ) : (
+                                  <>
+                                    <Image
+                                      alt='staff'
+                                      className='mr-2'
+                                      height={16}
+                                      src={`${config.cdnURL}/assets/admin/staff.svg`}
+                                      width={16}
+                                    />
+                                    Make Staff
+                                  </>
+                                )}
                               </DropdownMenuItem>
                               <DropdownMenuItem
                                 className='bg-red-500 text-white'
