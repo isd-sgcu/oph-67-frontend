@@ -1,6 +1,8 @@
 import NextImage from 'next/image'
 import React, { useEffect, useRef, useState } from 'react'
 
+import { config } from '@/app/config'
+
 import { Button } from '../ui/button'
 
 interface CertificateGeneratorProps {
@@ -22,7 +24,7 @@ const CertificateGenerator: React.FC<CertificateGeneratorProps> = ({
       if (!ctx) return
 
       const image = new Image()
-      image.src = '/certificate/template.jpg' // Ensure this file is in your public folder
+      image.src = `${config.cdnURL}/assets/certificate/template.jpg` // Ensure this file is in your public folder
 
       image.onload = () => {
         canvas.width = image.width
@@ -59,7 +61,7 @@ const CertificateGenerator: React.FC<CertificateGeneratorProps> = ({
           <NextImage
             alt='cert'
             height={24}
-            src='/assets/icons/flower-vase.svg'
+            src={`${config.cdnURL}/assets/icons/flower-vase.svg`}
             width={24}
           />
           <h1 className='header-green-gradient clip-text text-3xl'>
@@ -68,7 +70,7 @@ const CertificateGenerator: React.FC<CertificateGeneratorProps> = ({
           <NextImage
             alt='cert'
             height={24}
-            src='/assets/icons/flower-vase.svg'
+            src={`${config.cdnURL}/assets/icons/flower-vase.svg`}
             width={24}
           />
         </div>
@@ -95,7 +97,7 @@ const CertificateGenerator: React.FC<CertificateGeneratorProps> = ({
                 alt='download'
                 className='mb-1'
                 height={24}
-                src='/assets/icons/download.svg'
+                src={`${config.cdnURL}/assets/icons/download.svg`}
                 width={24}
               />
               ดาวน์โหลด

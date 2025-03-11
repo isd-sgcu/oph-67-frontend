@@ -1,3 +1,5 @@
+import { config } from '@/app/config'
+
 export enum FacultyId {
   Education = 'faculty-of-education',
   Psychology = 'faculty-of-psychology',
@@ -148,11 +150,11 @@ export const faculties: FacultyInterface[] = [
     id: FacultyId.Arts,
     th: 'คณะอักษรศาสตร์',
     en: 'Faculty of Arts',
-    thumbnail: '/assets/faculties/art/1.png',
+    thumbnail: `${config.cdnURL}/assets/faculties/art/1.png`,
     images: [
-      '/assets/faculties/art/1.png',
-      '/assets/faculties/art/2.png',
-      '/assets/faculties/art/3.png',
+      `${config.cdnURL}/assets/faculties/art/1.png`,
+      `${config.cdnURL}/assets/faculties/art/2.png`,
+      `${config.cdnURL}/assets/faculties/art/3.png`,
     ],
     about:
       'ipsum dolor sit amet consectetur. Ultrices tortor egestas viverra placerat volutpat vulputate tempor pellentesque. Etiam sit egestas urna amet. Mauris natoque tristique non imperdiet. Magnis diam non id nec purus.',

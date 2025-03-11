@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 
+import { config } from '@/app/config'
 import { FaqItems } from '@/const/faq'
 
 import QuestionComponent from './questionitem'
@@ -12,7 +13,7 @@ const Faq: React.FC = () => {
       <Image
         alt='faq'
         height={45.81}
-        src='/assets/homepage/faq.svg'
+        src={`${config.cdnURL}/assets/homepage/faq.svg`}
         width={79.48}
       />
       <div className='flex w-full flex-col justify-start gap-[4px]'>

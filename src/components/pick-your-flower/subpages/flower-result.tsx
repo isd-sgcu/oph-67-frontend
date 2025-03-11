@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 
+import { config } from '@/app/config'
 import { download } from '@/utils/download'
 import { shareWeb } from '@/utils/share'
 
@@ -43,7 +44,7 @@ const FlowerResult: React.FC<FlowerResultProps> = ({
         <Image
           alt='background flower'
           height={92}
-          src='/assets/pick-your-flower/flower-white-l.svg'
+          src={`${config.cdnURL}/assets/pick-your-flower/flower-white-l.svg`}
           width={92}
         />
       </div>
@@ -51,7 +52,7 @@ const FlowerResult: React.FC<FlowerResultProps> = ({
         <Image
           alt='background flower'
           height={92}
-          src='/assets/pick-your-flower/flower-white-r.svg'
+          src={`${config.cdnURL}/assets/pick-your-flower/flower-white-r.svg`}
           width={92}
         />
       </div>
@@ -59,7 +60,7 @@ const FlowerResult: React.FC<FlowerResultProps> = ({
         <Image
           alt='background flower'
           height={75}
-          src='/assets/pick-your-flower/flower-white-r.svg'
+          src={`${config.cdnURL}/assets/pick-your-flower/flower-white-r.svg`}
           width={75}
         />
       </div>
@@ -79,14 +80,14 @@ const FlowerResult: React.FC<FlowerResultProps> = ({
           alt='flower with leaf'
           className='absolute left-[-15px] top-[-20px] z-10'
           height={50}
-          src='/assets/pick-your-flower/flower-w-leaf.svg'
+          src={`${config.cdnURL}/assets/pick-your-flower/flower-w-leaf.svg`}
           width={50}
         />
         <Image
           alt='girl with flower'
           className='absolute bottom-[-17px] right-[-45px] z-10'
           height={104}
-          src='/assets/pick-your-flower/flower-girl.svg'
+          src={`${config.cdnURL}/assets/pick-your-flower/flower-girl.svg`}
           width={66}
         />
       </div>
@@ -99,7 +100,7 @@ const FlowerResult: React.FC<FlowerResultProps> = ({
           <Image
             alt='save icon'
             height={16}
-            src='/assets/pick-your-flower/save.svg'
+            src={`${config.cdnURL}/assets/pick-your-flower/save.svg`}
             width={16}
           />
           <div className='font-mitr text-base font-light tracking-tight text-white'>
@@ -114,7 +115,7 @@ const FlowerResult: React.FC<FlowerResultProps> = ({
           <Image
             alt='share icon'
             height={16}
-            src='/assets/pick-your-flower/share.svg'
+            src={`${config.cdnURL}/assets/pick-your-flower/share.svg`}
             width={16}
           />
           <div className='font-mitr text-base font-light tracking-tight text-white'>

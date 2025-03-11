@@ -1,13 +1,14 @@
 interface NavbarItem {
-  title: string
+  en: string
+  th: string
   link: string
 }
 
 export const NavbarItems: NavbarItem[] = [
-  { title: 'Navigator', link: '/navigator' },
-  { title: 'Event', link: '/event' },
-  { title: 'Faculties', link: '/faculties' },
-  { title: 'Workshop', link: '/workshop' },
-  { title: 'Pick Your Flower', link: '/pick-your-flower' },
-  { title: 'Account', link: '/profile' },
+  { en: 'Navigator', th: 'นำทาง', link: '/navigator' },
+  { en: 'Event', th: 'กิจกรรมส่วนกลาง', link: '/event' },
+  { en: 'Faculties', th: 'คณะ', link: '/faculties' },
+  { en: 'Workshop', th: 'เวิร์คช็อปคณะ', link: '/workshop' },
+  { en: 'Pick Your Flower', th: 'ดอกไม้ของฉัน', link: '/pick-your-flower' },
+  { en: 'Account', th: 'บัญชีของฉัน', link: '/profile' },
 ]

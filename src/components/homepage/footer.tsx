@@ -2,6 +2,8 @@
 
 import Image from 'next/image'
 
+import { config } from '@/app/config'
+
 const Footer: React.FC = () => {
   return (
     <div>
@@ -28,13 +30,13 @@ const Footer: React.FC = () => {
         <Image
           alt='logo'
           height={22}
-          src='/assets/homepage/isd_logo.svg'
+          src={`${config.cdnURL}/assets/homepage/isd_logo.svg`}
           width={40}
         />
         <Image
           alt='logo'
           height={25.39}
-          src='/assets/homepage/orborjor_logo.svg'
+          src={`${config.cdnURL}/assets/homepage/orborjor_logo.svg`}
           width={25.39}
         />
       </div>

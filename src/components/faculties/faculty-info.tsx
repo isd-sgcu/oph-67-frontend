@@ -1,5 +1,6 @@
 import Image from 'next/image'
 
+import { config } from '@/app/config'
 import { type Faculty } from '@/const/faculties'
 
 import { Button } from '../ui/button'
@@ -30,7 +31,7 @@ const FacultyInfo: React.FC<FacultyInfoProps> = ({ faculty, setStep }) => {
                 alt='info icon'
                 className='mr-2'
                 height={20}
-                src='/assets/icons/info.svg'
+                src={`${config.cdnURL}/assets/icons/info.svg`}
                 width={20}
               />
               <h2>เกี่ยวกับคณะ</h2>
@@ -48,7 +49,7 @@ const FacultyInfo: React.FC<FacultyInfoProps> = ({ faculty, setStep }) => {
                 alt='location icon'
                 className='mr-2'
                 height={20}
-                src='/assets/icons/location.svg'
+                src={`${config.cdnURL}/assets/icons/location.svg`}
                 width={20}
               />
               <h2>สถานที่</h2>
@@ -74,7 +75,7 @@ const FacultyInfo: React.FC<FacultyInfoProps> = ({ faculty, setStep }) => {
               alt='call icon'
               className='mr-3'
               height={20}
-              src='/assets/icons/call.svg'
+              src={`${config.cdnURL}/assets/icons/call.svg`}
               width={20}
             />
             <h2 className='font-light'>ช่องทางการติดต่อ</h2>
@@ -86,7 +87,7 @@ const FacultyInfo: React.FC<FacultyInfoProps> = ({ faculty, setStep }) => {
                   alt='captive-portal icon'
                   className='mr-3'
                   height={20}
-                  src='/assets/icons/captive-portal.svg'
+                  src={`${config.cdnURL}/assets/icons/captive-portal.svg`}
                   width={20}
                 />
                 <p className='font-extralight'>{faculty.webUrl}</p>
@@ -100,7 +101,7 @@ const FacultyInfo: React.FC<FacultyInfoProps> = ({ faculty, setStep }) => {
                   alt='facebook icon'
                   className='mr-3'
                   height={20}
-                  src='/assets/icons/facebook.svg'
+                  src={`${config.cdnURL}/assets/icons/facebook.svg`}
                   width={20}
                 />
                 <p className='font-extralight'>{faculty.fbUrl}</p>

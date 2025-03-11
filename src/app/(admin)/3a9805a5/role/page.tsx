@@ -4,6 +4,7 @@ import { Search } from 'lucide-react'
 import Image from 'next/image'
 import { useState } from 'react'
 
+import { config } from '@/app/config'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -87,7 +88,7 @@ const Adminrole: React.FC = () => {
               alt='logo'
               className='relative z-10'
               height={105}
-              src='/assets/admin/oph_logo-04.svg'
+              src={`${config.cdnURL}/assets/admin/oph_logo-04.svg`}
               width={118}
             />
           </div>
@@ -210,7 +211,7 @@ const Adminrole: React.FC = () => {
                               alt='admin'
                               className='mr-2'
                               height={16}
-                              src='/assets/admin/admin.svg'
+                              src={`${config.cdnURL}/assets/admin/admin.svg`}
                               width={16}
                             />
                             Make Admin
@@ -223,7 +224,7 @@ const Adminrole: React.FC = () => {
                               alt='staff'
                               className='mr-2'
                               height={16}
-                              src='/assets/admin/staff.svg'
+                              src={`${config.cdnURL}/assets/admin/staff.svg`}
                               width={16}
                             />
                             Make Staff
@@ -236,7 +237,7 @@ const Adminrole: React.FC = () => {
                               alt='remove'
                               className='mr-2'
                               height={16}
-                              src='/assets/admin/remove.svg'
+                              src={`${config.cdnURL}/assets/admin/remove.svg`}
                               width={16}
                             />
                             Remove

@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { useState } from 'react'
 
+import { config } from '@/app/config'
 import Frame from '@/components/event-and-map/frame'
 import ToggleButtons from '@/components/event-and-map/togglebutton'
 import Footer from '@/components/homepage/footer'
@@ -62,7 +63,10 @@ const Navigator: React.FC = () => {
             labels={MapButtons}
             onSelect={setSelectedOption}
           />
-          <Frame hasBorder imgPath='/assets/event_map/null.png' />
+          <Frame
+            hasBorder
+            imgPath={`${config.cdnURL}/assets/event_map/null.png`}
+          />
           {selectedOption === MapButtons[0] ? (
             <div className='flex flex-col items-center gap-5 pb-8'>
               <div className='flex flex-col items-center gap-4'>
@@ -105,7 +109,7 @@ const Navigator: React.FC = () => {
                       <Image
                         alt={faciItem.title}
                         height={19}
-                        src={`/assets/event_map/${faciItem.iconName}${faciItem.title === selectedMapItem.facility ? '_green' : ''}.svg`}
+                        src={`${config.cdnURL}/assets/event_map/${faciItem.iconName}${faciItem.title === selectedMapItem.facility ? '_green' : ''}.svg`}
                         width={19}
                       />
                       {faciItem.title}
@@ -137,7 +141,7 @@ const Navigator: React.FC = () => {
                       <Image
                         alt={navigationItem.title}
                         height={12}
-                        src={`/assets/event_map/${navigationItem.iconName}_${navigationItem.title === selectedNavigationItem.how ? 'pink' : 'white'}.svg`}
+                        src={`${config.cdnURL}/assets/event_map/${navigationItem.iconName}_${navigationItem.title === selectedNavigationItem.how ? 'pink' : 'white'}.svg`}
                         width={12}
                       />
                       {navigationItem.title}
@@ -155,7 +159,7 @@ const Navigator: React.FC = () => {
                     <Image
                       alt='icon'
                       height={20}
-                      src='/assets/event_map/flower2.svg'
+                      src={`${config.cdnURL}/assets/event_map/flower2.svg`}
                       width={20}
                     />
                     <p className='w-[50px] text-right font-mitr text-base font-normal text-[#064E41]'>
@@ -195,7 +199,7 @@ const Navigator: React.FC = () => {
                     <Image
                       alt='icon'
                       height={20}
-                      src='/assets/event_map/flower2.svg'
+                      src={`${config.cdnURL}/assets/event_map/flower2.svg`}
                       width={20}
                     />
                     <p className='w-[50px] text-right font-mitr text-base font-normal text-[#064E41]'>

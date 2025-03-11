@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 import React from 'react'
 
+import { config } from '@/app/config'
 import { Button } from '@/components/ui/button'
 
 const Success: React.FC = () => {
@@ -28,7 +29,7 @@ const Success: React.FC = () => {
         <Image
           alt='logo'
           height={280}
-          src='/assets/register/oph-logo-nobg.svg'
+          src={`${config.cdnURL}/assets/register/oph-logo-nobg.svg`}
           width={280}
         />
         <div className='flex flex-col items-center justify-center gap-0 font-cloud-soft text-lg font-normal tracking-tight text-[#064E41]'>

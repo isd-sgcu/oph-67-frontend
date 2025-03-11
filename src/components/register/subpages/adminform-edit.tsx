@@ -1,14 +1,15 @@
 'use client'
 
-import { cookies } from 'next/headers'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
 
+import { getAdminAuthToken } from '@/app/actions/admin-auth'
 import { updateUser } from '@/app/actions/edit-profile/edit-profile'
 import { getUser } from '@/app/actions/get-profile/get-user'
+import { config } from '@/app/config'
 import { LiffError } from '@/components/liff/liff-error'
 import { LiffLoading } from '@/components/liff/liff-loading'
 import { useLiffContext } from '@/components/liff/liff-provider'
@@ -45,12 +46,14 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
         if (!userId) {
           throw new Error('User ID is undefined')
         }
-        const cookieStore = await cookies()
-        const token = cookieStore.get('admin-token')?.value
-        setToken(token)
+
+        const token = await getAdminAuthToken()
+
         if (!token) {
           throw new Error('Not authenticated')
         }
+        setToken(token)
+
         const data = await getUser(userId, token)
         if (data.role === 'staff') {
           const staffData = data as StaffData
@@ -177,7 +180,7 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
         <Image
           alt='logo'
           height={125}
-          src='/assets/register/oph-logo.svg'
+          src={`${config.cdnURL}/assets/register/oph-logo.svg`}
           width={125}
         />
         <div className='flex flex-col items-center justify-center gap-0 font-mitr tracking-tight text-[#064E41]'>
@@ -185,7 +188,7 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
             <Image
               alt='edit'
               height={16}
-              src='/assets/register/edit.svg'
+              src={`${config.cdnURL}/assets/register/edit.svg`}
               width={16}
             />
             <div>แก้ไขข้อมูล</div>
@@ -199,7 +202,7 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
             <Image
               alt='person pin'
               height={20}
-              src='/assets/register/person-pin.svg'
+              src={`${config.cdnURL}/assets/register/person-pin.svg`}
               width={20}
             />
             <div className='text-base font-normal text-[#064E41]'>

@@ -44,6 +44,11 @@ export async function getMyProfile(userId: string): Promise<UserProfile> {
   }
 }
 
+export async function getAuthToken(): Promise<string | null> {
+  const cookieStore = await cookies()
+  return cookieStore.get('auth-token')?.value ?? null
+}
+
 export async function setAuthCookie(token: string): Promise<void> {
   const cookieStore = await cookies()
 

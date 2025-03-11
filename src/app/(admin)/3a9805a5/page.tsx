@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { config } from '@/app/config'
 import { Adminbuttons } from '@/const/adminbutton'
 
 const Adminhome: React.FC = () => {
@@ -13,7 +14,7 @@ const Adminhome: React.FC = () => {
           alt='logo'
           className='relative z-10'
           height={105}
-          src='/assets/admin/oph_logo-04.svg'
+          src={`${config.cdnURL}/assets/admin/oph_logo-04.svg`}
           width={118}
         />
       </div>
@@ -32,7 +33,7 @@ const Adminhome: React.FC = () => {
             <Image
               alt={adminbutton.iconName}
               height={20}
-              src={`/assets/admin/${adminbutton.iconName}.svg`}
+              src={`${config.cdnURL}/assets/admin/${adminbutton.iconName}.svg`}
               width={20}
             />
             {adminbutton.title}
