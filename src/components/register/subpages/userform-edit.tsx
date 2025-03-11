@@ -1,6 +1,6 @@
 'use client'
 import { CalendarIcon } from 'lucide-react'
-import { cookies } from 'next/headers'
+// import { cookies } from 'next/headers'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -9,9 +9,9 @@ import { Controller } from 'react-hook-form'
 
 import { updateUser } from '@/app/actions/edit-profile/edit-profile'
 import { getUser } from '@/app/actions/get-profile/get-user'
-import { LiffError } from '@/components/liff/liff-error'
-import { LiffLoading } from '@/components/liff/liff-loading'
-import { useLiffContext } from '@/components/liff/liff-provider'
+// import { LiffError } from '@/components/liff/liff-error'
+// import { LiffLoading } from '@/components/liff/liff-loading'
+// import { useLiffContext } from '@/components/liff/liff-provider'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Input } from '@/components/ui/input'
@@ -37,38 +37,33 @@ interface UserFormProps {
 
 const UserForm: React.FC<UserFormProps> = ({ form }) => {
   const router = useRouter()
-  const { profile, isInit } = useLiffContext()
+  // const { profile, isInit } = useLiffContext()
   const [isCalendarOpen, setIsCalendarOpen] = useState(false)
-  const [token, setToken] = useState<string | undefined>(undefined)
-  const userId = profile?.userId
+  // const [token, setToken] = useState<string | undefined>(undefined)
+  // const userId = profile?.userId
+  const userId = '29'
+  const token =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyOSJ9.MnEzSmMEivJZ6TF50iJdnM0SuZyozUx6K9WX66QGns8'
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
-        if (!userId) {
-          throw new Error('User ID is undefined')
-        }
-        const cookieStore = await cookies()
-        const token = cookieStore.get('auth-token')?.value
-        setToken(token)
-        if (!token) {
-          throw new Error('Not authenticated')
-        }
+        // if (!userId) {
+        //   throw new Error('User ID is undefined')
+        // }
+        // const cookieStore = await cookies()
+        // const token = cookieStore.get('auth-token')?.value
+        // setToken(token)
+        // if (!token) {
+        //   throw new Error('Not authenticated')
+        // }
         const data = await getUser(userId, token)
         if (data.role === 'student') {
           const studentData = data as StudentData
 
           const [name, surname] = studentData.name.split(' ')
-          const st = status.includes(
-            studentData.status as (typeof status)[number]
-          )
-            ? studentData.status
-            : undefined
-          const pv = provinces.includes(
-            studentData.province as (typeof provinces)[number]
-          )
-            ? studentData.province
-            : undefined
+          const st = status.some((s) => s.th === studentData.status)
+          const pv = provinces.some((p) => p.th === studentData.province)
 
           form.reset({
             name,
@@ -76,10 +71,10 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
             birthDate: studentData.birthDate
               ? new Date(studentData.birthDate)
               : undefined,
-            status: st as RegisterForm['status'],
+            status: st ? studentData.status : undefined,
             email: studentData.email,
             phone: studentData.phone,
-            province: pv as RegisterForm['province'],
+            province: pv ? studentData.province : undefined,
             school: studentData.school,
             otherSource: studentData.otherSource,
             firstInterest: studentData.firstInterest,
@@ -99,17 +94,17 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Reason: This effect should only run once when the component mounts
   }, [])
 
-  if (!isInit) {
-    return <LiffLoading />
-  }
+  // if (!isInit) {
+  //   return <LiffLoading />
+  // }
 
-  if (!profile) {
-    return <LiffError error='Failed to load profile' />
-  }
+  // if (!profile) {
+  //   return <LiffError error='Failed to load profile' />
+  // }
 
-  if (!userId) {
-    return <LiffError error='Failed to load user ID' />
-  }
+  // if (!userId) {
+  //   return <LiffError error='Failed to load user ID' />
+  // }
 
   async function onNext(): Promise<void> {
     const values = form.getValues()
@@ -156,8 +151,8 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
       try {
         const updates = transformToStudentData(values)
         await updateUser({
-          id: userId ?? '',
-          token: token ?? '',
+          id: userId,
+          token,
           updates,
         })
         router.push('/profile')
@@ -314,8 +309,8 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
                         side='bottom'
                       >
                         {status.map((st) => (
-                          <SelectItem key={st} value={st}>
-                            {st}
+                          <SelectItem key={st.th} value={st.th}>
+                            {st.th}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -386,8 +381,8 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
                     </SelectTrigger>
                     <SelectContent position='popper' side='bottom'>
                       {provinces.map((province) => (
-                        <SelectItem key={province} value={province}>
-                          {province}
+                        <SelectItem key={province.th} value={province.th}>
+                          {province.th}
                         </SelectItem>
                       ))}
                     </SelectContent>
