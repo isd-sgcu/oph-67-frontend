@@ -24,6 +24,7 @@ import translations from '@/const/register-title'
 import { status } from '@/const/status'
 import { type RegisterForm } from '@/types/register'
 import { formatDateSafe } from '@/utils/date'
+import { validateEmail } from '@/utils/email-validation'
 
 import CheckBox from '../policy/checkbox'
 
@@ -36,6 +37,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
   const [showOtherInput, setShowOtherInput] = useState(false)
   const [isCalendarOpen, setIsCalendarOpen] = useState(false)
   const [language, setLanguage] = useState<'th' | 'en'>('th')
+  const [isCorrectEmail, setIsCorrectEmail] = useState(true)
 
   function onNext(): void {
     const values = form.getValues()
@@ -71,9 +73,19 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
       }
     })
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- เหตุผล: ค่า someVariable อาจมีการเปลี่ยนแปลงแบบ asynchronous ที่ไม่สามารถตรวจจับได้
+    // Check if the email is valid
+    if (!isCorrectEmail) {
+      isFormValid = false
+      const emailElement = document.querySelector(`[name="email"]`)
+      if (emailElement) {
+        emailElement.classList.add('border-red-500')
+        firstInvalidField = emailElement as HTMLElement
+      }
+    }
+
+     
     if (!isFormValid && firstInvalidField) {
-      ;(firstInvalidField as HTMLElement).scrollIntoView({
+      ;(firstInvalidField).scrollIntoView({
         behavior: 'smooth',
         block: 'center',
       })
@@ -264,7 +276,12 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
               <div className='flex w-1/2 flex-col gap-1'>
                 <div className='text-xs font-normal text-[#064E41]'>
                   {translations[language].email.label}
-                  <span className='text-[#FF0000]'>*</span>
+                  <span className='text-[#FF0000]'>
+                    *{' '}
+                    {!isCorrectEmail
+                      ? translations[language].email.invalid
+                      : ''}
+                  </span>
                 </div>
                 <Input
                   className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
@@ -273,7 +290,15 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                   name='email'
                   onInput={(e) => {
                     const inputElement = e.currentTarget
-                    inputElement.classList.remove('border-red-500')
+                    if (validateEmail(e.currentTarget.value)) {
+                      setIsCorrectEmail(true)
+
+                      inputElement.classList.remove('border-red-500')
+                    } else {
+                      setIsCorrectEmail(false)
+
+                      inputElement.classList.add('border-red-500')
+                    }
                   }}
                 />
               </div>

@@ -17,6 +17,7 @@ const translations = {
     email: {
       label: 'Email',
       placeholder: '@email.com',
+      invalid: 'รูปแบบอีเมลไม่ถูกต้อง',
     },
     phone: {
       label: 'เบอร์ติดต่อ',
@@ -71,6 +72,7 @@ const translations = {
     email: {
       label: 'Email',
       placeholder: '@email.com',
+      invalid: 'Invalid email format',
     },
     phone: {
       label: 'Phone Number',

@@ -25,10 +25,12 @@ import {
 import { Textarea } from '@/components/ui/textarea'
 import { FacultyTH } from '@/const/faculties'
 import { provinces } from '@/const/province'
+import translations from '@/const/register-title'
 import { status } from '@/const/status'
 import { type RegisterForm } from '@/types/register'
 import { type StudentData } from '@/types/student-data'
 import { formatDateSafe } from '@/utils/date'
+import { validateEmail } from '@/utils/email-validation'
 import transformToStudentData from '@/utils/transform-student-data'
 
 interface UserFormProps {
@@ -39,6 +41,7 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
   const router = useRouter()
   // const { profile, isInit } = useLiffContext()
   const [isCalendarOpen, setIsCalendarOpen] = useState(false)
+  const [isCorrectEmail, setIsCorrectEmail] = useState(true)
   // const [token, setToken] = useState<string | undefined>(undefined)
   // const userId = profile?.userId
   const userId = '29'
@@ -62,8 +65,6 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
           const studentData = data as StudentData
 
           const [name, surname] = studentData.name.split(' ')
-          const st = status.some((s) => s.th === studentData.status)
-          const pv = provinces.some((p) => p.th === studentData.province)
 
           form.reset({
             name,
@@ -71,10 +72,10 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
             birthDate: studentData.birthDate
               ? new Date(studentData.birthDate)
               : undefined,
-            status: st ? studentData.status : undefined,
+            status: studentData.status,
             email: studentData.email,
             phone: studentData.phone,
-            province: pv ? studentData.province : undefined,
+            province: studentData.province,
             school: studentData.school,
             otherSource: studentData.otherSource,
             firstInterest: studentData.firstInterest,
@@ -140,9 +141,19 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
       }
     })
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- เหตุผล: ค่า someVariable อาจมีการเปลี่ยนแปลงแบบ asynchronous ที่ไม่สามารถตรวจจับได้
+    // Check if the email is valid
+    if (!isCorrectEmail) {
+      isFormValid = false
+      const emailElement = document.querySelector(`[name="email"]`)
+      if (emailElement) {
+        emailElement.classList.add('border-red-500')
+        firstInvalidField = emailElement as HTMLElement
+      }
+    }
+
+     
     if (!isFormValid && firstInvalidField) {
-      ;(firstInvalidField as HTMLElement).scrollIntoView({
+      ;(firstInvalidField).scrollIntoView({
         behavior: 'smooth',
         block: 'center',
       })
@@ -322,7 +333,10 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
             <div className='flex gap-2'>
               <div className='flex w-1/2 flex-col gap-1'>
                 <div className='text-xs font-normal text-[#064E41]'>
-                  Email<span className='text-[#FF0000]'>*</span>
+                  Email
+                  <span className='text-[#FF0000]'>
+                    * {!isCorrectEmail ? translations.th.email.invalid : ''}
+                  </span>
                 </div>
                 <Input
                   className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
@@ -331,7 +345,13 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
                   name='email'
                   onInput={(e) => {
                     const inputElement = e.currentTarget
-                    inputElement.classList.remove('border-red-500')
+                    if (validateEmail(e.currentTarget.value)) {
+                      setIsCorrectEmail(true)
+                      inputElement.classList.remove('border-red-500')
+                    } else {
+                      setIsCorrectEmail(false)
+                      inputElement.classList.add('border-red-500')
+                    }
                   }}
                 />
               </div>
