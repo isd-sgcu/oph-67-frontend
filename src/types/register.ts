@@ -10,12 +10,12 @@ export const RegisterSchema = z.object({
   name: z.string().min(1, 'ชื่อ'),
   surname: z.string().min(1, 'นามสกุล'),
   birthDate: z.date().refine((date) => !isNaN(date.getTime())),
-  status: z.enum(status, {
+  status: z.enum(status.map((s) => s.th) as [string, ...string[]], {
     message: 'สถานภาพ',
   }),
   email: z.string().email('@email.com'),
   phone: z.string().min(1, 'เบอร์โทรศัพท์'),
-  province: z.enum(provinces, {
+  province: z.enum(provinces.map((p) => p.th) as [string, ...string[]], {
     message: 'เลือกจังหวัดที่อยู่',
   }),
   school: z.string().min(1, 'โรงเรียน'),
