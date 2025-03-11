@@ -16,7 +16,7 @@ const Faq: React.FC = () => {
         src={`${config.cdnURL}/assets/homepage/faq.svg`}
         width={79.48}
       />
-      <div className='flex w-full flex-col justify-start gap-[4px]'>
+      <div className='flex w-full flex-col justify-start gap-0'>
         {FaqItems.map((q) => (
           <QuestionComponent key={q.title} detail={q.detail} title={q.title} />
         ))}

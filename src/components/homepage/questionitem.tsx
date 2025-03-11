@@ -74,7 +74,7 @@ const QuestionComponent: React.FC<QuestionItem> = ({ title, detail }) => {
   return (
     <div>
       <div
-        className={`mb-[8px] flex items-center justify-between rounded-[14px] border border-[#DD579B] bg-gradient-to-r from-white to-[#F7D3E8] px-[14px] py-[7px] transition-all duration-500 ${isOpen ? 'mb-[8px] shadow-lg' : 'mb-0 shadow-none'}`}
+        className={`mb-0 flex items-center justify-between rounded-[14px] border border-[#DD579B] bg-gradient-to-r from-white to-[#F7D3E8] px-[14px] py-[7px] transition-all duration-500 ${isOpen ? 'mb-[8px] shadow-lg' : 'mb-0 shadow-none'}`}
       >
         <h2 className='font-mitr text-base font-normal text-[#FB549C]'>
           {formatText(title)}
