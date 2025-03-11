@@ -14,16 +14,15 @@ interface ScanQRResponse {
 
 export async function scanQRCode(
   token: string,
-  qrCode: string
+  id: string
 ): Promise<ScanQRResponse> {
   try {
-    const response = await fetch(`${config.baseURL}/api/scan-qr`, {
+    const response = await fetch(`${config.baseURL}/api/users/qr/${id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ qrCode }),
     })
 
     if (!response.ok) {

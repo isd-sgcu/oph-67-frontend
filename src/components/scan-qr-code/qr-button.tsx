@@ -53,9 +53,9 @@ const QrButton: React.FC = () => {
       try {
         // Scan QR code using LIFF
         const scanResult = await liff.scanCodeV2()
-        const qrCode = scanResult.value
+        const userId = scanResult.value
 
-        if (!qrCode) {
+        if (!userId) {
           setModalType('invalid')
           setUserInfo('No QR code detected')
           setIsModalOpen(true)
@@ -71,14 +71,13 @@ const QrButton: React.FC = () => {
           return
         }
 
-        // Call server action to verify QR code
-        const result = await scanQRCode(token, qrCode)
+        const result = await scanQRCode(token, userId)
 
         if (!result.success) {
           if (result.error === 'User has already entered') {
             setModalType('already')
             setTime(result.lastEntered)
-            setUserInfo(qrCode) // Using QR code as user info for already entered case
+            setUserInfo(userId)
           } else {
             setModalType('invalid')
             setUserInfo(result.error ?? 'Invalid QR code')
