@@ -3,7 +3,7 @@
 import { ScanLine } from 'lucide-react'
 import { useState } from 'react'
 
-import { getAuthToken } from '@/app/actions/auth'
+import { getAdminAuthToken } from '@/app/actions/admin-auth'
 import { scanQRCode } from '@/app/actions/qr-code/scan-qr'
 import { useLiffContext } from '@/components/liff/liff-provider'
 import { Button } from '@/components/ui/button'
@@ -63,7 +63,7 @@ const QrButton: React.FC = () => {
         }
 
         // Get auth token
-        const token = await getAuthToken()
+        const token = await getAdminAuthToken()
         if (!token) {
           setModalType('invalid')
           setUserInfo('Authentication failed. Please log in again.')
