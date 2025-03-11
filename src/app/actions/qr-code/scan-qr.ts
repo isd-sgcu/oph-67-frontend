@@ -2,56 +2,44 @@
 import { config } from '@/app/config'
 
 interface ScanQRResponse {
-  id: string
-  name: string
-  lastEntered: string
-}
-
-interface ScanQRError {
-  error: string
-  message: string
-}
-
-export async function scanQRCode(studentId: string): Promise<{
   success: boolean
-  data?: ScanQRResponse
   error?: string
   lastEntered?: string
-}> {
-  try {
-    if (!config.baseURL) {
-      throw new Error('NEXT_PUBLIC_API_URL is not defined')
-    }
+  data?: {
+    name: string
+    lastEntered: string
+    studentId?: string
+  }
+}
 
-    const response = await fetch(
-      `${config.baseURL}/api/users/qr/${studentId}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer TODO: get staff token`,
-        },
-      }
-    )
+export async function scanQRCode(
+  token: string,
+  qrCode: string
+): Promise<ScanQRResponse> {
+  try {
+    const response = await fetch(`${config.baseURL}/api/scan-qr`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ qrCode }),
+    })
 
     if (!response.ok) {
-      const errorData = (await response.json()) as ScanQRError
-      return {
-        success: false,
-        error: errorData.error,
-        lastEntered: errorData.message,
-      }
+      throw new Error(`Failed to scan QR code: ${response.status}`)
     }
 
-    const data = (await response.json()) as ScanQRResponse
+    const data = (await response.json()) as ScanQRResponse['data']
     return {
       success: true,
       data,
     }
   } catch (error) {
+    console.error('Error scanning QR code:', error)
     return {
       success: false,
-      error: 'Failed to scan QR code',
+      error: error instanceof Error ? error.message : 'Unknown error occurred',
     }
   }
 }

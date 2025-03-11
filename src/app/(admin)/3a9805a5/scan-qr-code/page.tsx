@@ -32,7 +32,7 @@ const ScanQrCodePage: React.FC = () => {
         <QrButton />
       </section>
 
-      <Link className='mt-4' href='/admin/profile/edit'>
+      <Link className='mt-4' href='/admin/3a9805a5/profile/edit'>
         <Button
           className='text-md flex h-12 w-72 flex-row items-center justify-center rounded-full bg-white font-normal hover:bg-white/90'
           size='sm'

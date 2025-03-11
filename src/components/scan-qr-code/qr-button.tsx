@@ -3,7 +3,8 @@
 import { ScanLine } from 'lucide-react'
 import { useState } from 'react'
 
-// import { scanQRCode } from '@/app/actions/qr-code/scan-qr'
+import { getAuthToken } from '@/app/actions/auth'
+import { scanQRCode } from '@/app/actions/qr-code/scan-qr'
 import { useLiffContext } from '@/components/liff/liff-provider'
 import { Button } from '@/components/ui/button'
 
@@ -50,44 +51,49 @@ const QrButton: React.FC = () => {
       setIsScanning(true)
 
       try {
+        // Scan QR code using LIFF
         const scanResult = await liff.scanCodeV2()
-        const studentId = scanResult.value
+        const qrCode = scanResult.value
 
-        if (!studentId) {
+        if (!qrCode) {
           setModalType('invalid')
           setUserInfo('No QR code detected')
           setIsModalOpen(true)
           return
         }
 
-        const result = {
-          success: true,
-          error: null,
-          lastEntered: '2025-03-07 10:00:00',
-          data: {
-            name: 'John Doe',
-            lastEntered: '2025-03-07 10:00:00',
-          },
+        // Get auth token
+        const token = await getAuthToken()
+        if (!token) {
+          setModalType('invalid')
+          setUserInfo('Authentication failed. Please log in again.')
+          setIsModalOpen(true)
+          return
         }
 
-        // if (!result.success) {
-        //   if (result.error === 'User has already entered') {
-        //     setModalType('already')
-        //     setTime(result.lastEntered)
-        //     setUserInfo(studentId)
-        //   } else {
-        //     setModalType('invalid')
-        //     setUserInfo('')
-        //   }
-        //   setIsModalOpen(true)
-        //   return
-        // }
+        // Call server action to verify QR code
+        const result = await scanQRCode(token, qrCode)
+
+        if (!result.success) {
+          if (result.error === 'User has already entered') {
+            setModalType('already')
+            setTime(result.lastEntered)
+            setUserInfo(qrCode) // Using QR code as user info for already entered case
+          } else {
+            setModalType('invalid')
+            setUserInfo(result.error ?? 'Invalid QR code')
+          }
+          setIsModalOpen(true)
+          return
+        }
 
         // Success case
-        setModalType('confirm')
-        setUserInfo(result.data.name)
-        setTime(result.data.lastEntered)
-        setIsModalOpen(true)
+        if (result.data) {
+          setModalType('confirm')
+          setUserInfo(result.data.name)
+          setTime(result.data.lastEntered)
+          setIsModalOpen(true)
+        }
       } catch (scanError) {
         console.error('QR Scan Error:', scanError)
         setModalType('invalid')
@@ -110,7 +116,7 @@ const QrButton: React.FC = () => {
         className='flex h-12 w-72 items-center justify-center gap-2 rounded-full bg-white text-lg text-dark-pink hover:bg-white/90 disabled:bg-white/50'
         disabled={isScanning || !isInit}
         type='button'
-        onClick={handleScan}
+        onClick={() => void handleScan()}
       >
         <ScanLine className={isScanning ? 'animate-pulse' : ''} size={26} />
         <span>{getButtonText()}</span>
@@ -120,7 +126,7 @@ const QrButton: React.FC = () => {
         <Modal
           closeFn={() => setIsModalOpen(false)}
           modalType={modalType}
-          scanAgain={handleScan}
+          scanAgain={() => void handleScan()}
           time={time}
           userInfo={userInfo}
         />
