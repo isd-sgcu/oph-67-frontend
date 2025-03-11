@@ -83,9 +83,8 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
       }
     }
 
-     
     if (!isFormValid && firstInvalidField) {
-      ;(firstInvalidField).scrollIntoView({
+      firstInvalidField.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
       })
@@ -664,7 +663,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
           variant='filled'
           onClick={onNext}
         >
-          ลงทะเบียน
+          {translations[language].register}
         </Button>
       </div>
     </div>

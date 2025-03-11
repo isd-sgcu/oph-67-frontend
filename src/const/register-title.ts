@@ -53,6 +53,7 @@ const translations = {
       label: 'จุดประสงค์ในการเข้าร่วม Open House',
       placeholder: 'กรอกจุดประสงค์',
     },
+    register: 'ลงทะเบียน',
   },
   en: {
     information: 'Personal Information',
@@ -79,7 +80,7 @@ const translations = {
       placeholder: '09xxxxxxxx',
     },
     address: {
-      label: 'Province of Residence (Current Address)',
+      label: 'Current Province',
       placeholder: 'Select province',
     },
     education: 'Education',
@@ -108,6 +109,7 @@ const translations = {
       label: 'Purpose of attending the Open House',
       placeholder: 'Please specify your purpose',
     },
+    register: 'Register',
   },
 }
 
