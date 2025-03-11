@@ -4,20 +4,55 @@ import { IconFlowerFilled } from '@tabler/icons-react'
 import { Bookmark } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import QRCode from 'react-qr-code'
 
 import { config } from '@/app/config'
+import { getCookies } from '@/app/actions/auth'
+import { getUser } from '@/app/actions/get-profile/get-user'
 import { LiffError } from '@/components/liff/liff-error'
 import { LiffLoading } from '@/components/liff/liff-loading'
 import { useLiffContext } from '@/components/liff/liff-provider'
 import InterestedItem from '@/components/profile/interested-item'
 import { Button } from '@/components/ui/button'
-import { faculties } from '@/const/faculties'
+import { type Faculty, faculties } from '@/const/faculties'
 
 const Profile: React.FC = () => {
-  const favFaculties = faculties.slice(0, 3)
+  const [favFaculties, setFavFaculties] = useState<Faculty[]>([])
   const { profile, isInit } = useLiffContext()
-  const userName = profile?.displayName
+
+  useEffect(() => {
+    const fetchData = async (): Promise<void> => {
+      try {
+        const token = await getCookies('auth-token')
+        if (!token) {
+          throw new Error('Not authenticated')
+        }
+        if (!profile) {
+          throw new Error('Profile is not available')
+        }
+        const data = await getUser(profile.userId, token)
+        setFavFaculties([])
+        if (data.role === 'student') {
+          const interests = [
+            data.firstInterest,
+            data.secondInterest,
+            data.thirdInterest,
+          ]
+          const matchedFaculties = faculties.filter((faculty) =>
+            interests.includes(faculty.th)
+          )
+          setFavFaculties(matchedFaculties)
+        }
+      } catch (error) {
+        console.error('Failed to fetch user data', error)
+      }
+    }
+
+    if (profile) {
+      void fetchData()
+    }
+  }, [profile]) // Ensure effect runs only when profile is available
 
   if (!isInit) {
     return <LiffLoading />
@@ -26,6 +61,7 @@ const Profile: React.FC = () => {
   if (!profile) {
     return <LiffError error='Failed to load profile' />
   }
+  const { displayName } = profile
 
   return (
     <div className='relative flex h-full w-full grow flex-col items-center gap-3 py-8'>
@@ -45,7 +81,7 @@ const Profile: React.FC = () => {
           Your Profile
         </h1>
       </div>
-      <p className='text-base font-light text-primary-green'>{userName}</p>
+      <p className='text-base font-light text-primary-green'>{displayName}</p>
       <Link href='/profile/edit'>
         <Button className='font-normal' size='sm' variant='outline'>
           <EditSolid />
@@ -65,14 +101,18 @@ const Profile: React.FC = () => {
           <p className='font-light'>ID: {profile.userId.substring(0, 6)}</p>
         </div>
       </div>
-      <h2 className='mt-2 text-lg font-normal text-dark-pink'>
-        คณะที่สนใจที่สุด / Faculties interested
-      </h2>
-      <div className='auto-number flex w-[20rem] flex-wrap justify-center gap-y-5'>
-        {favFaculties.map((faculty) => (
-          <InterestedItem key={faculty.en} faculty={faculty} />
-        ))}
-      </div>
+      {favFaculties.length > 0 ? (
+        <>
+          <h2 className='mt-2 text-lg font-normal text-dark-pink'>
+            คณะที่สนใจที่สุด / Faculties interested
+          </h2>
+          <div className='auto-number flex w-[20rem] flex-wrap justify-center gap-y-5'>
+            {favFaculties.map((faculty) => (
+              <InterestedItem key={faculty.en} faculty={faculty} />
+            ))}
+          </div>
+        </>
+      ) : null}
       <div className='my-2 w-[20rem] border border-b-0 border-primary-green' />
       <Link href='/profile/certificate'>
         <Button className='w-[20rem] font-cloud-soft text-2xl font-bold'>
