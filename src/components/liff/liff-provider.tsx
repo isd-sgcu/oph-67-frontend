@@ -31,7 +31,6 @@ export const useLiffContext = (): LiffContextType => {
 
 interface LiffProviderProps {
   children: ReactNode
-  error?: string
 }
 
 export const LiffProvider: React.FC<LiffProviderProps> = ({ children }) => {
