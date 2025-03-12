@@ -2,13 +2,26 @@
 
 import { type ReactNode, useState } from 'react'
 
+import { LiffError } from '@/components/liff/liff-error'
+import { LiffLoading } from '@/components/liff/liff-loading'
+import { useLiffContext } from '@/components/liff/liff-provider'
 import CertificateGenerator from '@/components/profile/certificate-generator'
 import { Button } from '@/components/ui/button'
 import Notfound from '@/components/ui/notfound'
 
 const Certificate: React.FC = () => {
   const [step, setStep] = useState(1)
-  const userName = 'Name Lastname'
+  const { profile, isInit } = useLiffContext()
+
+  if (!isInit) {
+    return <LiffLoading />
+  }
+
+  if (!profile) {
+    return <LiffError error='Failed to load profile' />
+  }
+
+  const { displayName } = profile
 
   const getPage = (): ReactNode => {
     switch (step) {
@@ -33,7 +46,7 @@ const Certificate: React.FC = () => {
           </div>
         )
       case 2:
-        return <CertificateGenerator userName={userName} />
+        return <CertificateGenerator userName={displayName} />
       default:
         return <Notfound />
     }
