@@ -24,6 +24,7 @@ const CertificateGenerator: React.FC<CertificateGeneratorProps> = ({
       if (!ctx) return
 
       const image = new Image()
+      image.crossOrigin = 'anonymous' // This is important
       image.src = `${config.cdnURL}/assets/certificate/template.jpg` // Ensure this file is in your public folder
 
       image.onload = () => {
@@ -49,7 +50,7 @@ const CertificateGenerator: React.FC<CertificateGeneratorProps> = ({
     }
 
     handleGenerate()
-  }, [userName])
+  }, [userName, canvasRef])
 
   return (
     <div className='flex flex-col items-center gap-2 p-5'>
