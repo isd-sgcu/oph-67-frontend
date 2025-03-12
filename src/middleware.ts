@@ -8,6 +8,7 @@ const blockedPaths = [
   '/faculties',
   '/workshop',
   '/pick-your-flower',
+  '/suchibat',
 ]
 
 export function middleware(request: NextRequest): NextResponse {
