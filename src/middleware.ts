@@ -1,6 +1,14 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
+const blockedPaths = [
+  '/navigator',
+  '/event',
+  '/faculties',
+  '/workshop',
+  '/pick-your-flower',
+]
+
 export function middleware(request: NextRequest): NextResponse {
   const path = request.nextUrl.pathname
 
@@ -38,6 +46,10 @@ export function middleware(request: NextRequest): NextResponse {
     return NextResponse.redirect(new URL('/', request.url))
   }
 
+  if (blockedPaths.includes(path)) {
+    return NextResponse.redirect(new URL('/notyet', request.url))
+  }
+
   return NextResponse.next()
 }
 
@@ -47,5 +59,10 @@ export const config = {
     '/3a9805a5/:path*',
     '/',
     '/register',
+    '/navigator',
+    '/event',
+    '/faculties',
+    '/workshop',
+    '/pick-your-flower',
   ],
 }

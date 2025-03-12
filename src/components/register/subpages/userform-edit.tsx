@@ -36,7 +36,6 @@ import { validateEmail } from '@/utils/email-validation'
 import { validatePhone } from '@/utils/phone-validation'
 import transformToStudentData from '@/utils/transform-student-data'
 
-
 interface UserFormProps {
   form: UseFormReturn<RegisterForm>
 }
