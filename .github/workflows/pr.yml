@@ -24,31 +24,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-          cache: 'pnpm'
 
-      - name: Check for lock files
-        id: check-lock
-        run: |
-          if [ -f "pnpm-lock.yaml" ]; then
-            echo "lock_file_exists=true" >> $GITHUB_OUTPUT
-          else
-            echo "lock_file_exists=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Install dependencies with pnpm
-        if: steps.check-lock.outputs.lock_file_exists == 'true'
-        run: pnpm install --frozen-lockfile
-
-      - name: Install dependencies without lockfile
-        if: steps.check-lock.outputs.lock_file_exists == 'false'
-        run: pnpm install
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
 
       - name: Lint
         run: pnpm lint
 
       - name: Build Next.js app
         run: pnpm build
-
       - name: Check build status
         run: |
           echo "✅ Next.js build completed successfully!"
