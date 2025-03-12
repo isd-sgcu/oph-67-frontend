@@ -68,5 +68,6 @@ export const config = {
     '/faculties',
     '/workshop',
     '/pick-your-flower',
+    '/suchibat',
   ],
 }
