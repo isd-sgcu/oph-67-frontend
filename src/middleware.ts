@@ -49,7 +49,7 @@ export function middleware(request: NextRequest): NextResponse {
 
   // TODO: remove this when full version available
   if (blockedPaths.includes(path)) {
-    return NextResponse.redirect(new URL('/notyet', request.url))
+    return NextResponse.redirect(new URL('/coming-soon', request.url))
   }
 
   return NextResponse.next()
