@@ -8,7 +8,8 @@ const Footer: React.FC = () => {
   return (
     <div>
       {/* Footer Part 1 */}
-      <div className='flex h-auto w-full flex-col gap-[9px] bg-[#F7D3E8] p-[13px]'>
+      {/* disable until we're ready */}
+      {/* <div className='flex h-auto w-full flex-col gap-[9px] bg-[#F7D3E8] p-[13px]'>
         <div className='flex items-center justify-center gap-[21px]'>
           <div className='flex h-[40px] w-[40px] items-center justify-center rounded-full bg-white' />
           <div className='flex h-[40px] w-[40px] items-center justify-center rounded-full bg-white' />
@@ -23,7 +24,7 @@ const Footer: React.FC = () => {
           <div className='flex h-[40px] w-[40px] items-center justify-center rounded-full bg-white' />
           <div className='flex h-[40px] w-[40px] items-center justify-center rounded-full bg-white' />
         </div>
-      </div>
+      </div> */}
 
       {/* Footer Part 2 */}
       <div className='flex h-[38px] w-full items-center justify-center gap-[14.55px] bg-[#1C1B1F]'>
