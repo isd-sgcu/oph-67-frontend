@@ -5,14 +5,15 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
+import { Toaster, toast } from 'react-hot-toast'
 
-// import { getAdminAuthToken } from '@/app/actions/admin-auth'
+import { getAdminAuthToken } from '@/app/actions/admin-auth'
 import { updateUser } from '@/app/actions/edit-profile/edit-profile'
 import { getUser } from '@/app/actions/get-profile/get-user'
 import { config } from '@/app/config'
-// import { LiffError } from '@/components/liff/liff-error'
-// import { LiffLoading } from '@/components/liff/liff-loading'
-// import { useLiffContext } from '@/components/liff/liff-provider'
+import { LiffError } from '@/components/liff/liff-error'
+import { LiffLoading } from '@/components/liff/liff-loading'
+import { useLiffContext } from '@/components/liff/liff-provider'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -32,36 +33,33 @@ import { validateEmail } from '@/utils/email-validation'
 import { validatePhone } from '@/utils/phone-validation'
 import transformToStaffData from '@/utils/transform-staff-data'
 
+
 interface StaffFormProps {
   form: UseFormReturn<AdminRegisterForm>
 }
 
 const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
   const router = useRouter()
-  // const { profile, isInit } = useLiffContext()
+  const { profile, isInit } = useLiffContext()
   const [showFaculty, setShowFaculty] = useState(false)
   const [isCorrectEmail, setIsCorrectEmail] = useState(true)
   const [isCorrectPhone, setIsCorrectPhone] = useState(true)
-  // const [token, setToken] = useState<string | undefined>(undefined)
-  // const userId = profile?.userId
-
-  const userId = '111'
-  const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMTEifQ.4XL8wynT7x2XiyFynTaDrxufGh2QMUzqvfnfygZo2Y4'
+  const [token, setToken] = useState<string | undefined>(undefined)
+  const userId = profile?.userId
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
-        // if (!userId) {
-        //   throw new Error('User ID is undefined')
-        // }
+        if (!userId) {
+          throw new Error('User ID is undefined')
+        }
 
-        // const token = await getAdminAuthToken()
+        const token = await getAdminAuthToken()
 
-        // if (!token) {
-        //   throw new Error('Not authenticated')
-        // }
-        // setToken(token)
+        if (!token) {
+          throw new Error('Not authenticated')
+        }
+        setToken(token)
 
         const data = await getUser(userId, token)
         if (data.role === 'staff') {
@@ -108,17 +106,17 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Reason: This effect should only run once when the component mounts
   }, [])
 
-  // if (!isInit) {
-  //   return <LiffLoading />
-  // }
+  if (!isInit) {
+    return <LiffLoading />
+  }
 
-  // if (!profile) {
-  //   return <LiffError error='Failed to load profile' />
-  // }
+  if (!profile) {
+    return <LiffError error='Failed to load profile' />
+  }
 
-  // if (!userId) {
-  //   return <LiffError error='Failed to load user ID' />
-  // }
+  if (!userId) {
+    return <LiffError error='Failed to load user ID' />
+  }
 
   async function onNext(): Promise<void> {
     const values = form.getValues()
@@ -192,19 +190,26 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
       try {
         const updates = transformToStaffData(values)
         await updateUser({
-          id: userId,
-          token,
+          id: userId ?? '',
+          token: token ?? '',
           updates,
         })
         router.push('/3a9805a5')
       } catch (error) {
         console.error('Error updating user data:', error)
+        toast.error('This phone number is already taken.')
       }
     }
   }
 
   return (
     <div className='flex flex-col'>
+      <Toaster
+        position='top-center'
+        toastOptions={{
+          duration: 3000,
+        }}
+      />
       <div className='flex flex-col items-center justify-center gap-4 bg-[#FAE9F3] py-6'>
         <Image
           alt='logo'

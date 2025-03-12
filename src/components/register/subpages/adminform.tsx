@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
+import { Toaster } from 'react-hot-toast'
 
 import { config } from '@/app/config'
 import { Button } from '@/components/ui/button'
@@ -109,6 +110,12 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
 
   return (
     <div className='flex flex-col'>
+      <Toaster
+        position='top-center'
+        toastOptions={{
+          duration: 3000,
+        }}
+      />
       <div className='flex flex-col items-center justify-center gap-4 bg-[#FAE9F3] py-6'>
         <Image
           alt='logo'

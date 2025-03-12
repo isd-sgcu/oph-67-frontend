@@ -1,6 +1,7 @@
 'use client'
 
 import { type UseFormReturn } from 'react-hook-form'
+import { toast } from 'react-hot-toast'
 
 import { setAdminAuthCookie } from '@/app/actions/admin-auth'
 import { setAuthCookie } from '@/app/actions/auth'
@@ -77,6 +78,8 @@ const Pdpa: React.FC<PdpaProps> = ({
           console.error('An unknown error occurred')
         }
         console.log(`Failed to register ${isStaff ? 'staff 1' : 'user 1'}`)
+        setStep(1)
+        toast.error('This phone number is already taken.')
       }
     }
   }
