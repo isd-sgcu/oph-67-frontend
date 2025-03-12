@@ -31,23 +31,17 @@ export const useLiffContext = (): LiffContextType => {
 
 interface LiffProviderProps {
   children: ReactNode
-  fallback?: ReactNode
-  errorComponent?: ReactNode
 }
 
-export const LiffProvider: React.FC<LiffProviderProps> = ({
-  children,
-  fallback = <LiffLoading />,
-  errorComponent = <LiffError error='Failed to To connect to LINE' />,
-}) => {
+export const LiffProvider: React.FC<LiffProviderProps> = ({ children }) => {
   const { isInit, error, profile, liff } = useLiff()
 
   if (error) {
-    return <>{errorComponent}</>
+    return <LiffError error={error} />
   }
 
   if (!isInit) {
-    return <>{fallback}</>
+    return <LiffLoading />
   }
 
   return (
