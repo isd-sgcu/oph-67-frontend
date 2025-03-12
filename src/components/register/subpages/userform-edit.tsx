@@ -168,6 +168,7 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
       })
       console.log('Form is invalid')
     } else {
+      const loadingToastId = toast.loading('Loading...')
       try {
         const updates = transformToStudentData(values)
         await updateUser({
@@ -175,8 +176,10 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
           token: token ?? '',
           updates,
         })
+        toast.dismiss(loadingToastId)
         router.push('/profile')
       } catch (error) {
+        toast.dismiss(loadingToastId)
         console.error('Error updating user data:', error)
         toast.error('This phone number is already taken.')
       }

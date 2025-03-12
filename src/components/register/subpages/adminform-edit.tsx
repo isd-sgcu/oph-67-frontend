@@ -33,7 +33,6 @@ import { validateEmail } from '@/utils/email-validation'
 import { validatePhone } from '@/utils/phone-validation'
 import transformToStaffData from '@/utils/transform-staff-data'
 
-
 interface StaffFormProps {
   form: UseFormReturn<AdminRegisterForm>
 }
@@ -187,6 +186,7 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
       })
       console.log('Form is invalid')
     } else {
+      const loadingToastId = toast.loading('Loading...')
       try {
         const updates = transformToStaffData(values)
         await updateUser({
@@ -194,8 +194,10 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
           token: token ?? '',
           updates,
         })
+        toast.dismiss(loadingToastId)
         router.push('/3a9805a5')
       } catch (error) {
+        toast.dismiss(loadingToastId)
         console.error('Error updating user data:', error)
         toast.error('This phone number is already taken.')
       }

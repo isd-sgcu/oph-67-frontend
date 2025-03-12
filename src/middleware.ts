@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
+// TODO: remove this when full version available
 const blockedPaths = [
   '/navigator',
   '/event',
@@ -46,6 +47,7 @@ export function middleware(request: NextRequest): NextResponse {
     return NextResponse.redirect(new URL('/', request.url))
   }
 
+  // TODO: remove this when full version available
   if (blockedPaths.includes(path)) {
     return NextResponse.redirect(new URL('/notyet', request.url))
   }
@@ -59,6 +61,7 @@ export const config = {
     '/3a9805a5/:path*',
     '/',
     '/register',
+    // TODO: remove this when full version available
     '/navigator',
     '/event',
     '/faculties',
