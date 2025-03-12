@@ -6,13 +6,13 @@ import { useEffect, useState } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
 
-import { getAuthToken } from '@/app/actions/auth'
+// import { getAuthToken } from '@/app/actions/auth'
 import { updateUser } from '@/app/actions/edit-profile/edit-profile'
 import { getUser } from '@/app/actions/get-profile/get-user'
 import { config } from '@/app/config'
-import { LiffError } from '@/components/liff/liff-error'
-import { LiffLoading } from '@/components/liff/liff-loading'
-import { useLiffContext } from '@/components/liff/liff-provider'
+// import { LiffError } from '@/components/liff/liff-error'
+// import { LiffLoading } from '@/components/liff/liff-loading'
+// import { useLiffContext } from '@/components/liff/liff-provider'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Input } from '@/components/ui/input'
@@ -32,6 +32,7 @@ import { type RegisterForm } from '@/types/register'
 import { type StudentData } from '@/types/student-data'
 import { formatDateSafe } from '@/utils/date'
 import { validateEmail } from '@/utils/email-validation'
+import { validatePhone } from '@/utils/phone-validation'
 import transformToStudentData from '@/utils/transform-student-data'
 
 interface UserFormProps {
@@ -40,23 +41,28 @@ interface UserFormProps {
 
 const UserForm: React.FC<UserFormProps> = ({ form }) => {
   const router = useRouter()
-  const { profile, isInit } = useLiffContext()
+  // const { profile, isInit } = useLiffContext()
   const [isCalendarOpen, setIsCalendarOpen] = useState(false)
   const [isCorrectEmail, setIsCorrectEmail] = useState(true)
-  const [token, setToken] = useState<string | undefined>(undefined)
-  const userId = profile?.userId
+  const [isCorrectPhone, setIsCorrectPhone] = useState(true)
+  // const [token, setToken] = useState<string | undefined>(undefined)
+  // const userId = profile?.userId
+
+  const userId = '26'
+  const token =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyNiJ9.ZcJeaqPDsHSSuu8uzLegBZx6_SE6Jyqq0KmxI-nWrgc'
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
-        if (!userId) {
-          throw new Error('User ID is undefined')
-        }
-        const token = await getAuthToken()
-        if (!token) {
-          throw new Error('Not authenticated')
-        }
-        setToken(token)
+        // if (!userId) {
+        //   throw new Error('User ID is undefined')
+        // }
+        // const token = await getAuthToken()
+        // if (!token) {
+        //   throw new Error('Not authenticated')
+        // }
+        // setToken(token)
         const data = await getUser(userId, token)
         if (data.role === 'student') {
           const studentData = data as StudentData
@@ -92,17 +98,17 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Reason: This effect should only run once when the component mounts
   }, [])
 
-  if (!isInit) {
-    return <LiffLoading />
-  }
+  // if (!isInit) {
+  //   return <LiffLoading />
+  // }
 
-  if (!profile) {
-    return <LiffError error='Failed to load profile' />
-  }
+  // if (!profile) {
+  //   return <LiffError error='Failed to load profile' />
+  // }
 
-  if (!userId) {
-    return <LiffError error='Failed to load user ID' />
-  }
+  // if (!userId) {
+  //   return <LiffError error='Failed to load user ID' />
+  // }
 
   async function onNext(): Promise<void> {
     const values = form.getValues()
@@ -148,6 +154,16 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
       }
     }
 
+    // Check if the phone number is valid
+    if (!isCorrectPhone) {
+      isFormValid = false
+      const phoneElement = document.querySelector(`[name="phone"]`)
+      if (phoneElement) {
+        phoneElement.classList.add('border-red-500')
+        firstInvalidField = phoneElement as HTMLElement
+      }
+    }
+
     if (!isFormValid && firstInvalidField) {
       firstInvalidField.scrollIntoView({
         behavior: 'smooth',
@@ -158,8 +174,8 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
       try {
         const updates = transformToStudentData(values)
         await updateUser({
-          id: userId ?? '',
-          token: token ?? '',
+          id: userId,
+          token,
           updates,
         })
         router.push('/profile')
@@ -353,7 +369,10 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
               </div>
               <div className='flex w-1/2 flex-col gap-1'>
                 <div className='text-xs font-normal text-[#064E41]'>
-                  เบอร์ติดต่อ<span className='text-[#FF0000]'>*</span>
+                  เบอร์ติดต่อ
+                  <span className='text-[#FF0000]'>
+                    * {!isCorrectPhone ? translations.th.phone.invalid : ''}
+                  </span>
                 </div>
                 <Input
                   className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
@@ -362,7 +381,13 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
                   name='phone'
                   onInput={(e) => {
                     const inputElement = e.currentTarget
-                    inputElement.classList.remove('border-red-500')
+                    if (validatePhone(e.currentTarget.value)) {
+                      setIsCorrectPhone(true)
+                      inputElement.classList.remove('border-red-500')
+                    } else {
+                      setIsCorrectPhone(false)
+                      inputElement.classList.add('border-red-500')
+                    }
                   }}
                 />
               </div>

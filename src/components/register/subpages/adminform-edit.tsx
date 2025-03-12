@@ -6,13 +6,13 @@ import { useEffect, useState } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
 
-import { getAdminAuthToken } from '@/app/actions/admin-auth'
+// import { getAdminAuthToken } from '@/app/actions/admin-auth'
 import { updateUser } from '@/app/actions/edit-profile/edit-profile'
 import { getUser } from '@/app/actions/get-profile/get-user'
 import { config } from '@/app/config'
-import { LiffError } from '@/components/liff/liff-error'
-import { LiffLoading } from '@/components/liff/liff-loading'
-import { useLiffContext } from '@/components/liff/liff-provider'
+// import { LiffError } from '@/components/liff/liff-error'
+// import { LiffLoading } from '@/components/liff/liff-loading'
+// import { useLiffContext } from '@/components/liff/liff-provider'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -23,10 +23,13 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { faculties } from '@/const/faculties'
+import translations from '@/const/register-title'
 import { years } from '@/const/staff-year'
 import { status } from '@/const/status-staff'
 import { type AdminRegisterForm } from '@/types/admin-register'
 import { type StaffData } from '@/types/staff-data'
+import { validateEmail } from '@/utils/email-validation'
+import { validatePhone } from '@/utils/phone-validation'
 import transformToStaffData from '@/utils/transform-staff-data'
 
 interface StaffFormProps {
@@ -35,24 +38,30 @@ interface StaffFormProps {
 
 const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
   const router = useRouter()
-  const { profile, isInit } = useLiffContext()
+  // const { profile, isInit } = useLiffContext()
   const [showFaculty, setShowFaculty] = useState(false)
-  const [token, setToken] = useState<string | undefined>(undefined)
-  const userId = profile?.userId
+  const [isCorrectEmail, setIsCorrectEmail] = useState(true)
+  const [isCorrectPhone, setIsCorrectPhone] = useState(true)
+  // const [token, setToken] = useState<string | undefined>(undefined)
+  // const userId = profile?.userId
+
+  const userId = '111'
+  const token =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMTEifQ.4XL8wynT7x2XiyFynTaDrxufGh2QMUzqvfnfygZo2Y4'
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
-        if (!userId) {
-          throw new Error('User ID is undefined')
-        }
+        // if (!userId) {
+        //   throw new Error('User ID is undefined')
+        // }
 
-        const token = await getAdminAuthToken()
+        // const token = await getAdminAuthToken()
 
-        if (!token) {
-          throw new Error('Not authenticated')
-        }
-        setToken(token)
+        // if (!token) {
+        //   throw new Error('Not authenticated')
+        // }
+        // setToken(token)
 
         const data = await getUser(userId, token)
         if (data.role === 'staff') {
@@ -99,17 +108,17 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Reason: This effect should only run once when the component mounts
   }, [])
 
-  if (!isInit) {
-    return <LiffLoading />
-  }
+  // if (!isInit) {
+  //   return <LiffLoading />
+  // }
 
-  if (!profile) {
-    return <LiffError error='Failed to load profile' />
-  }
+  // if (!profile) {
+  //   return <LiffError error='Failed to load profile' />
+  // }
 
-  if (!userId) {
-    return <LiffError error='Failed to load user ID' />
-  }
+  // if (!userId) {
+  //   return <LiffError error='Failed to load user ID' />
+  // }
 
   async function onNext(): Promise<void> {
     const values = form.getValues()
@@ -153,6 +162,26 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
       }
     }
 
+    // Check if the email is valid
+    if (!isCorrectEmail) {
+      isFormValid = false
+      const emailElement = document.querySelector(`[name="email"]`)
+      if (emailElement) {
+        emailElement.classList.add('border-red-500')
+        firstInvalidField = emailElement as HTMLElement
+      }
+    }
+
+    // Check if the phone number is valid
+    if (!isCorrectPhone) {
+      isFormValid = false
+      const phoneElement = document.querySelector(`[name="phone"]`)
+      if (phoneElement) {
+        phoneElement.classList.add('border-red-500')
+        firstInvalidField = phoneElement as HTMLElement
+      }
+    }
+
     if (!isFormValid && firstInvalidField) {
       firstInvalidField.scrollIntoView({
         behavior: 'smooth',
@@ -163,8 +192,8 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
       try {
         const updates = transformToStaffData(values)
         await updateUser({
-          id: userId ?? '',
-          token: token ?? '',
+          id: userId,
+          token,
           updates,
         })
         router.push('/3a9805a5')
@@ -272,7 +301,10 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
             <div className='flex gap-2'>
               <div className='flex w-1/2 flex-col gap-1'>
                 <div className='text-xs font-normal text-[#064E41]'>
-                  Email<span className='text-[#FF0000]'>*</span>
+                  Email
+                  <span className='text-[#FF0000]'>
+                    * {!isCorrectEmail ? translations.th.email.invalid : ''}
+                  </span>
                 </div>
                 <Input
                   className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
@@ -281,13 +313,24 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
                   name='email'
                   onInput={(e) => {
                     const inputElement = e.currentTarget
-                    inputElement.classList.remove('border-red-500')
+                    if (validateEmail(e.currentTarget.value)) {
+                      setIsCorrectEmail(true)
+
+                      inputElement.classList.remove('border-red-500')
+                    } else {
+                      setIsCorrectEmail(false)
+
+                      inputElement.classList.add('border-red-500')
+                    }
                   }}
                 />
               </div>
               <div className='flex w-1/2 flex-col gap-1'>
                 <div className='text-xs font-normal text-[#064E41]'>
-                  เบอร์ติดต่อ<span className='text-[#FF0000]'>*</span>
+                  เบอร์ติดต่อ
+                  <span className='text-[#FF0000]'>
+                    * {!isCorrectPhone ? translations.th.phone.invalid : ''}
+                  </span>
                 </div>
                 <Input
                   className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
@@ -296,7 +339,13 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
                   name='phone'
                   onInput={(e) => {
                     const inputElement = e.currentTarget
-                    inputElement.classList.remove('border-red-500')
+                    if (validatePhone(e.currentTarget.value)) {
+                      setIsCorrectPhone(true)
+                      inputElement.classList.remove('border-red-500')
+                    } else {
+                      setIsCorrectPhone(false)
+                      inputElement.classList.add('border-red-500')
+                    }
                   }}
                 />
               </div>

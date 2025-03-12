@@ -16,9 +16,12 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { faculties } from '@/const/faculties'
+import translations from '@/const/register-title'
 import { years } from '@/const/staff-year'
 import { status } from '@/const/status-staff'
 import { type AdminRegisterForm } from '@/types/admin-register'
+import { validateEmail } from '@/utils/email-validation'
+import { validatePhone } from '@/utils/phone-validation'
 
 interface UserFormProps {
   setStep: (value: number) => void
@@ -27,6 +30,8 @@ interface UserFormProps {
 
 const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
   const [showFaculty, setShowFaculty] = useState(false)
+  const [isCorrectEmail, setIsCorrectEmail] = useState(true)
+  const [isCorrectPhone, setIsCorrectPhone] = useState(true)
 
   function onNext(): void {
     const values = form.getValues()
@@ -67,6 +72,26 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
         if (!firstInvalidField) {
           firstInvalidField = facultyInput as HTMLElement
         }
+      }
+    }
+
+    // Check if the email is valid
+    if (!isCorrectEmail) {
+      isFormValid = false
+      const emailElement = document.querySelector(`[name="email"]`)
+      if (emailElement) {
+        emailElement.classList.add('border-red-500')
+        firstInvalidField = emailElement as HTMLElement
+      }
+    }
+
+    // Check if the phone number is valid
+    if (!isCorrectPhone) {
+      isFormValid = false
+      const phoneElement = document.querySelector(`[name="phone"]`)
+      if (phoneElement) {
+        phoneElement.classList.add('border-red-500')
+        firstInvalidField = phoneElement as HTMLElement
       }
     }
 
@@ -172,7 +197,10 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
             <div className='flex gap-2'>
               <div className='flex w-1/2 flex-col gap-1'>
                 <div className='text-xs font-normal text-[#064E41]'>
-                  Email<span className='text-[#FF0000]'>*</span>
+                  Email
+                  <span className='text-[#FF0000]'>
+                    * {!isCorrectEmail ? translations.th.email.invalid : ''}
+                  </span>
                 </div>
                 <Input
                   className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
@@ -181,13 +209,24 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                   name='email'
                   onInput={(e) => {
                     const inputElement = e.currentTarget
-                    inputElement.classList.remove('border-red-500')
+                    if (validateEmail(e.currentTarget.value)) {
+                      setIsCorrectEmail(true)
+
+                      inputElement.classList.remove('border-red-500')
+                    } else {
+                      setIsCorrectEmail(false)
+
+                      inputElement.classList.add('border-red-500')
+                    }
                   }}
                 />
               </div>
               <div className='flex w-1/2 flex-col gap-1'>
                 <div className='text-xs font-normal text-[#064E41]'>
-                  เบอร์ติดต่อ<span className='text-[#FF0000]'>*</span>
+                  เบอร์ติดต่อ
+                  <span className='text-[#FF0000]'>
+                    * {!isCorrectPhone ? translations.th.phone.invalid : ''}
+                  </span>
                 </div>
                 <Input
                   className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
@@ -196,7 +235,13 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                   name='phone'
                   onInput={(e) => {
                     const inputElement = e.currentTarget
-                    inputElement.classList.remove('border-red-500')
+                    if (validatePhone(e.currentTarget.value)) {
+                      setIsCorrectPhone(true)
+                      inputElement.classList.remove('border-red-500')
+                    } else {
+                      setIsCorrectPhone(false)
+                      inputElement.classList.add('border-red-500')
+                    }
                   }}
                 />
               </div>

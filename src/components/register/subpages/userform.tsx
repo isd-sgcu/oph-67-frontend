@@ -26,6 +26,7 @@ import { status } from '@/const/status'
 import { type RegisterForm } from '@/types/register'
 import { formatDateSafe } from '@/utils/date'
 import { validateEmail } from '@/utils/email-validation'
+import { validatePhone } from '@/utils/phone-validation'
 
 import CheckBox from '../policy/checkbox'
 
@@ -39,6 +40,7 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false)
   const [language, setLanguage] = useState<'th' | 'en'>('th')
   const [isCorrectEmail, setIsCorrectEmail] = useState(true)
+  const [isCorrectPhone, setIsCorrectPhone] = useState(true)
 
   function onNext(): void {
     const values = form.getValues()
@@ -81,6 +83,16 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
       if (emailElement) {
         emailElement.classList.add('border-red-500')
         firstInvalidField = emailElement as HTMLElement
+      }
+    }
+
+    // Check if the phone number is valid
+    if (!isCorrectPhone) {
+      isFormValid = false
+      const phoneElement = document.querySelector(`[name="phone"]`)
+      if (phoneElement) {
+        phoneElement.classList.add('border-red-500')
+        firstInvalidField = phoneElement as HTMLElement
       }
     }
 
@@ -305,7 +317,12 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
               <div className='flex w-1/2 flex-col gap-1'>
                 <div className='text-xs font-normal text-[#064E41]'>
                   {translations[language].phone.label}
-                  <span className='text-[#FF0000]'>*</span>
+                  <span className='text-[#FF0000]'>
+                    *{' '}
+                    {!isCorrectPhone
+                      ? translations[language].phone.invalid
+                      : ''}
+                  </span>
                 </div>
                 <Input
                   className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
@@ -314,7 +331,13 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                   name='phone'
                   onInput={(e) => {
                     const inputElement = e.currentTarget
-                    inputElement.classList.remove('border-red-500')
+                    if (validatePhone(e.currentTarget.value)) {
+                      setIsCorrectPhone(true)
+                      inputElement.classList.remove('border-red-500')
+                    } else {
+                      setIsCorrectPhone(false)
+                      inputElement.classList.add('border-red-500')
+                    }
                   }}
                 />
               </div>
