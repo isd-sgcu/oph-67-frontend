@@ -31,7 +31,7 @@ const NotYetpage: React.FC = () => {
         />
         <div className='flex flex-col items-center justify-center gap-0 font-cloud-soft text-lg font-normal tracking-tight text-[#064E41]'>
           <div className='text-xl font-bold'>
-            This page is not available yet!
+            This page will be available soon!
           </div>
         </div>
         <Button
