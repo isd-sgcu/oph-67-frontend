@@ -33,7 +33,7 @@ const Imageslider: React.FC = () => {
   return (
     <div className='relative flex w-full items-center justify-center overflow-hidden py-2 sm:py-6'>
       {/* Images */}
-      <div className='relative flex min-h-[280px] w-full justify-center'>
+      <div className='relative flex aspect-[120/63] w-full justify-center'>
         {ImageSliderImages.length > 0 ? (
           ImageSliderImages.map((img, index) => (
             <Image
@@ -41,7 +41,7 @@ const Imageslider: React.FC = () => {
               alt={`Slide ${index + 1}`}
               className={`relative flex w-full bg-[#CCB9C4] transition-opacity duration-700 ease-in-out ${index === currentIndex ? 'opacity-100' : 'opacity-0'}`}
               layout='fill'
-              objectFit='contain'
+              objectFit='cover'
               src={`${config.cdnURL}/assets/homepage/${img}`}
             />
           ))
@@ -50,7 +50,7 @@ const Imageslider: React.FC = () => {
             key='first_banner'
             alt='first_banner'
             layout='fill'
-            objectFit='contain'
+            objectFit='cover'
             src={`${config.cdnURL}/assets/homepage/first_banner.png`}
           />
         )}
