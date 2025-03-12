@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
+import { Toaster, toast } from 'react-hot-toast'
 
 import { getAuthToken } from '@/app/actions/auth'
 import { updateUser } from '@/app/actions/edit-profile/edit-profile'
@@ -32,6 +33,7 @@ import { type RegisterForm } from '@/types/register'
 import { type StudentData } from '@/types/student-data'
 import { formatDateSafe } from '@/utils/date'
 import { validateEmail } from '@/utils/email-validation'
+import { validatePhone } from '@/utils/phone-validation'
 import transformToStudentData from '@/utils/transform-student-data'
 
 interface UserFormProps {
@@ -43,6 +45,7 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
   const { profile, isInit } = useLiffContext()
   const [isCalendarOpen, setIsCalendarOpen] = useState(false)
   const [isCorrectEmail, setIsCorrectEmail] = useState(true)
+  const [isCorrectPhone, setIsCorrectPhone] = useState(true)
   const [token, setToken] = useState<string | undefined>(undefined)
   const userId = profile?.userId
 
@@ -148,6 +151,16 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
       }
     }
 
+    // Check if the phone number is valid
+    if (!isCorrectPhone) {
+      isFormValid = false
+      const phoneElement = document.querySelector(`[name="phone"]`)
+      if (phoneElement) {
+        phoneElement.classList.add('border-red-500')
+        firstInvalidField = phoneElement as HTMLElement
+      }
+    }
+
     if (!isFormValid && firstInvalidField) {
       firstInvalidField.scrollIntoView({
         behavior: 'smooth',
@@ -155,6 +168,7 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
       })
       console.log('Form is invalid')
     } else {
+      const loadingToastId = toast.loading('Loading...')
       try {
         const updates = transformToStudentData(values)
         await updateUser({
@@ -162,15 +176,24 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
           token: token ?? '',
           updates,
         })
+        toast.dismiss(loadingToastId)
         router.push('/profile')
       } catch (error) {
+        toast.dismiss(loadingToastId)
         console.error('Error updating user data:', error)
+        toast.error('This phone number is already taken.')
       }
     }
   }
 
   return (
     <div className='flex flex-col'>
+      <Toaster
+        position='top-center'
+        toastOptions={{
+          duration: 3000,
+        }}
+      />
       <div className='flex flex-col items-center justify-center gap-4 bg-[#FAE9F3] py-6'>
         <Image
           alt='logo'
@@ -353,7 +376,10 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
               </div>
               <div className='flex w-1/2 flex-col gap-1'>
                 <div className='text-xs font-normal text-[#064E41]'>
-                  เบอร์ติดต่อ<span className='text-[#FF0000]'>*</span>
+                  เบอร์ติดต่อ
+                  <span className='text-[#FF0000]'>
+                    * {!isCorrectPhone ? translations.th.phone.invalid : ''}
+                  </span>
                 </div>
                 <Input
                   className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
@@ -362,7 +388,13 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
                   name='phone'
                   onInput={(e) => {
                     const inputElement = e.currentTarget
-                    inputElement.classList.remove('border-red-500')
+                    if (validatePhone(e.currentTarget.value)) {
+                      setIsCorrectPhone(true)
+                      inputElement.classList.remove('border-red-500')
+                    } else {
+                      setIsCorrectPhone(false)
+                      inputElement.classList.add('border-red-500')
+                    }
                   }}
                 />
               </div>

@@ -1,6 +1,7 @@
 'use client'
 
 import { type UseFormReturn } from 'react-hook-form'
+import { Toaster, toast } from 'react-hot-toast'
 
 import { setAdminAuthCookie } from '@/app/actions/admin-auth'
 import { setAuthCookie } from '@/app/actions/auth'
@@ -52,6 +53,7 @@ const Pdpa: React.FC<PdpaProps> = ({
   }
 
   async function onNext(): Promise<void> {
+    const loadingToastId = toast.loading('Loading...')
     if (isValid) {
       try {
         const formValues = form.getValues()
@@ -69,6 +71,7 @@ const Pdpa: React.FC<PdpaProps> = ({
           const res = await registerUser({ id: userId, form: userFormValues })
           await setAuthCookie(res.accessToken)
         }
+        toast.dismiss(loadingToastId)
         setStep(3)
       } catch (error) {
         if (error instanceof Error) {
@@ -77,12 +80,16 @@ const Pdpa: React.FC<PdpaProps> = ({
           console.error('An unknown error occurred')
         }
         console.log(`Failed to register ${isStaff ? 'staff 1' : 'user 1'}`)
+        toast.dismiss(loadingToastId)
+        setStep(1)
+        toast.error('This phone number is already taken.')
       }
     }
   }
 
   return (
     <div>
+      <Toaster position='top-center' />
       <div className='flex flex-col gap-6 px-5 py-8'>
         <Policy
           SetIsAccepted={setIsTerm}

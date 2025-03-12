@@ -22,6 +22,7 @@ const translations = {
     phone: {
       label: 'เบอร์ติดต่อ',
       placeholder: '09xxxxxxxx',
+      invalid: 'รูปแบบไม่ถูกต้อง',
     },
     address: {
       label: 'จังหวัดที่อยู่ (ที่อยู่อาศัยปัจจุบัน)',
@@ -73,11 +74,12 @@ const translations = {
     email: {
       label: 'Email',
       placeholder: '@email.com',
-      invalid: 'Invalid email format',
+      invalid: 'Invalid',
     },
     phone: {
       label: 'Phone Number',
       placeholder: '09xxxxxxxx',
+      invalid: 'Invalid',
     },
     address: {
       label: 'Current Province',
