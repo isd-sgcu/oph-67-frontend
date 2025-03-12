@@ -8,6 +8,7 @@ import Faq from '@/components/homepage/faq'
 import Footer from '@/components/homepage/footer'
 import Imageslider from '@/components/homepage/imageslider'
 import Navbar from '@/components/homepage/navbar'
+import Popup from '@/components/homepage/popup'
 import Timer from '@/components/homepage/timer'
 import { Button } from '@/components/ui/button'
 import {
@@ -32,6 +33,7 @@ const Home: React.FC = () => {
 
   return (
     <div className='flex flex-col justify-center bg-[#FCF3F8]'>
+      <Popup />
       <Navbar />
       <Imageslider />
       <Timer />
