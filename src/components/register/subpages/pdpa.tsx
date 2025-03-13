@@ -110,6 +110,7 @@ const Pdpa: React.FC<PdpaProps> = ({
         <div className='text-center'>
           <Button
             className='font-cloud-soft text-2xl font-medium'
+            disabled={!isValid}
             variant={isValid ? 'filled' : 'disabled'}
             onClick={onNext}
           >

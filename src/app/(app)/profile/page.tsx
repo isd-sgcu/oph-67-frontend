@@ -39,9 +39,9 @@ const Profile: React.FC = () => {
             data.secondInterest,
             data.thirdInterest,
           ]
-          const matchedFaculties = faculties.filter((faculty) =>
-            interests.includes(faculty.th)
-          )
+          const matchedFaculties = faculties
+            .filter((faculty) => interests.includes(faculty.th))
+            .sort((a, b) => interests.indexOf(a.th) - interests.indexOf(b.th))
           setFavFaculties(matchedFaculties)
         }
       } catch (error) {
