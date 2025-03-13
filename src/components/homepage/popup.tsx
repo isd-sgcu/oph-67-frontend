@@ -1,17 +1,18 @@
 'use client'
 
+import { X } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-
 
 const Popup: React.FC = () => {
   const [open, setOpen] = useState(false)
@@ -25,6 +26,10 @@ const Popup: React.FC = () => {
       <DialogContent className='w-[300px] rounded-xl border-0 bg-[linear-gradient(135deg,#EFA8C4_15%,#FFF2CC_30%,#F7A6CC_90%)] sm:max-w-md'>
         {/* Header */}
         <DialogHeader className='flex flex-col items-center'>
+          <DialogClose className='absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-0 focus:ring-offset-0 disabled:pointer-events-none data-[state=open]:bg-transparent'>
+            <X className='h-4 w-4 text-[#ED338C]' />
+            <span className='sr-only'>Close</span>
+          </DialogClose>
           <div className='flex flex-col items-center justify-center'>
             {/* Logo */}
             <div className='relative flex h-[120px] w-[120px] items-center justify-center'>
@@ -152,9 +157,9 @@ const Popup: React.FC = () => {
                   />
                   <div className='-translate-y-2 text-center'>
                     <p className='rounded-full bg-white px-2 text-[8px] font-medium text-[#ED338C]'>
-                      P'Punch
+                      P&apos;Punch
                     </p>
-                    <p className="text-[8px] font-medium text-[#ED338C]">
+                    <p className='text-[8px] font-medium text-[#ED338C]'>
                       #Dek66
                     </p>
                   </div>
@@ -182,9 +187,9 @@ const Popup: React.FC = () => {
                   />
                   <div className='-translate-y-2 text-center'>
                     <p className='rounded-full bg-white px-2 text-[8px] font-medium text-[#ED338C]'>
-                      P'Tony
+                      P&apos;Tony
                     </p>
-                    <p className="text-[8px] font-medium text-[#ED338C]">
+                    <p className='text-[8px] font-medium text-[#ED338C]'>
                       #Dek67
                     </p>
                   </div>
@@ -218,15 +223,15 @@ const Popup: React.FC = () => {
 
             <div className='flex flex-col items-center justify-center'>
               <p className='text-[8px] font-medium text-[#ED338C]'>
-                Don't Miss!
+                Don&apos;t Miss!
               </p>
-              <p className="text-center text-sm font-medium text-[#ED338C]">
+              <p className='text-center text-sm font-medium text-[#ED338C]'>
                 Come and find out here!
               </p>
             </div>
             <Link
               className='flex gap-1 rounded-full border border-[#ED338C] bg-white px-3 py-1'
-              href="https://www.instagram.com/chulaforall/"
+              href='https://www.instagram.com/chulaforall/'
             >
               <Image
                 alt='instagram'
