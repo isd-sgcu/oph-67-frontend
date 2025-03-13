@@ -7,7 +7,7 @@ import React from 'react'
 import { config } from '@/app/config'
 import { Button } from '@/components/ui/button'
 
-const Success: React.FC = () => {
+const NotYetpage: React.FC = () => {
   const router = useRouter()
 
   const onNext = (): void => {
@@ -30,10 +30,9 @@ const Success: React.FC = () => {
           width={280}
         />
         <div className='flex flex-col items-center justify-center gap-0 font-cloud-soft text-lg font-normal tracking-tight text-[#064E41]'>
-          <div className='text-3xl font-bold'>ลงทะเบียนเรียบร้อย!</div>
-          <div>อย่าลืมมาเจอกัน</div>
-          <div>วันที่ 29-30 มีนาคม</div>
-          <div>@จุฬาลงกรณ์มหาวิทยาลัย!</div>
+          <div className='text-xl font-bold'>
+            This page will be available soon!
+          </div>
         </div>
         <Button
           className='mt-3 font-cloud-soft text-2xl font-medium'
@@ -47,4 +46,4 @@ const Success: React.FC = () => {
   )
 }
 
-export default Success
+export default NotYetpage

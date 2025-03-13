@@ -22,6 +22,7 @@ module.exports = {
       'error',
       { ignoreArrowShorthand: true },
     ],
+    '@typescript-eslint/no-unsafe-return': 'off',
     '@typescript-eslint/no-shadow': 'off',
     '@typescript-eslint/no-misused-promises': [
       'error',
@@ -44,7 +45,6 @@ module.exports = {
         unnamedComponents: 'arrow-function',
       },
     ],
-    'react/no-unescaped-entities': 'off',
     'react/jsx-sort-props': [
       'warn',
       {

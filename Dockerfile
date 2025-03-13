@@ -10,9 +10,9 @@ RUN pnpm install
 
 COPY . .
 
-ARG NEXT_PUBLIC_LIFF_ID=2006975619-je4oBBk9
+ARG NEXT_PUBLIC_LIFF_ID=2007056697-DPW5dXG3
 ARG NEXT_PUBLIC_API_URL=https://dev-api.cuopenhouse2025.com/
-ARG NEXT_PUBLIC_CDN_URL=https://dev-cdn.cuopenhouse2025.com
+ARG NEXT_PUBLIC_CDN_URL=https://cdn.cuopenhouse2025.com
 
 ENV NEXT_PUBLIC_LIFF_ID=${NEXT_PUBLIC_LIFF_ID}
 ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
@@ -34,8 +34,13 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/pnpm-lock.yaml ./pnpm-lock.yaml
 
+ARG NEXT_PUBLIC_LIFF_ID=2007056697-DPW5dXG3
+ARG NEXT_PUBLIC_API_URL=https://dev-api.cuopenhouse2025.com/
+ARG NEXT_PUBLIC_CDN_URL=https://cdn.cuopenhouse2025.com
+
 ENV NEXT_PUBLIC_LIFF_ID=${NEXT_PUBLIC_LIFF_ID}
-ENV NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL}
+ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+ENV NEXT_PUBLIC_CDN_URL=${NEXT_PUBLIC_CDN_URL}
 
 RUN pnpm install --prod --ignore-scripts
 

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
+import { Toaster, toast } from 'react-hot-toast'
 
 import { getAdminAuthToken } from '@/app/actions/admin-auth'
 import { updateUser } from '@/app/actions/edit-profile/edit-profile'
@@ -23,10 +24,13 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { faculties } from '@/const/faculties'
+import translations from '@/const/register-title'
 import { years } from '@/const/staff-year'
 import { status } from '@/const/status-staff'
 import { type AdminRegisterForm } from '@/types/admin-register'
 import { type StaffData } from '@/types/staff-data'
+import { validateEmail } from '@/utils/email-validation'
+import { validatePhone } from '@/utils/phone-validation'
 import transformToStaffData from '@/utils/transform-staff-data'
 
 interface StaffFormProps {
@@ -37,6 +41,8 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
   const router = useRouter()
   const { profile, isInit } = useLiffContext()
   const [showFaculty, setShowFaculty] = useState(false)
+  const [isCorrectEmail, setIsCorrectEmail] = useState(true)
+  const [isCorrectPhone, setIsCorrectPhone] = useState(true)
   const [token, setToken] = useState<string | undefined>(undefined)
   const userId = profile?.userId
 
@@ -153,6 +159,26 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
       }
     }
 
+    // Check if the email is valid
+    if (!isCorrectEmail) {
+      isFormValid = false
+      const emailElement = document.querySelector(`[name="email"]`)
+      if (emailElement) {
+        emailElement.classList.add('border-red-500')
+        firstInvalidField = emailElement as HTMLElement
+      }
+    }
+
+    // Check if the phone number is valid
+    if (!isCorrectPhone) {
+      isFormValid = false
+      const phoneElement = document.querySelector(`[name="phone"]`)
+      if (phoneElement) {
+        phoneElement.classList.add('border-red-500')
+        firstInvalidField = phoneElement as HTMLElement
+      }
+    }
+
     if (!isFormValid && firstInvalidField) {
       firstInvalidField.scrollIntoView({
         behavior: 'smooth',
@@ -160,6 +186,7 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
       })
       console.log('Form is invalid')
     } else {
+      const loadingToastId = toast.loading('Loading...')
       try {
         const updates = transformToStaffData(values)
         await updateUser({
@@ -167,15 +194,24 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
           token: token ?? '',
           updates,
         })
+        toast.dismiss(loadingToastId)
         router.push('/3a9805a5')
       } catch (error) {
+        toast.dismiss(loadingToastId)
         console.error('Error updating user data:', error)
+        toast.error('This phone number is already taken.')
       }
     }
   }
 
   return (
     <div className='flex flex-col'>
+      <Toaster
+        position='top-center'
+        toastOptions={{
+          duration: 3000,
+        }}
+      />
       <div className='flex flex-col items-center justify-center gap-4 bg-[#FAE9F3] py-6'>
         <Image
           alt='logo'
@@ -272,7 +308,10 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
             <div className='flex gap-2'>
               <div className='flex w-1/2 flex-col gap-1'>
                 <div className='text-xs font-normal text-[#064E41]'>
-                  Email<span className='text-[#FF0000]'>*</span>
+                  Email
+                  <span className='text-[#FF0000]'>
+                    * {!isCorrectEmail ? translations.th.email.invalid : ''}
+                  </span>
                 </div>
                 <Input
                   className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
@@ -281,13 +320,24 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
                   name='email'
                   onInput={(e) => {
                     const inputElement = e.currentTarget
-                    inputElement.classList.remove('border-red-500')
+                    if (validateEmail(e.currentTarget.value)) {
+                      setIsCorrectEmail(true)
+
+                      inputElement.classList.remove('border-red-500')
+                    } else {
+                      setIsCorrectEmail(false)
+
+                      inputElement.classList.add('border-red-500')
+                    }
                   }}
                 />
               </div>
               <div className='flex w-1/2 flex-col gap-1'>
                 <div className='text-xs font-normal text-[#064E41]'>
-                  เบอร์ติดต่อ<span className='text-[#FF0000]'>*</span>
+                  เบอร์ติดต่อ
+                  <span className='text-[#FF0000]'>
+                    * {!isCorrectPhone ? translations.th.phone.invalid : ''}
+                  </span>
                 </div>
                 <Input
                   className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
@@ -296,7 +346,13 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
                   name='phone'
                   onInput={(e) => {
                     const inputElement = e.currentTarget
-                    inputElement.classList.remove('border-red-500')
+                    if (validatePhone(e.currentTarget.value)) {
+                      setIsCorrectPhone(true)
+                      inputElement.classList.remove('border-red-500')
+                    } else {
+                      setIsCorrectPhone(false)
+                      inputElement.classList.add('border-red-500')
+                    }
                   }}
                 />
               </div>
