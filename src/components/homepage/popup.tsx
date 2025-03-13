@@ -152,12 +152,12 @@ const Popup: React.FC = () => {
                     alt='person1'
                     className='rounded-full'
                     height={40}
-                    src='/assets/homepage/person1.png'
+                    src='/assets/homepage/person1.svg'
                     width={40}
                   />
                   <div className='-translate-y-2 text-center'>
                     <p className='rounded-full bg-white px-2 text-[8px] font-medium text-[#ED338C]'>
-                      P&apos;Punch
+                      P&apos; Zeta
                     </p>
                     <p className='text-[8px] font-medium text-[#ED338C]'>
                       #Dek66
@@ -175,19 +175,19 @@ const Popup: React.FC = () => {
                       width={12}
                     />
                     <p className='rounded-full border border-[#ED338C] bg-white px-1 text-[6px] font-semibold text-[#ED338C]'>
-                      ที่1 แพทย์
+                      ที่1 แพทย์ฯ
                     </p>
                   </div>
                   <Image
                     alt='person2'
                     className='rounded-full'
                     height={40}
-                    src='/assets/homepage/person2.png'
+                    src='/assets/homepage/person2.svg'
                     width={40}
                   />
                   <div className='-translate-y-2 text-center'>
                     <p className='rounded-full bg-white px-2 text-[8px] font-medium text-[#ED338C]'>
-                      P&apos;Tony
+                      P&apos; Tonkao
                     </p>
                     <p className='text-[8px] font-medium text-[#ED338C]'>
                       #Dek67
