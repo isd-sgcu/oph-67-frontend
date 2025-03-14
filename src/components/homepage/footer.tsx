@@ -9,23 +9,23 @@ const Footer: React.FC = () => {
   return (
     <div>
       {/* Footer Part 1 */}
-      <div className='to-[bg-gradient-to-r to-[#bg-gradient-to-r flex h-16 w-full items-center justify-center gap-9 border-t border-[#FBDAED] bg-gradient-to-r from-white via-[#E51889]/60 via-[#FEF5FA] via-white to-[#FEF6E9]'>
+      <div className='flex h-16 w-full items-center justify-center gap-9 border-t border-[#FBDAED] bg-gradient-to-r from-white via-[#FEF5FA] to-[#FEF6E9]'>
         <Image
           alt='faq'
           height={32}
-          src="/assets/sponsor/centralretail.png"
+          src='/assets/sponsor/centralretail.png'
           width={72.53}
         />
         <Image
           alt='faq'
           height={38.5}
-          src="/assets/sponsor/MJG.png"
+          src='/assets/sponsor/MJG.png'
           width={22.95}
         />
         <Image
           alt='faq'
           height={16}
-          src="/assets/sponsor/Gulf.png"
+          src='/assets/sponsor/Gulf.png'
           width={53}
         />
       </div>
