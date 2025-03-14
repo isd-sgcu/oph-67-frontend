@@ -6,7 +6,7 @@ interface InterestedItemProps {
 
 const InterestedItem: React.FC<InterestedItemProps> = ({ faculty }) => {
   return (
-    <div className='relative w-1/2 text-nowrap text-base font-light text-primary-green'>
+    <div className='flex w-1/2 flex-col items-center text-nowrap text-base font-light text-primary-green'>
       <p>{faculty.th}</p>
       <p className='text-xs'>{faculty.en}</p>
     </div>
