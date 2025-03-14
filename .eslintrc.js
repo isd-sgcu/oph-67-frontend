@@ -22,7 +22,6 @@ module.exports = {
       'error',
       { ignoreArrowShorthand: true },
     ],
-    '@typescript-eslint/no-unsafe-return': 'off',
     '@typescript-eslint/no-shadow': 'off',
     '@typescript-eslint/no-misused-promises': [
       'error',
