@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import React, { createContext, useContext, useEffect, useState } from 'react'
 
 import { setAuthCookie } from '@/app/actions/auth'
@@ -23,10 +24,14 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 interface AuthProviderProps {
   children: React.ReactNode
+  redirectToProfileOnLogin?: boolean
+  profilePath?: string
 }
 
 export const AuthProvider = ({
   children,
+  redirectToProfileOnLogin = true,
+  profilePath = '/profile',
 }: AuthProviderProps): React.ReactElement => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -37,6 +42,7 @@ export const AuthProvider = ({
     useState<AuthContextType['liffUserProfile']>(null)
 
   const { isInit, profile } = useLiff()
+  const router = useRouter()
 
   useEffect(() => {
     const autoLogin = async (): Promise<void> => {
@@ -57,6 +63,10 @@ export const AuthProvider = ({
         })
         setIsAuthenticated(true)
         await setAuthCookie(response.accessToken)
+
+        if (redirectToProfileOnLogin) {
+          router.push(profilePath)
+        }
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to auto-login')
         setIsAuthenticated(false)
@@ -66,7 +76,7 @@ export const AuthProvider = ({
     }
 
     void autoLogin()
-  }, [isInit, profile])
+  }, [isInit, profile, redirectToProfileOnLogin, profilePath, router])
 
   const value = {
     isAuthenticated,
