@@ -64,7 +64,7 @@ export const AuthProvider = ({
         setIsAuthenticated(true)
         await setAuthCookie(response.accessToken)
 
-        if (redirectToProfileOnLogin) {
+        if (redirectToProfileOnLogin && !isAuthenticated) {
           window.location.reload()
         }
       } catch (err) {
