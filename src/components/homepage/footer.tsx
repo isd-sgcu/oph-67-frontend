@@ -31,65 +31,71 @@ const Footer: React.FC = () => {
       </div>
 
       {/* Footer Part 2 */}
-      <div className='flex items-center justify-center bg-[linear-gradient(135deg,#EFA8C4_15%,#FFF2CC_50%,#F7A6CC_90%)] px-4 pb-4 pt-8'>
+      <div className='flex h-auto bg-[linear-gradient(135deg,#EFA8C4_15%,#FFF2CC_50%,#F7A6CC_90%)] px-2 pb-4 pt-4'>
         {/* Left Part */}
-        <div className='flex flex-col items-center justify-center'>
+        <div className='flex w-2/6 flex-col items-center justify-center'>
           {/* Logo */}
           <div className='relative mb-4 flex items-center justify-center'>
             <div className='absolute z-0 h-[120px] w-[100px] -translate-x-1 -translate-y-1 rounded-full bg-white blur-md' />
-            <Image
-              priority
-              alt='logo'
-              className='z-10'
-              height={80}
-              src={`${config.cdnURL}/assets/homepage/chula_for_all.svg`}
-              width={80}
-            />
+            <object
+              className='z-10 h-[80px] w-[80px]'
+              data={`${config.cdnURL}/assets/homepage/chula_for_all.svg`}
+              type='image/svg+xml'
+            >
+              <Image
+                alt='logo'
+                className='z-10'
+                height={80}
+                src={`${config.cdnURL}/assets/homepage/chula_for_all.svg`}
+                width={80}
+              />
+            </object>
           </div>
           {/* Header Text */}
-          <div className='z-10 flex flex-col items-center justify-center'>
-            <p className='text-center text-[8px] font-medium text-[#ED338C]'>
-              YOUR JOURNEY TO
-            </p>
-            <p className='text-center text-[8px] font-medium text-[#ED338C]'>
-              CHULA STARTS HERE!
-            </p>
+          <div className='flex flex-col items-center justify-center text-center text-[8px] font-medium text-[#ED338C]'>
+            <p>YOUR JOURNEY TO</p>
+            <p>CHULA STARTS HERE!</p>
           </div>
         </div>
 
         {/* Right Part */}
-        <div className='flex translate-x-8 flex-col items-center pt-14'>
-          {/* Logo */}
-          <div className='relative flex -translate-y-14'>
+        <div className='flex w-4/6 flex-col items-center'>
+          <div className='flex gap-0'>
             {/* Star Left */}
             <Image
               alt='star_left'
-              className='absolute -translate-x-6 -translate-y-4'
-              height={20}
-              src={`${config.cdnURL}/assets/homepage/star_yellow.svg`}
-              width={20}
-            />
-
-            {/* Star Right */}
-            <Image
-              alt='star_right'
-              className='absolute -translate-y-4 translate-x-20 rotate-[30deg]'
+              className=''
               height={20}
               src={`${config.cdnURL}/assets/homepage/star_yellow.svg`}
               width={20}
             />
 
             {/* Text */}
-            <div className='z-10 -translate-y-3'>
+            <object
+              className='z-10 h-[20px] w-[85px]'
+              data={`${config.cdnURL}/assets/homepage/special_text.svg`}
+              type='image/svg+xml'
+            >
               <Image
-                alt='special_text'
-                height={80}
+                alt='logo'
+                className=''
+                height={16}
                 src={`${config.cdnURL}/assets/homepage/special_text.svg`}
-                width={80}
+                width={56}
               />
-            </div>
+            </object>
+            {/* Star Right */}
+            <Image
+              alt='star_right'
+              className='rotate-[30deg]'
+              height={20}
+              src={`${config.cdnURL}/assets/homepage/star_yellow.svg`}
+              width={20}
+            />
+          </div>
 
-            {/* Dice */}
+          {/* Dice */}
+          <div className='mt-8 flex items-center justify-center gap-0'>
             <div className='absolute rounded-full border border-white bg-white/50 px-3 py-2'>
               <Image
                 alt='dice'
@@ -101,7 +107,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Title */}
-          <div className='flex flex-col items-center justify-center pb-4'>
+          <div className='mt-9 flex flex-col items-center justify-center'>
             <div className='relative w-fit'>
               <div className='absolute z-0 h-8 w-full -translate-y-2 rounded-full bg-white blur-sm' />
               <p className='relative z-10 text-[8px] font-medium text-[#ED338C]'>
@@ -117,26 +123,39 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Instagram */}
-          <div className='relative flex w-full items-center justify-center gap-2 rounded-full border-2 border-white bg-white px-6 py-2 shadow-md'>
+          <div className='relative mt-3 flex w-auto items-center justify-center gap-1 rounded-xl border-2 border-white bg-[#FDF8F8] px-5 py-1 shadow-md'>
             {/* Ribbon Left */}
-            <Image
-              alt='ribbon'
-              className='absolute -translate-x-24 -translate-y-4'
-              height={30}
-              src={`${config.cdnURL}/assets/homepage/ribbon.svg`}
-              width={30}
-            />
+            <object
+              className='absolute h-[40px] w-[40px] -translate-x-24 -translate-y-4'
+              data={`${config.cdnURL}/assets/homepage/ribbon.svg`}
+              type='image/svg+xml'
+            >
+              <Image
+                alt='ribbon'
+                className='absolute -translate-x-24 -translate-y-5'
+                height={30}
+                src={`${config.cdnURL}/assets/homepage/ribbon.svg`}
+                width={30}
+              />
+            </object>
 
             {/* Ribbon Right */}
-            <Image
-              alt='ribbon'
-              className='absolute -translate-y-5 translate-x-24 rotate-[30deg]'
-              height={30}
-              src={`${config.cdnURL}/assets/homepage/ribbon.svg`}
-              width={30}
-            />
+            <object
+              className='absolute h-[40px] w-[40px] -translate-y-4 translate-x-24 rotate-[30deg]'
+              data={`${config.cdnURL}/assets/homepage/ribbon.svg`}
+              type='image/svg+xml'
+            >
+              <Image
+                alt='ribbon'
+                className='absolute -translate-y-5 translate-x-24 rotate-[30deg]'
+                height={30}
+                src={`${config.cdnURL}/assets/homepage/ribbon.svg`}
+                width={30}
+              />
+            </object>
+
             {/* Left Text */}
-            <div>
+            <div className='flex flex-col'>
               <p className='flex items-center gap-1 text-[8px] font-medium text-[#ED338C]'>
                 Don&apos;t Miss!
                 <Image
@@ -150,6 +169,7 @@ const Footer: React.FC = () => {
                 Come and find out,
               </p>
             </div>
+
             {/* Right Button */}
             <Link
               className='flex gap-1 rounded-full border border-[#ED338C] bg-white px-3 py-1'

@@ -15,7 +15,6 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 
-
 const Popup: React.FC = () => {
   const [open, setOpen] = useState(false)
 
@@ -25,7 +24,7 @@ const Popup: React.FC = () => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className='w-[300px] rounded-xl border-0 bg-[linear-gradient(135deg,#EFA8C4_15%,#FFF2CC_30%,#F7A6CC_90%)] sm:max-w-md'>
+      <DialogContent className='w-[300px] rounded-xl border-0 bg-[linear-gradient(135deg,#EFA8C4_15%,#FFF2CC_30%,#F7A6CC_90%)] font-anuphan sm:max-w-md'>
         {/* Header */}
         <DialogHeader className='flex flex-col items-center'>
           <DialogClose className='absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-0 focus:ring-offset-0 disabled:pointer-events-none data-[state=open]:bg-transparent'>
@@ -36,14 +35,19 @@ const Popup: React.FC = () => {
             {/* Logo */}
             <div className='relative flex h-[120px] w-[120px] items-center justify-center'>
               <div className='absolute z-0 h-[140px] w-[140px] -translate-x-1 -translate-y-1 rounded-full bg-white blur-md' />
-              <Image
-                priority
-                alt='logo'
-                className='z-10'
-                height={80}
-                src={`${config.cdnURL}/assets/homepage/chula_for_all.svg`}
-                width={100}
-              />
+              <object
+                className='z-10 h-[80px] w-[100px]'
+                data={`${config.cdnURL}/assets/homepage/chula_for_all.svg`}
+                type='image/svg+xml'
+              >
+                <Image
+                  alt='logo'
+                  className='z-10'
+                  height={80}
+                  src={`${config.cdnURL}/assets/homepage/chula_for_all.svg`}
+                  width={100}
+                />
+              </object>
             </div>
             {/* Header Text */}
             <div className='z-10 flex flex-col items-center justify-center'>
@@ -75,22 +79,34 @@ const Popup: React.FC = () => {
               </p>
 
               {/* Ribbon Left */}
-              <Image
-                alt='ribbon'
-                className='absolute -translate-x-20 translate-y-1'
-                height={40}
-                src={`${config.cdnURL}/assets/homepage/ribbon.svg`}
-                width={40}
-              />
+              <object
+                className='absolute h-[40px] w-[40px] -translate-x-20 translate-y-1'
+                data={`${config.cdnURL}/assets/homepage/ribbon.svg`}
+                type='image/svg+xml'
+              >
+                <Image
+                  alt='ribbon'
+                  className='absolute -translate-x-20 translate-y-1'
+                  height={40}
+                  src={`${config.cdnURL}/assets/homepage/ribbon.svg`}
+                  width={40}
+                />
+              </object>
 
               {/* Ribbon Right */}
-              <Image
-                alt='ribbon'
-                className='absolute translate-x-20 translate-y-1 rotate-[30deg]'
-                height={40}
-                src={`${config.cdnURL}/assets/homepage/ribbon.svg`}
-                width={40}
-              />
+              <object
+                className='absolute h-[40px] w-[40px] translate-x-20 translate-y-1 rotate-[30deg]'
+                data={`${config.cdnURL}/assets/homepage/ribbon.svg`}
+                type='image/svg+xml'
+              >
+                <Image
+                  alt='ribbon'
+                  className='absolute translate-x-20 translate-y-1 rotate-[30deg]'
+                  height={40}
+                  src={`${config.cdnURL}/assets/homepage/ribbon.svg`}
+                  width={40}
+                />
+              </object>
 
               {/* Left Box */}
               <p className='absolute -translate-x-20 -translate-y-6 rotate-[-8deg] rounded-full border border-[#ED338C] bg-white px-3 py-1 text-[10px] font-medium text-[#ED338C]'>
@@ -150,13 +166,19 @@ const Popup: React.FC = () => {
                       ที่1 บัญชี
                     </p>
                   </div>
-                  <Image
-                    alt='person1'
-                    className='rounded-full'
-                    height={40}
-                    src={`${config.cdnURL}/assets/homepage/person1.svg`}
-                    width={40}
-                  />
+                  <object
+                    className='h-[40px] w-[40px] rounded-full'
+                    data={`${config.cdnURL}/assets/homepage/person1.svg`}
+                    type='image/svg+xml'
+                  >
+                    <Image
+                      alt='person1'
+                      className='rounded-full'
+                      height={40}
+                      src={`${config.cdnURL}/assets/homepage/person1.svg`}
+                      width={40}
+                    />
+                  </object>
                   <div className='-translate-y-2 text-center'>
                     <p className='rounded-full bg-white px-2 text-[8px] font-medium text-[#ED338C]'>
                       P&apos; Zeta
@@ -180,13 +202,19 @@ const Popup: React.FC = () => {
                       ที่1 แพทย์ฯ
                     </p>
                   </div>
-                  <Image
-                    alt='person2'
-                    className='rounded-full'
-                    height={40}
-                    src={`${config.cdnURL}/assets/homepage/person2.svg`}
-                    width={40}
-                  />
+                  <object
+                    className='h-[40px] w-[40px] rounded-full'
+                    data={`${config.cdnURL}/assets/homepage/person2.svg`}
+                    type='image/svg+xml'
+                  >
+                    <Image
+                      alt='person2'
+                      className='rounded-full'
+                      height={40}
+                      src={`${config.cdnURL}/assets/homepage/person2.svg`}
+                      width={40}
+                    />
+                  </object>
                   <div className='-translate-y-2 text-center'>
                     <p className='rounded-full bg-white px-2 text-[8px] font-medium text-[#ED338C]'>
                       P&apos; Tonkao
