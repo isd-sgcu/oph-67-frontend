@@ -1,6 +1,5 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
 import React, { createContext, useContext, useEffect, useState } from 'react'
 
 import { setAuthCookie } from '@/app/actions/auth'
@@ -24,14 +23,12 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 interface AuthProviderProps {
   children: React.ReactNode
-  redirectToProfileOnLogin?: boolean
-  profilePath?: string
+  refreshAfterLogin?: boolean
 }
 
 export const AuthProvider = ({
   children,
-  redirectToProfileOnLogin = true,
-  profilePath = '/profile',
+  refreshAfterLogin = true,
 }: AuthProviderProps): React.ReactElement => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -42,7 +39,15 @@ export const AuthProvider = ({
     useState<AuthContextType['liffUserProfile']>(null)
 
   const { isInit, profile } = useLiff()
-  const router = useRouter()
+
+  const [hasRefreshed, setHasRefreshed] = useState(false)
+
+  useEffect(() => {
+    const refreshFlag = sessionStorage.getItem('auth_refreshed')
+    if (refreshFlag === 'true') {
+      setHasRefreshed(true)
+    }
+  }, [])
 
   useEffect(() => {
     const autoLogin = async (): Promise<void> => {
@@ -64,8 +69,9 @@ export const AuthProvider = ({
         setIsAuthenticated(true)
         await setAuthCookie(response.accessToken)
 
-        if (redirectToProfileOnLogin) {
-          router.push(profilePath)
+        if (refreshAfterLogin && !hasRefreshed) {
+          sessionStorage.setItem('auth_refreshed', 'true')
+          window.location.reload()
         }
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to auto-login')
@@ -76,7 +82,7 @@ export const AuthProvider = ({
     }
 
     void autoLogin()
-  }, [isInit, profile, redirectToProfileOnLogin, profilePath, router])
+  }, [isInit, profile, refreshAfterLogin, hasRefreshed])
 
   const value = {
     isAuthenticated,
