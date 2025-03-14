@@ -28,6 +28,31 @@ const Footer: React.FC = () => {
       </div> */}
 
       {/* Footer Part 2 */}
+      <div className='flex h-[64px] w-full justify-center gap-10 bg-white'>
+        <Image
+          alt='sponsor1'
+          className='object-contain'
+          height={32}
+          src={`${config.cdnURL}/assets/homepage/centralretail.png`}
+          width={73}
+        />
+        <Image
+          alt='sponsor2'
+          className='object-contain'
+          height={40}
+          src={`${config.cdnURL}/assets/homepage/majorgroup.png`}
+          width={24}
+        />
+        <Image
+          alt='sponsor3'
+          className='object-contain'
+          height={16}
+          src={`${config.cdnURL}/assets/homepage/gulf.png`}
+          width={56}
+        />
+      </div>
+
+      {/* Footer Part 3 */}
       <div className='flex items-center justify-center bg-[linear-gradient(135deg,#EFA8C4_15%,#FFF2CC_50%,#F7A6CC_90%)] px-4 pb-4 pt-8'>
         {/* Left Part */}
         <div className='flex flex-col items-center justify-center'>
@@ -165,8 +190,7 @@ const Footer: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {/* Footer Part 3 */}
+      {/* Footer Part 4 */}
       <div className='flex h-[38px] w-full items-center justify-center gap-[14.55px] bg-[#1C1B1F]'>
         <Image
           alt='logo'
