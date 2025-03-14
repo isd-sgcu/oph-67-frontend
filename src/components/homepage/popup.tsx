@@ -15,7 +15,6 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 
-
 const Popup: React.FC = () => {
   const [open, setOpen] = useState(false)
 
@@ -25,7 +24,7 @@ const Popup: React.FC = () => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className='w-[300px] rounded-xl border-0 bg-[linear-gradient(135deg,#EFA8C4_15%,#FFF2CC_30%,#F7A6CC_90%)] sm:max-w-md'>
+      <DialogContent className='w-[300px] rounded-xl border-0 bg-[linear-gradient(135deg,#EFA8C4_15%,#FFF2CC_30%,#F7A6CC_90%)] font-anuphan sm:max-w-md'>
         {/* Header */}
         <DialogHeader className='flex flex-col items-center'>
           <DialogClose className='absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-0 focus:ring-offset-0 disabled:pointer-events-none data-[state=open]:bg-transparent'>
@@ -37,7 +36,6 @@ const Popup: React.FC = () => {
             <div className='relative flex h-[120px] w-[120px] items-center justify-center'>
               <div className='absolute z-0 h-[140px] w-[140px] -translate-x-1 -translate-y-1 rounded-full bg-white blur-md' />
               <Image
-                priority
                 alt='logo'
                 className='z-10'
                 height={80}
