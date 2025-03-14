@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 
+import { AuthProvider } from '@/components/auth/auth-provider'
 import { LiffProvider } from '@/components/liff/liff-provider'
 
 export const metadata: Metadata = {
@@ -12,7 +13,9 @@ const Layout: React.FC<Readonly<{ children: React.ReactNode }>> = ({
 }) => {
   return (
     <div className='relative mx-auto min-h-screen max-w-md font-anuphan shadow'>
-      <LiffProvider>{children}</LiffProvider>
+      <LiffProvider>
+        <AuthProvider>{children}</AuthProvider>
+      </LiffProvider>
     </div>
   )
 }
