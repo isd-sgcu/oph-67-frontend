@@ -138,7 +138,7 @@ const Popup: React.FC = () => {
                 width={18}
               />
               {/* Title */}
-              <p className='text-center text-[16px] font-medium text-[#ED338C]'>
+              <p className='text-center text-[16px] font-bold text-[#ED338C]'>
                 Special!
               </p>
               {/* Subtitle */}
@@ -147,7 +147,7 @@ const Popup: React.FC = () => {
                   ลุ้นรับโอกาสในการคุยกับ<b>พี่จุฬาฯตัวจริง</b>
                 </p>
                 <p className='text-[10px] font-medium text-[#ED338C]'>
-                  ด้วยคะแนนสอบเข้า TCAS อันดับ 1 ของประเทศ!
+                  ด้วยคะแนนสอบเข้า <b>TCAS</b> อันดับ <b>1</b> ของประเทศ!
                 </p>
               </div>
               {/* Persons */}

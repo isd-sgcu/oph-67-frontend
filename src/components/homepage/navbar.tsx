@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -21,13 +22,21 @@ const Navbar: React.FC = () => {
 
         <div className='flex h-[72px] w-full items-center justify-between bg-[#064E41] py-1 pl-2 pr-4'>
           {/* Logo is at the left */}
-          <Link
-            className='h-[64px] w-[64px]'
-            href='/'
-            style={{
-              backgroundImage: `url(${config.cdnURL}/assets/homepage/oph_logo-01.svg)`,
-            }}
-          />
+          <Link href='/'>
+            <object
+              className='h-[64px] w-[64px]'
+              data={`${config.cdnURL}/assets/homepage/oph_logo-01.svg`}
+              type='image/svg+xml'
+            >
+              <Image
+                alt='logo'
+                className='h-[64px] w-[64px]'
+                height={64}
+                src={`${config.cdnURL}/assets/homepage/oph_logo-01.svg`}
+                width={64}
+              />
+            </object>
+          </Link>
 
           {/* Burger Button is at the right */}
           <div className='flex gap-4'>

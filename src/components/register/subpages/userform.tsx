@@ -133,12 +133,18 @@ const UserForm: React.FC<UserFormProps> = ({ setStep, form }) => {
           <Switch onClick={() => onLanguageChange()} />
         </div>
         <div className='flex flex-col items-center justify-center gap-4 pb-6 pt-2'>
-          <Image
-            alt='logo'
-            height={125}
-            src={`${config.cdnURL}/assets/register/oph-logo.svg`}
-            width={125}
-          />
+          <object
+            className='h-[125px] w-[125px]'
+            data={`${config.cdnURL}/assets/register/oph-logo.svg`}
+            type='image/svg+xml'
+          >
+            <Image
+              alt='logo'
+              height={125}
+              src={`${config.cdnURL}/assets/register/oph-logo.svg`}
+              width={125}
+            />
+          </object>
           <div className='flex flex-col items-center justify-center gap-0 font-mitr tracking-tight text-[#064E41]'>
             <div className='text-xl font-medium'>ลงทะเบียน</div>
             <div className='text-base font-light'>Registration Form</div>
