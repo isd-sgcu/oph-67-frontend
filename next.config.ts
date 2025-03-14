@@ -25,9 +25,6 @@ const nextConfig: NextConfig = {
         pathname: '/oph-2025/**',
       },
     ],
-    disableStaticImages: true,
-    minimumCacheTTL: 60,
-    unoptimized: true,
   },
 }
 
