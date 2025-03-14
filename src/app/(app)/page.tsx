@@ -56,7 +56,7 @@ const Home: React.FC = () => {
                 </p>
               </Link>
             </Button>
-            {timeLeft && timeLeft.targetDate >= openRegisteredDate ? <p className='font-mitr text-[15px] font-normal text-[#064E41]'>
+            {timeLeft && timeLeft.nowDate < openRegisteredDate ? <p className='font-mitr text-[15px] font-normal text-[#064E41]'>
                 พร้อมลงทะเบียนวันที่ 14 มีนาคมนี้
               </p> : null}
           </>

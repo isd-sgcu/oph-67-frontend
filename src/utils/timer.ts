@@ -7,6 +7,7 @@ export const getTimer = (
   seconds: number
   time_left: number
   targetDate: number
+  nowDate: number
 } => {
   const target = new Date(targetDate).getTime()
   const now = new Date().getTime()
@@ -20,6 +21,7 @@ export const getTimer = (
       seconds: 0,
       time_left: 0,
       targetDate: target,
+      nowDate: now,
     }
   }
 
@@ -30,5 +32,6 @@ export const getTimer = (
     seconds: Math.floor((diff % (1000 * 60)) / 1000),
     time_left: diff,
     targetDate: target,
+    nowDate: now,
   }
 }
