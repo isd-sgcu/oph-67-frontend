@@ -64,8 +64,8 @@ export const AuthProvider = ({
         setIsAuthenticated(true)
         await setAuthCookie(response.accessToken)
 
-        if (redirectToProfileOnLogin && !isAuthenticated) {
-          window.location.reload()
+        if (redirectToProfileOnLogin) {
+          router.push(profilePath)
         }
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to auto-login')
