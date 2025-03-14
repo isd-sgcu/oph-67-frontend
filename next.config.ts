@@ -25,6 +25,7 @@ const nextConfig: NextConfig = {
         pathname: '/oph-2025/**',
       },
     ],
+    unoptimized: true,
   },
 }
 
