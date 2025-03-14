@@ -35,13 +35,19 @@ const Popup: React.FC = () => {
             {/* Logo */}
             <div className='relative flex h-[120px] w-[120px] items-center justify-center'>
               <div className='absolute z-0 h-[140px] w-[140px] -translate-x-1 -translate-y-1 rounded-full bg-white blur-md' />
-              <Image
-                alt='logo'
-                className='z-10'
-                height={80}
-                src={`${config.cdnURL}/assets/homepage/chula_for_all.svg`}
-                width={100}
-              />
+              <object
+                className='z-10 h-[80px] w-[100px]'
+                data={`${config.cdnURL}/assets/homepage/chula_for_all.svg`}
+                type='image/svg+xml'
+              >
+                <Image
+                  alt='logo'
+                  className='z-10'
+                  height={80}
+                  src={`${config.cdnURL}/assets/homepage/chula_for_all.svg`}
+                  width={100}
+                />
+              </object>
             </div>
             {/* Header Text */}
             <div className='z-10 flex flex-col items-center justify-center'>
@@ -82,13 +88,19 @@ const Popup: React.FC = () => {
               />
 
               {/* Ribbon Right */}
-              <Image
-                alt='ribbon'
-                className='absolute translate-x-20 translate-y-1 rotate-[30deg]'
-                height={40}
-                src={`${config.cdnURL}/assets/homepage/ribbon.svg`}
-                width={40}
-              />
+              <object
+                className='absolute h-[40px] w-[40px] translate-x-20 translate-y-1 rotate-[30deg]'
+                data={`${config.cdnURL}/assets/homepage/ribbon.svg`}
+                type='image/svg+xml'
+              >
+                <Image
+                  alt='ribbon'
+                  className='absolute translate-x-20 translate-y-1 rotate-[30deg]'
+                  height={40}
+                  src={`${config.cdnURL}/assets/homepage/ribbon.svg`}
+                  width={40}
+                />
+              </object>
 
               {/* Left Box */}
               <p className='absolute -translate-x-20 -translate-y-6 rotate-[-8deg] rounded-full border border-[#ED338C] bg-white px-3 py-1 text-[10px] font-medium text-[#ED338C]'>
