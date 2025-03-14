@@ -1,5 +1,5 @@
 export const getTimer = (
-  targetDate = '2025-03-14T00:00:00'
+  targetDate = '2025-03-29T08:00:00'
 ): {
   days: number
   hours: number
