@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
+import { config } from '@/app/config'
 import {
   Dialog,
   DialogClose,
@@ -13,6 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+
 
 const Popup: React.FC = () => {
   const [open, setOpen] = useState(false)
@@ -39,7 +41,7 @@ const Popup: React.FC = () => {
                 alt='logo'
                 className='z-10'
                 height={80}
-                src='/assets/homepage/chula_for_all.svg'
+                src={`${config.cdnURL}/assets/homepage/chula_for_all.svg`}
                 width={100}
               />
             </div>
@@ -64,7 +66,7 @@ const Popup: React.FC = () => {
                 <Image
                   alt='dice'
                   height={60}
-                  src='/assets/homepage/dice.svg'
+                  src={`${config.cdnURL}/assets/homepage/dice.svg`}
                   width={60}
                 />
               </div>
@@ -77,7 +79,7 @@ const Popup: React.FC = () => {
                 alt='ribbon'
                 className='absolute -translate-x-20 translate-y-1'
                 height={40}
-                src='/assets/homepage/ribbon.svg'
+                src={`${config.cdnURL}/assets/homepage/ribbon.svg`}
                 width={40}
               />
 
@@ -86,7 +88,7 @@ const Popup: React.FC = () => {
                 alt='ribbon'
                 className='absolute translate-x-20 translate-y-1 rotate-[30deg]'
                 height={40}
-                src='/assets/homepage/ribbon.svg'
+                src={`${config.cdnURL}/assets/homepage/ribbon.svg`}
                 width={40}
               />
 
@@ -108,7 +110,7 @@ const Popup: React.FC = () => {
                 alt='instagram'
                 className='absolute -translate-x-12 -translate-y-14'
                 height={18}
-                src='/assets/homepage/star_yellow.svg'
+                src={`${config.cdnURL}/assets/homepage/star_yellow.svg`}
                 width={18}
               />
               {/* Star Right */}
@@ -116,7 +118,7 @@ const Popup: React.FC = () => {
                 alt='instagram'
                 className='absolute -translate-y-14 translate-x-12 rotate-[30deg]'
                 height={18}
-                src='/assets/homepage/star_yellow.svg'
+                src={`${config.cdnURL}/assets/homepage/star_yellow.svg`}
                 width={18}
               />
               {/* Title */}
@@ -141,7 +143,7 @@ const Popup: React.FC = () => {
                       alt='crown'
                       className='translate-x-3 translate-y-1'
                       height={12}
-                      src='/assets/homepage/crown.svg'
+                      src={`${config.cdnURL}/assets/homepage/crown.svg`}
                       width={12}
                     />
                     <p className='rounded-full border border-[#ED338C] bg-white px-1 text-[6px] font-semibold text-[#ED338C]'>
@@ -152,7 +154,7 @@ const Popup: React.FC = () => {
                     alt='person1'
                     className='rounded-full'
                     height={40}
-                    src='/assets/homepage/person1.svg'
+                    src={`${config.cdnURL}/assets/homepage/person1.svg`}
                     width={40}
                   />
                   <div className='-translate-y-2 text-center'>
@@ -171,7 +173,7 @@ const Popup: React.FC = () => {
                       alt='crown'
                       className='translate-x-3 translate-y-1 rotate-[30deg]'
                       height={12}
-                      src='/assets/homepage/crown.svg'
+                      src={`${config.cdnURL}/assets/homepage/crown.svg`}
                       width={12}
                     />
                     <p className='rounded-full border border-[#ED338C] bg-white px-1 text-[6px] font-semibold text-[#ED338C]'>
@@ -182,7 +184,7 @@ const Popup: React.FC = () => {
                     alt='person2'
                     className='rounded-full'
                     height={40}
-                    src='/assets/homepage/person2.svg'
+                    src={`${config.cdnURL}/assets/homepage/person2.svg`}
                     width={40}
                   />
                   <div className='-translate-y-2 text-center'>
@@ -209,7 +211,7 @@ const Popup: React.FC = () => {
               alt='instagram'
               className='absolute -translate-x-24 -translate-y-1'
               height={18}
-              src='/assets/homepage/star.svg'
+              src={`${config.cdnURL}/assets/homepage/star.svg`}
               width={18}
             />
             {/* Star Right */}
@@ -217,7 +219,7 @@ const Popup: React.FC = () => {
               alt='instagram'
               className='1 absolute -translate-y-1 translate-x-24 rotate-[30deg]'
               height={18}
-              src='/assets/homepage/star.svg'
+              src={`${config.cdnURL}/assets/homepage/star.svg`}
               width={18}
             />
 
@@ -236,7 +238,7 @@ const Popup: React.FC = () => {
               <Image
                 alt='instagram'
                 height={12}
-                src='/assets/homepage/instagram.svg'
+                src={`${config.cdnURL}/assets/homepage/instagram.svg`}
                 width={12}
               />
               <p className='text-[10px] font-medium text-[#ED338C]'>

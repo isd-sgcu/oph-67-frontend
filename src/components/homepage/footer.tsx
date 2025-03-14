@@ -39,7 +39,7 @@ const Footer: React.FC = () => {
               alt='logo'
               className='z-10'
               height={80}
-              src='/assets/homepage/chula_for_all.svg'
+              src={`${config.cdnURL}/assets/homepage/chula_for_all.svg`}
               width={80}
             />
           </div>
@@ -63,7 +63,7 @@ const Footer: React.FC = () => {
               alt='star_left'
               className='absolute -translate-x-6 -translate-y-4'
               height={20}
-              src='/assets/homepage/star_yellow.svg'
+              src={`${config.cdnURL}/assets/homepage/star_yellow.svg`}
               width={20}
             />
 
@@ -72,7 +72,7 @@ const Footer: React.FC = () => {
               alt='star_right'
               className='absolute -translate-y-4 translate-x-20 rotate-[30deg]'
               height={20}
-              src='/assets/homepage/star_yellow.svg'
+              src={`${config.cdnURL}/assets/homepage/star_yellow.svg`}
               width={20}
             />
 
@@ -81,7 +81,7 @@ const Footer: React.FC = () => {
               <Image
                 alt='special_text'
                 height={80}
-                src='/assets/homepage/special_text.svg'
+                src={`${config.cdnURL}/assets/homepage/special_text.svg`}
                 width={80}
               />
             </div>
@@ -91,7 +91,7 @@ const Footer: React.FC = () => {
               <Image
                 alt='dice'
                 height={60}
-                src='/assets/homepage/dice.svg'
+                src={`${config.cdnURL}/assets/homepage/dice.svg`}
                 width={60}
               />
             </div>
@@ -120,7 +120,7 @@ const Footer: React.FC = () => {
               alt='ribbon'
               className='absolute -translate-x-24 -translate-y-4'
               height={30}
-              src='/assets/homepage/ribbon.svg'
+              src={`${config.cdnURL}/assets/homepage/ribbon.svg`}
               width={30}
             />
 
@@ -129,7 +129,7 @@ const Footer: React.FC = () => {
               alt='ribbon'
               className='absolute -translate-y-5 translate-x-24 rotate-[30deg]'
               height={30}
-              src='/assets/homepage/ribbon.svg'
+              src={`${config.cdnURL}/assets/homepage/ribbon.svg`}
               width={30}
             />
             {/* Left Text */}
@@ -139,9 +139,9 @@ const Footer: React.FC = () => {
                 <Image
                   alt='star_pink'
                   height={10}
-                  src='/assets/homepage/star_pink.svg'
+                  src={`${config.cdnURL}/assets/homepage/star_pink.svg`}
                   width={10}
-                 />
+                />
               </p>
               <p className='text-center text-[8px] font-medium text-[#ED338C]'>
                 Come and find out,
@@ -155,7 +155,7 @@ const Footer: React.FC = () => {
               <Image
                 alt='instagram'
                 height={12}
-                src='/assets/homepage/instagram.svg'
+                src={`${config.cdnURL}/assets/homepage/instagram.svg`}
                 width={12}
               />
               <p className='text-[12px] font-medium text-[#ED338C]'>
