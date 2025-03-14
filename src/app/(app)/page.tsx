@@ -8,6 +8,7 @@ import Faq from '@/components/homepage/faq'
 import Footer from '@/components/homepage/footer'
 import Imageslider from '@/components/homepage/imageslider'
 import Navbar from '@/components/homepage/navbar'
+import Popup from '@/components/homepage/popup'
 import Timer from '@/components/homepage/timer'
 import { Button } from '@/components/ui/button'
 import {
@@ -20,10 +21,18 @@ import { getTimer } from '@/utils/timer'
 const Home: React.FC = () => {
   const { isAuthenticated } = useAuth()
   const isRegistered = isAuthenticated
-  const [currentTimeLeft, setCurrentTimeLeft] = useState<number | null>(null)
+  const openRegisteredDate = new Date('2025-03-14T00:00:00').getTime()
+  const [timeLeft, setTimeLeft] = useState<ReturnType<typeof getTimer> | null>(
+    null
+  )
 
   useEffect(() => {
-    setCurrentTimeLeft(getTimer().time_left)
+    setTimeLeft(getTimer())
+    const interval = setInterval(() => {
+      setTimeLeft(getTimer())
+    }, 1000)
+
+    return () => clearInterval(interval)
   }, [])
 
   const actionButtonsDetail = isRegistered
@@ -32,6 +41,7 @@ const Home: React.FC = () => {
 
   return (
     <div className='flex flex-col justify-center bg-[#FCF3F8]'>
+      <Popup />
       <Navbar />
       <Imageslider />
       <Timer />
@@ -46,11 +56,9 @@ const Home: React.FC = () => {
                 </p>
               </Link>
             </Button>
-            {currentTimeLeft !== 0 && (
-              <p className='font-mitr text-[15px] font-normal text-[#064E41]'>
+            {timeLeft && timeLeft.nowDate < openRegisteredDate ? <p className='font-mitr text-[15px] font-normal text-[#064E41]'>
                 พร้อมลงทะเบียนวันที่ 14 มีนาคมนี้
-              </p>
-            )}
+              </p> : null}
           </>
         )}
         <div className='grid w-full grid-cols-2 gap-2'>
