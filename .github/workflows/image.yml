@@ -1,0 +1,37 @@
+name: Sync Assets to GCS
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'public/**'
+
+jobs:
+  sync-assets:
+    name: Sync Public Assets to Google Cloud Storage
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+      - name: Check public directory
+        run: |
+          echo "Files to be synced:"
+          find public -type f | wc -l
+          du -sh public
+
+      - name: Copy files to Google Cloud Storage
+        run: |
+          echo "Copying files to gs://oph-2025/"
+          gsutil -m cp -r ./public/* gs://oph-2025/
+
+      - name: Verify sync
+        run: |
+          echo "Sync completed. Files in bucket:"
+          gsutil ls -l gs://oph-2025/ | wc -l
