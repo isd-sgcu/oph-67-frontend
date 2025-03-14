@@ -15,9 +15,6 @@ const RootLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({
         ubuntu.variable
       )}
     >
-      <head>
-        <link href='/logo.svg' rel='icon' sizes='any' />
-      </head>
       <body>{children}</body>
     </html>
   )
