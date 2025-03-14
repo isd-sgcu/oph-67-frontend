@@ -16,9 +16,11 @@ import { useLiffContext } from '@/components/liff/liff-provider'
 import InterestedItem from '@/components/profile/interested-item'
 import { Button } from '@/components/ui/button'
 import { type Faculty, faculties } from '@/const/faculties'
+import { type UserData } from '@/types/user-data'
 
 const Profile: React.FC = () => {
   const [favFaculties, setFavFaculties] = useState<Faculty[]>([])
+  const [profileInfo, setProfileInfo] = useState<UserData | null>(null)
   const { profile, isInit } = useLiffContext()
 
   useEffect(() => {
@@ -33,6 +35,7 @@ const Profile: React.FC = () => {
         }
         const data = await getUser(profile.userId, token)
         setFavFaculties([])
+        setProfileInfo(data)
         if (data.role === 'student') {
           const interests = [
             data.firstInterest,
@@ -81,7 +84,9 @@ const Profile: React.FC = () => {
           Your Profile
         </h1>
       </div>
-      <p className='text-base font-light text-primary-green'>{displayName}</p>
+      <p className='text-base font-light text-primary-green'>
+        {profileInfo?.name ?? displayName}
+      </p>
       <Link href='/profile/edit'>
         <Button className='font-normal' size='sm' variant='outline'>
           <EditSolid />
