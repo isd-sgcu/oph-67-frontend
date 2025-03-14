@@ -114,7 +114,7 @@ const Profile: React.FC = () => {
         </>
       ) : null}
       <div className='my-2 w-[20rem] border border-b-0 border-primary-green' />
-      <Link href='/profile/certificate'>
+      {/* <Link href='/profile/certificate'>
         <Button className='w-[20rem] font-cloud-soft text-2xl font-bold'>
           <Image
             alt='cert'
@@ -125,7 +125,7 @@ const Profile: React.FC = () => {
           />
           รับเกียรติบัตร
         </Button>
-      </Link>
+      </Link> */}
     </div>
   )
 }
