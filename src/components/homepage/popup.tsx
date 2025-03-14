@@ -79,13 +79,19 @@ const Popup: React.FC = () => {
               </p>
 
               {/* Ribbon Left */}
-              <Image
-                alt='ribbon'
-                className='absolute -translate-x-20 translate-y-1'
-                height={40}
-                src={`${config.cdnURL}/assets/homepage/ribbon.svg`}
-                width={40}
-              />
+              <object
+                className='absolute h-[40px] w-[40px] -translate-x-20 translate-y-1'
+                data={`${config.cdnURL}/assets/homepage/ribbon.svg`}
+                type='image/svg+xml'
+              >
+                <Image
+                  alt='ribbon'
+                  className='absolute -translate-x-20 translate-y-1'
+                  height={40}
+                  src={`${config.cdnURL}/assets/homepage/ribbon.svg`}
+                  width={40}
+                />
+              </object>
 
               {/* Ribbon Right */}
               <object
@@ -160,13 +166,19 @@ const Popup: React.FC = () => {
                       ที่1 บัญชี
                     </p>
                   </div>
-                  <Image
-                    alt='person1'
-                    className='rounded-full'
-                    height={40}
-                    src={`${config.cdnURL}/assets/homepage/person1.svg`}
-                    width={40}
-                  />
+                  <object
+                    className='h-[40px] w-[40px] rounded-full'
+                    data={`${config.cdnURL}/assets/homepage/person1.svg`}
+                    type='image/svg+xml'
+                  >
+                    <Image
+                      alt='person1'
+                      className='rounded-full'
+                      height={40}
+                      src={`${config.cdnURL}/assets/homepage/person1.svg`}
+                      width={40}
+                    />
+                  </object>
                   <div className='-translate-y-2 text-center'>
                     <p className='rounded-full bg-white px-2 text-[8px] font-medium text-[#ED338C]'>
                       P&apos; Zeta
@@ -190,13 +202,19 @@ const Popup: React.FC = () => {
                       ที่1 แพทย์ฯ
                     </p>
                   </div>
-                  <Image
-                    alt='person2'
-                    className='rounded-full'
-                    height={40}
-                    src={`${config.cdnURL}/assets/homepage/person2.svg`}
-                    width={40}
-                  />
+                  <object
+                    className='h-[40px] w-[40px] rounded-full'
+                    data={`${config.cdnURL}/assets/homepage/person2.svg`}
+                    type='image/svg+xml'
+                  >
+                    <Image
+                      alt='person2'
+                      className='rounded-full'
+                      height={40}
+                      src={`${config.cdnURL}/assets/homepage/person2.svg`}
+                      width={40}
+                    />
+                  </object>
                   <div className='-translate-y-2 text-center'>
                     <p className='rounded-full bg-white px-2 text-[8px] font-medium text-[#ED338C]'>
                       P&apos; Tonkao
