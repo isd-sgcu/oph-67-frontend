@@ -4,7 +4,7 @@ import { AuthProvider } from '@/components/auth/auth-provider'
 import { LiffProvider } from '@/components/liff/liff-provider'
 
 export const metadata: Metadata = {
-  title: 'CU OPENHOUSE 67',
+  title: 'CU OPENHOUSE 68',
   description: '',
 }
 
