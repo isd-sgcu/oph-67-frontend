@@ -28,6 +28,12 @@ const Footer: React.FC = () => {
           src='/assets/sponsor/Gulf.png'
           width={53}
         />
+        <Image
+          alt='faq'
+          height={32}
+          src='/assets/sponsor/culture_chula.PNG'
+          width={72.53}
+        />
       </div>
 
       {/* Footer Part 2 */}
