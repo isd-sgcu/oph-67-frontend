@@ -23,10 +23,12 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 interface AuthProviderProps {
   children: React.ReactNode
+  refreshAfterLogin?: boolean
 }
 
 export const AuthProvider = ({
   children,
+  refreshAfterLogin = true,
 }: AuthProviderProps): React.ReactElement => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -37,6 +39,15 @@ export const AuthProvider = ({
     useState<AuthContextType['liffUserProfile']>(null)
 
   const { isInit, profile } = useLiff()
+
+  const [hasRefreshed, setHasRefreshed] = useState(false)
+
+  useEffect(() => {
+    const refreshFlag = sessionStorage.getItem('auth_refreshed')
+    if (refreshFlag === 'true') {
+      setHasRefreshed(true)
+    }
+  }, [])
 
   useEffect(() => {
     const autoLogin = async (): Promise<void> => {
@@ -57,6 +68,11 @@ export const AuthProvider = ({
         })
         setIsAuthenticated(true)
         await setAuthCookie(response.accessToken)
+
+        if (refreshAfterLogin && !hasRefreshed) {
+          sessionStorage.setItem('auth_refreshed', 'true')
+          window.location.reload()
+        }
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to auto-login')
         setIsAuthenticated(false)
@@ -66,7 +82,7 @@ export const AuthProvider = ({
     }
 
     void autoLogin()
-  }, [isInit, profile])
+  }, [isInit, profile, refreshAfterLogin, hasRefreshed])
 
   const value = {
     isAuthenticated,

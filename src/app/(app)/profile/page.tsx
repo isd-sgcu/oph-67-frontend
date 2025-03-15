@@ -111,7 +111,7 @@ const Profile: React.FC = () => {
           <h2 className='mt-2 text-lg font-normal text-dark-pink'>
             คณะที่สนใจที่สุด / Faculties interested
           </h2>
-          <div className='auto-number flex w-[20rem] flex-wrap justify-center gap-y-5'>
+          <div className='auto-number flex w-[20rem] flex-col flex-wrap items-center justify-center gap-y-5'>
             {favFaculties.map((faculty) => (
               <InterestedItem key={faculty.en} faculty={faculty} />
             ))}
