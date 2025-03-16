@@ -1,11 +1,13 @@
 import Image from 'next/image'
 import React from 'react'
+import { Toaster } from 'react-hot-toast'
 
 import { config } from '@/app/config'
+import { Button } from '@/components/ui/button'
 import { download } from '@/utils/download'
-import { shareWeb } from '@/utils/share'
 
 import InvitationCard from '../invitation-card'
+
 
 interface FlowerResultProps {
   resultImage: string
@@ -26,20 +28,14 @@ const FlowerResult: React.FC<FlowerResultProps> = ({
     console.log(resultText)
   }
 
-  const handleShare: () => Promise<void> = async () => {
-    try {
-      await shareWeb(
-        'CU Open House 2025 - Flower',
-        'Come and check your flower at CU OPH 2025!'
-      )
-      console.log('share')
-    } catch (error) {
-      console.error('Error sharing', error)
-    }
-  }
-
   return (
     <div className='relative flex flex-col items-center gap-5 bg-gradient-to-b from-[#FFFFFF] to-[#EA88BD] px-6 py-10'>
+      <Toaster
+        position='top-center'
+        toastOptions={{
+          duration: 3000,
+        }}
+      />
       <object
         className='absolute -left-6 top-1/3 z-0 h-[130px] w-[130px]'
         data={`${config.cdnURL}/assets/pick-your-flower/flower-white-l.svg`}
@@ -113,8 +109,9 @@ const FlowerResult: React.FC<FlowerResultProps> = ({
         </object>
       </div>
       <div className='z-10 mt-4 flex w-full items-center justify-center gap-2'>
-        <button
+        <Button
           className='flex w-[143px] items-center justify-center gap-1 rounded-lg bg-[#076855] px-3 py-1'
+          size='sm'
           type='button'
           onClick={handleSave}
         >
@@ -127,22 +124,7 @@ const FlowerResult: React.FC<FlowerResultProps> = ({
           <div className='font-mitr text-base font-light tracking-tight text-white'>
             บันทึกรูปภาพ
           </div>
-        </button>
-        <button
-          className='flex w-[143px] items-center justify-center gap-1 rounded-lg bg-[#DD579B] px-3 py-1'
-          type='button'
-          onClick={handleShare}
-        >
-          <Image
-            alt='share icon'
-            height={16}
-            src={`${config.cdnURL}/assets/pick-your-flower/share.svg`}
-            width={16}
-          />
-          <div className='font-mitr text-base font-light tracking-tight text-white'>
-            แชร์
-          </div>
-        </button>
+        </Button>
       </div>
       <div className='z-10'>
         <InvitationCard />

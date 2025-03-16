@@ -1,21 +1,21 @@
 import Image from 'next/image'
 import React from 'react'
+import { toast } from 'react-hot-toast'
 
 import { config } from '@/app/config'
+import { shareWeb } from '@/utils/share'
 
 const InvitationCard: React.FC = () => {
   const handleShare: () => Promise<void> = async () => {
     const shareData = {
       title: 'CU Open House 2025',
-      text: 'Come joy us at CU OPH 2025!',
-      url: 'https://www.youtube.com/',
+      url: 'https://cuopenhouse2025.com/',
     }
     try {
-      await navigator.share(shareData)
+      await shareWeb(shareData)
     } catch (error) {
-      console.error('Error sharing', error)
+      toast.error('Cannot share link')
     }
-    console.log('share link')
   }
 
   return (
@@ -24,7 +24,7 @@ const InvitationCard: React.FC = () => {
         <Image
           alt='qrcode'
           height={93}
-          src={`${config.cdnURL}/assets/pick-your-flower/qrcode.png`}
+          src="/assets/pick-your-flower/qrcode.png"
           width={93}
         />
         <div className='font-mitr text-xs font-light text-primary-green'>
