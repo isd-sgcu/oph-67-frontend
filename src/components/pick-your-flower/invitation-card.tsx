@@ -32,12 +32,18 @@ const InvitationCard: React.FC = () => {
         </div>
       </div>
       <div className='ml-2.5 flex flex-col items-start justify-center gap-1.5'>
-        <Image
-          alt='oph logo'
-          height={45}
-          src={`${config.cdnURL}/assets/pick-your-flower/cu-oph-logo.svg`}
-          width={57}
-        />
+        <object
+          className='h-[45px] w-[57px]'
+          data={`${config.cdnURL}/assets/pick-your-flower/cu-oph-logo.svg`}
+          type='image/svg+xml'
+        >
+          <Image
+            alt='oph logo'
+            height={45}
+            src={`${config.cdnURL}/assets/pick-your-flower/cu-oph-logo.svg`}
+            width={57}
+          />
+        </object>
         <div className='flex flex-col font-mitr text-[10px] font-light text-primary-green'>
           <div>29 - 30 มีนาคม 2568</div>
           <div>08:00 - 16:00 น.</div>

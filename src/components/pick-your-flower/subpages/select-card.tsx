@@ -17,30 +17,45 @@ const SelectCard: React.FC<SelectFlowerProps> = ({
 }) => {
   return (
     <div className='relative flex h-auto flex-col items-center bg-gradient-to-b from-[#FAE9F3] to-[#DD579B] px-6 py-10'>
-      <div className='absolute left-0 top-1/3 z-0'>
+      <object
+        className='absolute -left-6 top-1/3 z-0 h-[130px] w-[130px]'
+        data={`${config.cdnURL}/assets/pick-your-flower/flower-white-l.svg`}
+        type='image/svg+xml'
+      >
         <Image
           alt='background flower'
+          className='absolute left-0 top-1/3 z-0'
           height={92}
           src={`${config.cdnURL}/assets/pick-your-flower/flower-white-l.svg`}
           width={92}
         />
-      </div>
-      <div className='absolute right-0 top-0 z-0'>
+      </object>
+      <object
+        className='absolute right-0 top-6 z-0 h-[140px] w-[140px]'
+        data={`${config.cdnURL}/assets/pick-your-flower/flower-white-r.svg`}
+        type='image/svg+xml'
+      >
         <Image
           alt='background flower'
+          className='absolute right-0 top-0 z-0'
           height={92}
           src={`${config.cdnURL}/assets/pick-your-flower/flower-white-r.svg`}
           width={92}
         />
-      </div>
-      <div className='absolute bottom-10 right-0 z-0'>
+      </object>
+      <object
+        className='absolute bottom-10 right-0 z-0 h-[100px] w-[100px]'
+        data={`${config.cdnURL}/assets/pick-your-flower/flower-white-r.svg`}
+        type='image/svg+xml'
+      >
         <Image
           alt='background flower'
+          className='absolute bottom-10 right-0 z-0'
           height={75}
           src={`${config.cdnURL}/assets/pick-your-flower/flower-white-r.svg`}
           width={75}
         />
-      </div>
+      </object>
       <div className='relative z-10 flex items-center justify-center gap-1'>
         <Image
           alt='flower'
