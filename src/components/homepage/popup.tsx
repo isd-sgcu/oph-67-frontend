@@ -33,8 +33,8 @@ const Popup: React.FC = () => {
           </DialogClose>
           <div className='flex flex-col items-center justify-center'>
             {/* Logo */}
-            <div className='relative flex h-[120px] w-[120px] items-center justify-center'>
-              <div className='absolute z-0 h-[140px] w-[140px] -translate-x-1 -translate-y-1 rounded-full bg-white blur-md' />
+            <div className='relative flex h-auto w-[120px] items-center justify-center'>
+              <div className='absolute z-0 h-full w-full -translate-x-1 -translate-y-1 rounded-full bg-white blur-md' />
               <object
                 className='z-10 h-[80px] w-[100px]'
                 data={`${config.cdnURL}/assets/homepage/chula_for_all.svg`}
@@ -51,242 +51,259 @@ const Popup: React.FC = () => {
             </div>
             {/* Header Text */}
             <div className='z-10 flex flex-col items-center justify-center'>
-              <DialogTitle className='text-center text-sm font-medium text-[#ED338C]'>
+              <DialogTitle className='text-center text-[10px] font-medium text-[#ED338C]'>
                 YOUR JOURNEY TO
               </DialogTitle>
-              <DialogTitle className='text-center text-sm font-medium text-[#ED338C]'>
+              <DialogTitle className='text-center text-[10px] font-medium text-[#ED338C]'>
                 CHULA STARTS HERE!
               </DialogTitle>
             </div>
           </div>
         </DialogHeader>
 
-        {/* Content */}
-        <div className='flex flex-col items-center justify-center gap-[6px] pt-9'>
-          <div className='flex h-full w-full flex-col'>
-            {/* Box1 Logo */}
-            <div className='relative z-10 flex flex-col items-center justify-center'>
-              <div className='absolute rounded-full border border-white bg-white/50 px-3 py-2'>
-                <Image
-                  alt='dice'
-                  height={60}
-                  src={`${config.cdnURL}/assets/homepage/dice.svg`}
-                  width={60}
-                />
+        <Link
+          className='flex flex-col gap-3'
+          href='https://www.instagram.com/chulaforall/'
+        >
+          {/* Content */}
+          <div className='flex flex-col items-center justify-center gap-[6px] pt-9'>
+            {/* Box 1 */}
+            <div className='flex h-full w-full flex-col'>
+              {/* Box1 Logo */}
+              <div className='relative z-10 flex flex-col items-center justify-center'>
+                <div className='absolute rounded-full border border-white bg-white/50 px-3 py-2'>
+                  <Image
+                    alt='dice'
+                    height={60}
+                    src={`${config.cdnURL}/assets/homepage/dice.svg`}
+                    width={60}
+                  />
+                </div>
+                <p className='absolute translate-y-10 rounded-full border border-[#ED338C] bg-white/50 px-3 py-1 text-[10px] font-medium text-[#ED338C]'>
+                  Motivational <b>Postcard!</b>
+                </p>
+
+                {/* Ribbon Left */}
+                <object
+                  className='absolute h-[40px] w-[40px] -translate-x-20 translate-y-1'
+                  data={`${config.cdnURL}/assets/homepage/ribbon.svg`}
+                  type='image/svg+xml'
+                >
+                  <Image
+                    alt='ribbon'
+                    className='absolute -translate-x-20 translate-y-1'
+                    height={40}
+                    src={`${config.cdnURL}/assets/homepage/ribbon.svg`}
+                    width={40}
+                  />
+                </object>
+
+                {/* Ribbon Right */}
+                <object
+                  className='absolute h-[40px] w-[40px] translate-x-20 translate-y-1 rotate-[30deg]'
+                  data={`${config.cdnURL}/assets/homepage/ribbon.svg`}
+                  type='image/svg+xml'
+                >
+                  <Image
+                    alt='ribbon'
+                    className='absolute translate-x-20 translate-y-1 rotate-[30deg]'
+                    height={40}
+                    src={`${config.cdnURL}/assets/homepage/ribbon.svg`}
+                    width={40}
+                  />
+                </object>
+
+                {/* Left Box */}
+                <p className='absolute -translate-x-20 -translate-y-6 rotate-[-8deg] rounded-full border border-[#ED338C] bg-white px-3 py-1 text-[10px] font-medium text-[#ED338C]'>
+                  Cute <b>Stickers</b>
+                </p>
+
+                {/* Right Box */}
+                <p className='absolute -translate-y-6 translate-x-20 rotate-[8deg] rounded-full border border-[#ED338C] bg-white px-3 py-1 text-[10px] font-medium text-[#ED338C]'>
+                  Stylish <b>Tote bag</b>
+                </p>
               </div>
-              <p className='absolute translate-y-10 rounded-full border border-[#ED338C] bg-white/50 px-3 py-1 text-[10px] font-medium text-[#ED338C]'>
-                Motivational <b>Postcard!</b>
-              </p>
 
-              {/* Ribbon Left */}
-              <object
-                className='absolute h-[40px] w-[40px] -translate-x-20 translate-y-1'
-                data={`${config.cdnURL}/assets/homepage/ribbon.svg`}
-                type='image/svg+xml'
-              >
-                <Image
-                  alt='ribbon'
-                  className='absolute -translate-x-20 translate-y-1'
-                  height={40}
-                  src={`${config.cdnURL}/assets/homepage/ribbon.svg`}
-                  width={40}
-                />
-              </object>
+              {/* Box 1 Content */}
+              <div className='flex w-full flex-col items-center justify-center rounded-md border-2 border-white bg-gradient-to-br from-[#FDDCE6] to-white/60 pb-2 pt-14 shadow-md backdrop-blur-sm'>
+                {/* Title */}
+                <div className='flex justify-center gap-2'>
+                  {/* Star Left */}
+                  <Image
+                    alt='instagram'
+                    height={18}
+                    src={`${config.cdnURL}/assets/homepage/star_yellow.svg`}
+                    width={18}
+                  />
 
-              {/* Ribbon Right */}
-              <object
-                className='absolute h-[40px] w-[40px] translate-x-20 translate-y-1 rotate-[30deg]'
-                data={`${config.cdnURL}/assets/homepage/ribbon.svg`}
-                type='image/svg+xml'
-              >
-                <Image
-                  alt='ribbon'
-                  className='absolute translate-x-20 translate-y-1 rotate-[30deg]'
-                  height={40}
-                  src={`${config.cdnURL}/assets/homepage/ribbon.svg`}
-                  width={40}
-                />
-              </object>
+                  <p className='text-center text-[16px] font-bold text-[#ED338C]'>
+                    Special!
+                  </p>
 
-              {/* Left Box */}
-              <p className='absolute -translate-x-20 -translate-y-6 rotate-[-8deg] rounded-full border border-[#ED338C] bg-white px-3 py-1 text-[10px] font-medium text-[#ED338C]'>
-                Cute <b>Stickers</b>
-              </p>
-
-              {/* Right Box */}
-              <p className='absolute -translate-y-6 translate-x-20 rotate-[8deg] rounded-full border border-[#ED338C] bg-white px-3 py-1 text-[10px] font-medium text-[#ED338C]'>
-                Stylish <b>Tote bag</b>
-              </p>
+                  {/* Star Right */}
+                  <Image
+                    alt='instagram'
+                    className='rotate-[30deg]'
+                    height={18}
+                    src={`${config.cdnURL}/assets/homepage/star_yellow.svg`}
+                    width={18}
+                  />
+                </div>
+                {/* Subtitle */}
+                <div className='flex flex-col items-center justify-center'>
+                  <p className='text-[12px] font-medium text-[#ED338C]'>
+                    ลุ้นรับโอกาสในการคุยกับ<b>พี่จุฬาฯตัวจริง</b>
+                  </p>
+                  <p className='text-[12px] font-medium text-[#ED338C]'>
+                    ด้วยคะแนนสอบเข้า <b>TCAS</b> อันดับ <b>1</b> ของประเทศ!
+                  </p>
+                </div>
+                {/* Persons */}
+                <div className='flex justify-center gap-2'>
+                  {/* Person1 */}
+                  <div className='relative flex flex-col items-center'>
+                    <div className='absolute -translate-x-9 translate-y-3'>
+                      <Image
+                        alt='crown'
+                        className='z-10 translate-x-3 translate-y-1'
+                        height={16}
+                        src={`${config.cdnURL}/assets/homepage/crown.svg`}
+                        width={16}
+                      />
+                      <p className='rounded-full border border-[#ED338C] bg-white px-2 text-[8px] font-semibold text-[#ED338C]'>
+                        ที่1 บัญชี
+                      </p>
+                    </div>
+                    <Link
+                      className='block h-[60px] w-[60px] overflow-hidden rounded-full'
+                      href='https://www.instagram.com/chulaforall/'
+                      rel='noopener noreferrer'
+                      target='_blank'
+                    >
+                      <Image
+                        priority
+                        unoptimized
+                        alt='Instagram profile'
+                        className='rounded-full'
+                        height={60}
+                        quality={100}
+                        src={`${config.cdnURL}/assets/homepage/person1.svg`}
+                        width={60}
+                      />
+                    </Link>
+                    <div className='-translate-y-2 text-center'>
+                      <p className='rounded-full bg-white px-2 text-[8px] font-medium text-[#ED338C]'>
+                        P&apos; Zeta
+                      </p>
+                      <p className='text-[8px] font-medium text-[#ED338C]'>
+                        #Dek66
+                      </p>
+                    </div>
+                  </div>
+                  {/* Person2 */}
+                  <div className='relative flex flex-col items-center'>
+                    <div className='absolute translate-x-10 translate-y-3'>
+                      <Image
+                        alt='crown'
+                        className='translate-x-3 translate-y-1 rotate-[30deg]'
+                        height={16}
+                        src={`${config.cdnURL}/assets/homepage/crown.svg`}
+                        width={16}
+                      />
+                      <p className='rounded-full border border-[#ED338C] bg-white px-2 text-[8px] font-semibold text-[#ED338C]'>
+                        ที่1 แพทย์ฯ
+                      </p>
+                    </div>
+                    <Link
+                      className='block h-[60px] w-[60px] overflow-hidden rounded-full'
+                      href='https://www.instagram.com/chulaforall/'
+                      rel='noopener noreferrer'
+                      target='_blank'
+                    >
+                      <Image
+                        priority
+                        unoptimized
+                        alt='Instagram profile'
+                        className='rounded-full'
+                        height={60}
+                        quality={100}
+                        src={`${config.cdnURL}/assets/homepage/person2.svg`}
+                        width={60}
+                      />
+                    </Link>
+                    <div className='-translate-y-2 text-center'>
+                      <p className='rounded-full bg-white px-2 text-[8px] font-medium text-[#ED338C]'>
+                        P&apos; Tonkao
+                      </p>
+                      <p className='text-[8px] font-medium text-[#ED338C]'>
+                        #Dek67
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                {/* More Info */}
+                <p className='text-[8px] font-medium text-[#ED338C]'>
+                  *ที่นั่งมี<b>จำนวนจำกัด: 1 กล่องต่อ 1 สิทธิ์</b> ในการลุ้น!
+                </p>
+              </div>
             </div>
 
-            {/* Box 1 Content */}
-            <div className='flex w-full flex-col items-center justify-center gap-1 rounded-md border-2 border-white bg-gradient-to-br from-[#FDDCE6] to-white/60 pb-2 pt-14 shadow-md backdrop-blur-sm'>
+            {/* Box2 */}
+            <div className='relative flex w-[222px] flex-col items-center justify-center rounded-xl border-2 border-white bg-[#FDDCE6] py-2 shadow-md backdrop-blur-sm'>
               {/* Star Left */}
               <Image
                 alt='instagram'
-                className='absolute -translate-x-12 -translate-y-14'
-                height={18}
-                src={`${config.cdnURL}/assets/homepage/star_yellow.svg`}
-                width={18}
+                className='absolute -translate-x-20 -translate-y-2'
+                height={30}
+                src={`${config.cdnURL}/assets/homepage/star.svg`}
+                width={30}
               />
               {/* Star Right */}
               <Image
                 alt='instagram'
-                className='absolute -translate-y-14 translate-x-12 rotate-[30deg]'
-                height={18}
-                src={`${config.cdnURL}/assets/homepage/star_yellow.svg`}
-                width={18}
+                className='absolute -translate-y-2 translate-x-20 rotate-[30deg]'
+                height={30}
+                src={`${config.cdnURL}/assets/homepage/star.svg`}
+                width={30}
               />
-              {/* Title */}
-              <p className='text-center text-[16px] font-bold text-[#ED338C]'>
-                Special!
-              </p>
-              {/* Subtitle */}
+
               <div className='flex flex-col items-center justify-center'>
-                <p className='text-[10px] font-medium text-[#ED338C]'>
-                  ลุ้นรับโอกาสในการคุยกับ<b>พี่จุฬาฯตัวจริง</b>
+                <p className='text-[8px] font-medium text-[#ED338C]'>
+                  Don&apos;t Miss!
                 </p>
-                <p className='text-[10px] font-medium text-[#ED338C]'>
-                  ด้วยคะแนนสอบเข้า <b>TCAS</b> อันดับ <b>1</b> ของประเทศ!
+                <p className='text-[12px] font-medium text-[#ED338C]'>
+                  Come and find out here!
                 </p>
               </div>
-              {/* Persons */}
-              <div className='flex justify-center gap-2'>
-                {/* Person1 */}
-                <div className='relative flex flex-col items-center'>
-                  <div className='absolute -translate-x-6'>
-                    <Image
-                      alt='crown'
-                      className='translate-x-3 translate-y-1'
-                      height={12}
-                      src={`${config.cdnURL}/assets/homepage/crown.svg`}
-                      width={12}
-                    />
-                    <p className='rounded-full border border-[#ED338C] bg-white px-1 text-[6px] font-semibold text-[#ED338C]'>
-                      ที่1 บัญชี
-                    </p>
-                  </div>
-                  <object
-                    className='h-[40px] w-[40px] rounded-full'
-                    data={`${config.cdnURL}/assets/homepage/person1.svg`}
-                    type='image/svg+xml'
-                  >
-                    <Image
-                      alt='person1'
-                      className='rounded-full'
-                      height={40}
-                      src={`${config.cdnURL}/assets/homepage/person1.svg`}
-                      width={40}
-                    />
-                  </object>
-                  <div className='-translate-y-2 text-center'>
-                    <p className='rounded-full bg-white px-2 text-[8px] font-medium text-[#ED338C]'>
-                      P&apos; Zeta
-                    </p>
-                    <p className='text-[8px] font-medium text-[#ED338C]'>
-                      #Dek66
-                    </p>
-                  </div>
-                </div>
-                {/* Person2 */}
-                <div className='relative flex flex-col items-center'>
-                  <div className='absolute translate-x-6'>
-                    <Image
-                      alt='crown'
-                      className='translate-x-3 translate-y-1 rotate-[30deg]'
-                      height={12}
-                      src={`${config.cdnURL}/assets/homepage/crown.svg`}
-                      width={12}
-                    />
-                    <p className='rounded-full border border-[#ED338C] bg-white px-1 text-[6px] font-semibold text-[#ED338C]'>
-                      ที่1 แพทย์ฯ
-                    </p>
-                  </div>
-                  <object
-                    className='h-[40px] w-[40px] rounded-full'
-                    data={`${config.cdnURL}/assets/homepage/person2.svg`}
-                    type='image/svg+xml'
-                  >
-                    <Image
-                      alt='person2'
-                      className='rounded-full'
-                      height={40}
-                      src={`${config.cdnURL}/assets/homepage/person2.svg`}
-                      width={40}
-                    />
-                  </object>
-                  <div className='-translate-y-2 text-center'>
-                    <p className='rounded-full bg-white px-2 text-[8px] font-medium text-[#ED338C]'>
-                      P&apos; Tonkao
-                    </p>
-                    <p className='text-[8px] font-medium text-[#ED338C]'>
-                      #Dek67
-                    </p>
-                  </div>
-                </div>
-              </div>
-              {/* More Info */}
-              <p className='text-[8px] font-medium text-[#ED338C]'>
-                *ที่นั่งมี<b>จำนวนจำกัด: 1 กล่องต่อ 1 สิทธิ์</b> ในการลุ้น!
-              </p>
+              <Link
+                className='flex gap-1 rounded-full border border-[#ED338C] bg-white px-3 py-1'
+                href='https://www.instagram.com/chulaforall/'
+              >
+                <Image
+                  alt='instagram'
+                  height={12}
+                  src={`${config.cdnURL}/assets/homepage/instagram.svg`}
+                  width={12}
+                />
+                <p className='text-[10px] font-medium text-[#ED338C]'>
+                  @chulaforall
+                </p>
+              </Link>
             </div>
           </div>
 
-          {/* Box2 */}
-          <div className='relative flex w-full flex-col items-center justify-center gap-2 rounded-md border-2 border-white bg-[#FDDCE6] py-2 shadow-md backdrop-blur-sm'>
-            {/* Star Left */}
-            <Image
-              alt='instagram'
-              className='absolute -translate-x-24 -translate-y-1'
-              height={18}
-              src={`${config.cdnURL}/assets/homepage/star.svg`}
-              width={18}
-            />
-            {/* Star Right */}
-            <Image
-              alt='instagram'
-              className='1 absolute -translate-y-1 translate-x-24 rotate-[30deg]'
-              height={18}
-              src={`${config.cdnURL}/assets/homepage/star.svg`}
-              width={18}
-            />
-
+          {/* Footer */}
+          <DialogFooter className='sm:justify-center'>
             <div className='flex flex-col items-center justify-center'>
               <p className='text-[8px] font-medium text-[#ED338C]'>
-                Don&apos;t Miss!
+                *ร้านค้าโดยนิสิต ไม่มีส่วนเกี่ยวข้องกับจุฬาลงกรณ์มหาวิทยาลัย
               </p>
-              <p className='text-center text-sm font-medium text-[#ED338C]'>
-                Come and find out here!
+              <p className='text-[8px] font-medium text-[#ED338C]'>
+                และโครงการ ChulaOpenhouse2025
               </p>
             </div>
-            <Link
-              className='flex gap-1 rounded-full border border-[#ED338C] bg-white px-3 py-1'
-              href='https://www.instagram.com/chulaforall/'
-            >
-              <Image
-                alt='instagram'
-                height={12}
-                src={`${config.cdnURL}/assets/homepage/instagram.svg`}
-                width={12}
-              />
-              <p className='text-[10px] font-medium text-[#ED338C]'>
-                @chulaforall
-              </p>
-            </Link>
-          </div>
-        </div>
-
-        {/* Footer */}
-        <DialogFooter className='sm:justify-center'>
-          <div className='flex flex-col items-center justify-center'>
-            <p className='text-[8px] font-medium text-[#ED338C]'>
-              *ร้านค้าโดยนิสิต ไม่มีส่วนเกี่ยวข้องกับจุฬาลงกรณ์มหาวิทยาลัย
-            </p>
-            <p className='text-[8px] font-medium text-[#ED338C]'>
-              และโครงการ ChulaOpenhouse2025
-            </p>
-          </div>
-        </DialogFooter>
+          </DialogFooter>
+        </Link>
       </DialogContent>
     </Dialog>
   )
