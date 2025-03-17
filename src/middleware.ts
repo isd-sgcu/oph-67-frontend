@@ -7,7 +7,6 @@ const blockedPaths = [
   '/event',
   '/faculties',
   '/workshop',
-  '/pick-your-flower',
   '/suchibat',
 ]
 
@@ -67,7 +66,6 @@ export const config = {
     '/event',
     '/faculties',
     '/workshop',
-    '/pick-your-flower',
     '/suchibat',
   ],
 }

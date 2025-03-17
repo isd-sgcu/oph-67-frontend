@@ -18,7 +18,7 @@ const SelectCard: React.FC<SelectFlowerProps> = ({
   return (
     <div className='relative flex h-auto flex-col items-center bg-gradient-to-b from-[#FAE9F3] to-[#DD579B] px-6 py-10'>
       <object
-        className='absolute -left-6 top-1/3 z-0 h-[130px] w-[130px]'
+        className='absolute -left-12 top-1/3 z-0 h-[130px] w-[130px]'
         data={`${config.cdnURL}/assets/pick-your-flower/flower-white-l.svg`}
         type='image/svg+xml'
       >
@@ -70,14 +70,14 @@ const SelectCard: React.FC<SelectFlowerProps> = ({
       <div className='relative z-10 font-mitr text-base font-normal tracking-tight text-primary-green'>
         Pick Your Card
       </div>
-      <div className='relative z-10 mb-16 mt-6 grid grid-cols-3 gap-3'>
+      <div className='relative z-10 mb-6 mt-6 grid grid-cols-3 gap-2.5'>
         {cardList.map((cardImage: string, index: number) => (
           <FlowerCard
             key={cardImage}
             image={
               selectedCard === index
                 ? cardImage
-                : `${config.cdnURL}/assets/pick-your-flower/flower-card-cover.png`
+                : `/assets/pick-your-flower/card/your-flower-cover.png`
             }
             onClick={() => handleClick(index)}
           />

@@ -8,24 +8,17 @@ import { download } from '@/utils/download'
 
 import InvitationCard from '../invitation-card'
 
-
 interface FlowerResultProps {
   resultImage: string
-  resultDownloadandShare: string
   resultName: string
-  resultText: string
 }
 
 const FlowerResult: React.FC<FlowerResultProps> = ({
   resultImage,
-  resultDownloadandShare,
   resultName,
-  resultText,
 }) => {
   const handleSave: () => void = () => {
-    download(resultDownloadandShare, resultName)
-    console.log('save')
-    console.log(resultText)
+    download(resultImage, resultName)
   }
 
   return (
@@ -37,7 +30,7 @@ const FlowerResult: React.FC<FlowerResultProps> = ({
         }}
       />
       <object
-        className='absolute -left-6 top-1/3 z-0 h-[130px] w-[130px]'
+        className='absolute -left-12 top-1/3 z-0 h-[130px] w-[130px]'
         data={`${config.cdnURL}/assets/pick-your-flower/flower-white-l.svg`}
         type='image/svg+xml'
       >
@@ -75,27 +68,27 @@ const FlowerResult: React.FC<FlowerResultProps> = ({
           width={75}
         />
       </object>
-      <div className='z-10 font-cloud-soft text-2xl font-medium tracking-tight text-primary-green'>
+      <div className='z-10 font-cloud-soft text-3xl font-medium tracking-tight text-primary-green'>
         Your Flower
       </div>
-      <div className='relative z-10 flex items-center justify-center'>
-        <div className='absolute z-0 h-[383px] w-[217px] rounded-[18px] border-[1px] border-[#DD579B] blur-[2px]' />
+      <div className='relative z-10 mt-2 flex items-center justify-center'>
+        <div className='absolute z-0 h-[462px] w-[282px] rounded-[18px] border-[1px] border-[#DD579B] blur-[2px]' />
         <Image
           alt='flower result'
-          className='relative z-10'
-          height={370}
+          className='relative z-10 rounded-xl'
+          height={481}
           src={resultImage}
-          width={206}
+          width={267.8}
         />
         <Image
           alt='flower with leaf'
-          className='absolute left-[-15px] top-[-20px] z-10'
-          height={50}
+          className='absolute left-[-20px] top-[-26px] z-10'
+          height={70}
           src={`${config.cdnURL}/assets/pick-your-flower/flower-w-leaf.svg`}
-          width={50}
+          width={70}
         />
         <object
-          className='absolute bottom-[-17px] right-[-45px] z-10'
+          className='absolute bottom-[-25px] right-[-45px] z-10'
           data={`${config.cdnURL}/assets/pick-your-flower/flower-girl.svg`}
           type='image/svg+xml'
         >
