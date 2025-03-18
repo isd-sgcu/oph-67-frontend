@@ -50,7 +50,7 @@ const WorkshopPage: React.FC = () => {
         />
       </div>
       <div className='my-2 w-5/6 border border-b-0 border-dark-pink' />
-      <div className='grid grid-cols-2 gap-6'>
+      <div className='flex flex-col gap-4'>
         {filteredWorkshops.map((workshop) => (
           <WorkshopSmallCard key={workshop.id} workshop={workshop} />
         ))}

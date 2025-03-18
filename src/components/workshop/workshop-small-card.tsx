@@ -1,4 +1,4 @@
-import { ImageIcon } from 'lucide-react'
+// import { ImageIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -38,9 +38,19 @@ const WorkshopSmallCard: React.FC<WorkshopSmallCardProps> = ({
           />
         ) : null}
       </Button>
-      <Link href=''>
-        <div className='workshop-small-card-gradient relative flex h-[13rem] w-[10rem] flex-col items-start justify-between gap-1 rounded-md border border-dark-pink p-2 shadow-lg'>
-          <div className='relative h-full w-full'>
+      <Link href={workshop.registerUrl ?? ''}>
+        <div className='flex h-[161px] w-[324px] justify-between rounded-lg border border-[#FBDAED] bg-white p-3 shadow-[0_2px_8px_0_rgba(0,0,0,0.1)]'>
+          <div className='flex h-full w-auto flex-col gap-2' />
+          <div>
+            <Image
+              alt='heart'
+              className=''
+              height={14}
+              src="/assets/workshop/heart.svg"
+              width={16}
+            />
+          </div>
+          {/* <div className='relative h-full w-full'>
             {workshop.thumbnail ? (
               <Image
                 fill
@@ -60,7 +70,7 @@ const WorkshopSmallCard: React.FC<WorkshopSmallCardProps> = ({
             <p className='truncate text-xs font-light'>
               {workshop.description}
             </p>
-          </div>
+          </div> */}
         </div>
       </Link>
     </div>
