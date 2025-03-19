@@ -38,7 +38,7 @@ const WorkshopSmallCard: React.FC<WorkshopSmallCardProps> = ({
           />
         ) : null}
       </Button>
-      <Link href={workshop.registerUrl}>
+      <Link href=''>
         <div className='workshop-small-card-gradient relative flex h-[13rem] w-[10rem] flex-col items-start justify-between gap-1 rounded-md border border-dark-pink p-2 shadow-lg'>
           <div className='relative h-full w-full'>
             {workshop.thumbnail ? (
