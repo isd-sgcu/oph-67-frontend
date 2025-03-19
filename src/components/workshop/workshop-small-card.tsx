@@ -38,48 +38,51 @@ const WorkshopSmallCard: React.FC<WorkshopSmallCardProps> = ({
           />
         ) : null}
       </Button>
-      <div className='flex h-[161px] w-[324px] justify-between rounded-lg border border-[#FBDAED] bg-white p-3 font-mitr shadow-[0_2px_8px_0_rgba(0,0,0,0.1)]'>
-        <div className='flex h-full w-auto flex-col justify-between'>
+      <div className='flex h-auto w-[330px] justify-between rounded-lg border border-[#FBDAED] bg-white p-3 font-mitr shadow-[0_2px_8px_0_rgba(0,0,0,0.1)]'>
+        <div className='flex h-full w-auto flex-col gap-2'>
           <div className='text-base font-normal leading-5 tracking-tight'>
             <p className='truncate'>{workshop.name}</p>
             <p>{workshop.faculty}</p>
           </div>
           <div className='flex flex-col gap-1'>
-            <div className='flex gap-1 text-xs font-light tracking-tight'>
+            <div className='flex items-start gap-1 text-xs font-light tracking-tight'>
               <Image
                 alt='major'
+                className='mt-0.5'
                 height={12}
                 src='/assets/workshop/school.svg'
                 width={12}
               />
               <p>
-                <strong>เอก/สาขา :</strong> {workshop.major}
+                <strong>เอก/สาขา :</strong> {workshop.organizer}
               </p>
             </div>
-            <div className='flex gap-1 text-xs font-light tracking-tight'>
+            <div className='flex items-start gap-1 text-xs font-light tracking-tight'>
               <Image
                 alt='major'
+                className='mt-0.5'
                 height={12}
                 src='/assets/workshop/location.svg'
                 width={12}
               />
               <p>
-                <strong>สถานที่จัด :</strong> {workshop.faculty}
+                <strong>สถานที่จัด :</strong> {workshop.location}
               </p>
             </div>
-            <div className='flex gap-1 text-xs font-light tracking-tight'>
+            <div className='flex items-start gap-1 text-xs font-light tracking-tight'>
               <Image
                 alt='major'
+                className='mt-0.5'
                 height={12}
                 src='/assets/workshop/schedule.svg'
                 width={12}
               />
               <p>
-                <strong>เวลา :</strong> {workshop.facultyId}
+                <strong>เวลา :</strong> {workshop.time}
               </p>
             </div>
           </div>
-          <Link href={workshop.registerUrl}>
+          <Link href=''>
             <div className='flex h-6 w-40 items-center justify-center rounded bg-[#EA88BD] px-2 py-0.5 font-mitr text-xs font-light text-white'>
               ดูรายละเอียดเพิ่มเติม
             </div>
