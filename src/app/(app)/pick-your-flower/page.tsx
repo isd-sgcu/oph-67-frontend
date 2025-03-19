@@ -20,16 +20,8 @@ const FlowerPage: React.FC = () => {
     () => shuffledCards.map((data) => data.img),
     [shuffledCards]
   )
-  const downloadAndShareList = useMemo(
-    () => shuffledCards.map((data) => data.downloadShare),
-    [shuffledCards]
-  )
-  const titleList = useMemo(
-    () => shuffledCards.map((data) => data.title),
-    [shuffledCards]
-  )
-  const textList = useMemo(
-    () => shuffledCards.map((data) => data.content),
+  const flowerNameList = useMemo(
+    () => shuffledCards.map((data) => data.FlowerName),
     [shuffledCards]
   )
 
@@ -53,10 +45,8 @@ const FlowerPage: React.FC = () => {
         return (
           selectedCard !== null && (
             <FlowerResult
-              resultDownloadandShare={downloadAndShareList[selectedCard]}
               resultImage={cardList[selectedCard]}
-              resultName={titleList[selectedCard]}
-              resultText={textList[selectedCard]}
+              resultName={flowerNameList[selectedCard]}
             />
           )
         )
