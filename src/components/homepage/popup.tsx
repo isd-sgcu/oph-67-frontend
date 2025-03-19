@@ -29,35 +29,35 @@ const Popup: React.FC = () => {
             <X className='h-4 w-4 text-[#ED338C]' />
             <span className='sr-only'>Close</span>
           </DialogClose>
-        </DialogHeader>
-
-        {/* Header */}
-        <div className='flex flex-col items-center justify-center p-0'>
-          {/* Logo */}
-          <div className='relative flex h-auto w-[120px] items-center justify-center'>
-            <div className='absolute z-0 h-full w-full -translate-x-1 -translate-y-1 rounded-full bg-white blur-md' />
-            <object
-              className='z-10 h-[80px] w-[100px]'
-              data={`${config.cdnURL}/assets/homepage/chula_for_all.svg`}
-              type='image/svg+xml'
-            >
-              <Image
-                alt='logo'
-                className='z-10'
-                height={80}
-                src={`${config.cdnURL}/assets/homepage/chula_for_all.svg`}
-                width={100}
-              />
-            </object>
+          {/* Header */}
+          <div className='z-10 flex flex-col items-center justify-center'>
+            {/* Logo */}
+            <div className='relative flex h-[120px] w-[120px] items-center justify-center'>
+              <div className='absolute z-0 h-full w-full -translate-x-1 -translate-y-1 rounded-full bg-white blur-md' />
+              <object
+                className='z-10 h-[80px] w-[100px]'
+                data={`${config.cdnURL}/assets/homepage/chula_for_all.svg`}
+                type='image/svg+xml'
+              >
+                <Image
+                  alt='logo'
+                  className='z-10'
+                  height={80}
+                  src={`${config.cdnURL}/assets/homepage/chula_for_all.svg`}
+                  width={100}
+                />
+              </object>
+            </div>
+            {/* Text */}
+            <Image
+              alt='logo_text'
+              className='absolute translate-y-20'
+              height={10}
+              src="/assets/homepage/group_popup_header.png"
+              width={150}
+            />
           </div>
-          {/* Text */}
-          <Image
-            alt='logo_text'
-            height={10}
-            src="/assets/homepage/group_popup_header.png"
-            width={150}
-          />
-        </div>
+        </DialogHeader>
 
         <Link
           className='flex flex-col'
