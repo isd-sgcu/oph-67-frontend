@@ -7,10 +7,10 @@ import { type UseFormReturn } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
 import { Toaster, toast } from 'react-hot-toast'
 
-import { getAdminAuthToken } from '@/app/actions/admin-auth'
 import { updateUser } from '@/app/actions/edit-profile/edit-profile'
 import { getUser } from '@/app/actions/get-profile/get-user'
 import { config } from '@/app/config'
+import { useAuth } from '@/components/auth/auth-provider'
 import { LiffError } from '@/components/liff/liff-error'
 import { LiffLoading } from '@/components/liff/liff-loading'
 import { useLiffContext } from '@/components/liff/liff-provider'
@@ -40,10 +40,10 @@ interface StaffFormProps {
 const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
   const router = useRouter()
   const { profile, isInit } = useLiffContext()
+  const { accessToken } = useAuth()
   const [showFaculty, setShowFaculty] = useState(false)
   const [isCorrectEmail, setIsCorrectEmail] = useState(true)
   const [isCorrectPhone, setIsCorrectPhone] = useState(true)
-  const [token, setToken] = useState<string | undefined>(undefined)
   const userId = profile?.userId
 
   useEffect(() => {
@@ -53,14 +53,11 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
           throw new Error('User ID is undefined')
         }
 
-        const token = await getAdminAuthToken()
-
-        if (!token) {
+        if (!accessToken) {
           throw new Error('Not authenticated')
         }
-        setToken(token)
 
-        const data = await getUser(userId, token)
+        const data = await getUser(userId, accessToken)
         if (data.role === 'staff') {
           const staffData = data as StaffData
 
@@ -191,7 +188,7 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
         const updates = transformToStaffData(values)
         await updateUser({
           id: userId ?? '',
-          token: token ?? '',
+          token: accessToken ?? '',
           updates,
         })
         toast.dismiss(loadingToastId)
@@ -373,6 +370,7 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
                   name='status'
                   render={({ field }) => (
                     <Select
+                      disabled
                       defaultValue=''
                       value={field.value}
                       onValueChange={(value) => {
@@ -423,6 +421,7 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
                     name='faculty'
                     render={({ field }) => (
                       <Select
+                        disabled
                         defaultValue=''
                         value={
                           typeof field.value === 'string' ? field.value : ''
