@@ -18,8 +18,11 @@ const WorkshopPage: React.FC = () => {
       allWorkshops.filter(
         (workshop) =>
           workshop.name.toLowerCase().includes(search.toLowerCase()) ||
-          workshop.faculty.toLowerCase().includes(search.toLowerCase()) ||
-          workshop.major.toLowerCase().includes(search.toLowerCase())
+          (workshop.faculty ?? '')
+            .toLowerCase()
+            .includes(search.toLowerCase()) ||
+          workshop.facultyId.toLowerCase().includes(search.toLowerCase()) ||
+          workshop.description.toLowerCase().includes(search.toLowerCase())
       )
     )
   }, [search])
