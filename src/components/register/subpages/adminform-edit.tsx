@@ -226,7 +226,6 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
             </object>
             <div>แก้ไขข้อมูล</div>
           </div>
-          <div className='text-base font-light'>Registration Form</div>
         </div>
       </div>
       <div className='flex flex-col gap-4 px-3 py-3 font-mitr'>
