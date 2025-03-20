@@ -123,7 +123,7 @@ const Footer: React.FC = () => {
             <div className='relative w-fit'>
               <div className='absolute z-0 h-5 w-full -translate-y-1 bg-white blur-sm' />
               <p className='relative z-10 text-[9px] font-medium text-[#ED338C]'>
-                โดย <b>#ที่1บัญชี (TCAS66)</b> และ <b>#ที่1แพทย์ฯ(TCAS67)</b>
+                โดย <b>#ที่1บัญชี (TCAS66)</b> และ <b>#ที่1แพทย์ฯ (TCAS67)</b>
               </p>
             </div>
           </div>
@@ -132,13 +132,13 @@ const Footer: React.FC = () => {
           <div className='relative mt-3 flex w-auto items-center justify-center gap-6 rounded-xl border-2 border-white bg-[#FDF8F8] px-8 py-1 shadow-md'>
             {/* Ribbon Left */}
             <object
-              className='absolute h-[40px] w-[40px] -translate-x-32 -translate-y-4'
+              className='absolute h-[40px] w-[40px] -translate-x-28 -translate-y-4'
               data={`${config.cdnURL}/assets/homepage/ribbon.svg`}
               type='image/svg+xml'
             >
               <Image
                 alt='ribbon'
-                className='absolute -translate-x-24 -translate-y-4'
+                className='absolute -translate-x-28 -translate-y-4'
                 height={30}
                 src={`${config.cdnURL}/assets/homepage/ribbon.svg`}
                 width={30}
@@ -147,13 +147,13 @@ const Footer: React.FC = () => {
 
             {/* Ribbon Right */}
             <object
-              className='absolute h-[40px] w-[40px] -translate-y-4 translate-x-32 rotate-[30deg]'
+              className='absolute h-[40px] w-[40px] -translate-y-4 translate-x-28 rotate-[30deg]'
               data={`${config.cdnURL}/assets/homepage/ribbon.svg`}
               type='image/svg+xml'
             >
               <Image
                 alt='ribbon'
-                className='absolute -translate-y-4 translate-x-24 rotate-[30deg]'
+                className='absolute -translate-y-4 translate-x-28 rotate-[30deg]'
                 height={30}
                 src={`${config.cdnURL}/assets/homepage/ribbon.svg`}
                 width={30}
@@ -178,7 +178,7 @@ const Footer: React.FC = () => {
 
             {/* Right Button */}
             <Link
-              className='flex gap-1 rounded-full border border-[#ED338C] bg-white px-3 py-1'
+              className='flex items-center justify-center gap-1 rounded-full border border-[#ED338C] bg-white px-2 py-1'
               href='https://www.instagram.com/chulaforall/'
             >
               <Image
