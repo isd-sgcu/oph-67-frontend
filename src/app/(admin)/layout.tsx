@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Toaster } from 'react-hot-toast'
 
+import { AuthProvider } from '@/components/auth/auth-provider'
 import { LiffProvider } from '@/components/liff/liff-provider'
 
 export const metadata: Metadata = {
@@ -14,8 +15,10 @@ const Layout: React.FC<Readonly<{ children: React.ReactNode }>> = ({
   return (
     <div className='relative mx-auto min-h-screen max-w-md font-anuphan shadow'>
       <LiffProvider>
-        <Toaster position='top-center' />
-        {children}
+        <AuthProvider>
+          <Toaster position='top-center' />
+          {children}
+        </AuthProvider>
       </LiffProvider>
     </div>
   )

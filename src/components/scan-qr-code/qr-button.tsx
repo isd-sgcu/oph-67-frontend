@@ -3,8 +3,8 @@
 import { ScanLine } from 'lucide-react'
 import { useState } from 'react'
 
-import { getAdminAuthToken } from '@/app/actions/admin-auth'
 import { scanQRCode } from '@/app/actions/qr-code/scan-qr'
+import { useAuth } from '@/components/auth/auth-provider'
 import { useLiffContext } from '@/components/liff/liff-provider'
 import { Button } from '@/components/ui/button'
 
@@ -14,6 +14,7 @@ type ModalType = 'confirm' | 'invalid' | 'already'
 
 const QrButton: React.FC = () => {
   const { liff, isInit } = useLiffContext()
+  const { accessToken } = useAuth()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [modalType, setModalType] = useState<ModalType>('invalid')
   const [userInfo, setUserInfo] = useState<string>()
@@ -63,15 +64,14 @@ const QrButton: React.FC = () => {
         }
 
         // Get auth token
-        const token = await getAdminAuthToken()
-        if (!token) {
+        if (!accessToken) {
           setModalType('invalid')
           setUserInfo('Authentication failed. Please log in again.')
           setIsModalOpen(true)
           return
         }
 
-        const result = await scanQRCode(token, userId)
+        const result = await scanQRCode(accessToken, userId)
 
         if (!result.success) {
           if (result.error === 'User has already entered') {

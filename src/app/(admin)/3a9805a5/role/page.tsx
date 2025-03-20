@@ -5,12 +5,12 @@ import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import { Toaster, toast } from 'react-hot-toast'
 
-import { getAdminAuthToken } from '@/app/actions/admin-auth'
 import { addStaff } from '@/app/actions/staff/add-staff'
 import { changeRole } from '@/app/actions/staff/change-role'
 import { deleteStaff } from '@/app/actions/staff/delete-staff'
 import { getStaff } from '@/app/actions/staff/get-staff'
 import { config } from '@/app/config'
+import { useAuth } from '@/components/auth/auth-provider'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -49,24 +49,22 @@ const Adminrole: React.FC = () => {
     uid: number
     role: string
   } | null>(null)
-  const [token, setToken] = useState<string | null>(null)
+  const { accessToken } = useAuth()
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
     const fetchInitialData = async (): Promise<void> => {
       try {
         setIsLoading(true)
-        const authToken = await getAdminAuthToken()
 
-        if (!authToken) {
+        if (!accessToken) {
           console.error('No authentication token found')
           toast.error('Authentication failed. Please log in again.')
           setIsLoading(false)
           return
         }
 
-        setToken(authToken)
-        await fetchStaffData(authToken)
+        await fetchStaffData(accessToken)
       } catch (error) {
         console.error('Error fetching initial data:', error)
         toast.error('Failed to load staff data. Please try again.')
@@ -76,10 +74,10 @@ const Adminrole: React.FC = () => {
     }
 
     void fetchInitialData()
-  }, [])
+  }, [accessToken])
 
   useEffect(() => {
-    if (!token) return
+    if (!accessToken) return
 
     if (searchTimeoutRef.current) {
       clearTimeout(searchTimeoutRef.current)
@@ -90,7 +88,7 @@ const Adminrole: React.FC = () => {
         if (searchInput.trim() !== '') {
           setIsSearching(true)
           try {
-            await fetchStaffData(token, searchInput)
+            await fetchStaffData(accessToken, searchInput)
           } catch (error) {
             console.error('Error searching staff:', error)
           } finally {
@@ -98,7 +96,7 @@ const Adminrole: React.FC = () => {
           }
         } else {
           try {
-            await fetchStaffData(token)
+            await fetchStaffData(accessToken)
           } catch (error) {
             console.error('Error fetching all staff:', error)
           }
@@ -113,7 +111,7 @@ const Adminrole: React.FC = () => {
         clearTimeout(searchTimeoutRef.current)
       }
     }
-  }, [searchInput, token])
+  }, [searchInput, accessToken])
 
   const fetchStaffData = async (
     authToken: string,
@@ -145,7 +143,7 @@ const Adminrole: React.FC = () => {
   }
 
   const handleRemove = async (uid: number): Promise<void> => {
-    if (!token) {
+    if (!accessToken) {
       toast.error('Authentication failed. Please log in again.')
       return
     }
@@ -153,7 +151,7 @@ const Adminrole: React.FC = () => {
     try {
       setIsRemovingStaff(uid)
 
-      await deleteStaff(token, uid.toString())
+      await deleteStaff(accessToken, uid.toString())
 
       const updatedItems = items.filter((item) => item.uid !== uid)
       setItems(updatedItems)
@@ -171,7 +169,7 @@ const Adminrole: React.FC = () => {
     uid: number,
     newRole: string
   ): Promise<void> => {
-    if (!token) {
+    if (!accessToken) {
       toast.error('Authentication failed. Please log in again.')
       return
     }
@@ -179,7 +177,7 @@ const Adminrole: React.FC = () => {
     try {
       setIsChangingRole({ uid, role: newRole })
 
-      await changeRole(token, uid, newRole)
+      await changeRole(accessToken, uid, newRole)
 
       const updatedItems = items.map((item) =>
         item.uid === uid ? { ...item, role: newRole } : item
@@ -201,7 +199,7 @@ const Adminrole: React.FC = () => {
       return
     }
 
-    if (!token) {
+    if (!accessToken) {
       toast.error('Authentication failed. Please log in again.')
       return
     }
@@ -209,7 +207,7 @@ const Adminrole: React.FC = () => {
     setIsAddingRole(true)
 
     try {
-      await addStaff(token, phoneNumber)
+      await addStaff(accessToken, phoneNumber)
       setPhoneNumber('')
 
       toast.success('Staff member added successfully')
