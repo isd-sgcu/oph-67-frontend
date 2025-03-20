@@ -41,10 +41,10 @@ const Footer: React.FC = () => {
         {/* Left Part */}
         <div className='flex w-2/6 flex-col items-center justify-center'>
           {/* Logo */}
-          <div className='relative mb-4 flex items-center justify-center'>
-            <div className='absolute z-0 h-[120px] w-[100px] -translate-x-1 -translate-y-1 rounded-full bg-white blur-md' />
+          <div className='relative flex h-[120px] w-[120px] items-center justify-center'>
+            <div className='absolute z-0 h-full w-full -translate-x-1 -translate-y-1 rounded-full bg-white blur-md' />
             <object
-              className='z-10 h-[80px] w-[80px]'
+              className='z-10 h-[80px] w-[100px]'
               data={`${config.cdnURL}/assets/homepage/chula_for_all.svg`}
               type='image/svg+xml'
             >
@@ -53,12 +53,12 @@ const Footer: React.FC = () => {
                 className='z-10'
                 height={80}
                 src={`${config.cdnURL}/assets/homepage/chula_for_all.svg`}
-                width={80}
+                width={100}
               />
             </object>
           </div>
           {/* Header Text */}
-          <div className='flex flex-col items-center justify-center text-center text-[8px] font-medium text-[#ED338C]'>
+          <div className='z-20 flex flex-col items-center justify-center text-center text-[8px] font-medium text-[#ED338C]'>
             <p>YOUR JOURNEY TO</p>
             <p>CHULA STARTS HERE!</p>
           </div>
@@ -71,7 +71,7 @@ const Footer: React.FC = () => {
             <Image
               alt='star_left'
               height={20}
-              src={`${config.cdnURL}/assets/homepage/star_yellow.svg`}
+              src="/assets/homepage/star_yellow_border.svg"
               width={20}
             />
 
@@ -93,20 +93,22 @@ const Footer: React.FC = () => {
               alt='star_right'
               className='rotate-[30deg]'
               height={20}
-              src={`${config.cdnURL}/assets/homepage/star_yellow.svg`}
+              src="/assets/homepage/star_yellow_border.svg"
               width={20}
             />
           </div>
 
-          {/* Dice */}
+          {/* Tickets */}
           <div className='mt-8 flex items-center justify-center gap-0'>
-            <div className='absolute rounded-full border border-white bg-white/50 px-3 py-2'>
+            <div className='absolute'>
               <Image
-                alt='dice'
+                alt='tickets'
+                className='relative z-10'
                 height={60}
-                src={`${config.cdnURL}/assets/homepage/dice.svg`}
-                width={60}
+                src="/assets/homepage/group_tickets.png"
+                width={100}
               />
+              <div className='absolute z-0 h-[70px] w-[70px] -translate-y-16 translate-x-4 rounded-full border border-white bg-white/50' />
             </div>
           </div>
 
@@ -114,23 +116,23 @@ const Footer: React.FC = () => {
           <div className='mt-9 flex flex-col items-center justify-center'>
             <div className='relative w-fit'>
               <div className='absolute z-0 h-8 w-full -translate-y-2 rounded-full bg-white blur-sm' />
-              <p className='relative z-10 text-[8px] font-medium text-[#ED338C]'>
+              <p className='relative z-10 text-[9px] font-medium text-[#ED338C]'>
                 ลุ้นรับโอกาสในการคุยกับ<b>พี่จุฬาฯตัวจริง</b>
               </p>
             </div>
             <div className='relative w-fit'>
               <div className='absolute z-0 h-5 w-full -translate-y-1 bg-white blur-sm' />
-              <p className='relative z-10 text-[8px] font-medium text-[#ED338C]'>
+              <p className='relative z-10 text-[9px] font-medium text-[#ED338C]'>
                 โดย <b>#ที่1บัญชี (TCAS66)</b> และ <b>#ที่1แพทย์ฯ(TCAS67)</b>
               </p>
             </div>
           </div>
 
           {/* Instagram */}
-          <div className='relative mt-3 flex w-auto items-center justify-center gap-1 rounded-xl border-2 border-white bg-[#FDF8F8] px-5 py-1 shadow-md'>
+          <div className='relative mt-3 flex w-auto items-center justify-center gap-6 rounded-xl border-2 border-white bg-[#FDF8F8] px-8 py-1 shadow-md'>
             {/* Ribbon Left */}
             <object
-              className='absolute h-[40px] w-[40px] -translate-x-24 -translate-y-4'
+              className='absolute h-[40px] w-[40px] -translate-x-32 -translate-y-4'
               data={`${config.cdnURL}/assets/homepage/ribbon.svg`}
               type='image/svg+xml'
             >
@@ -145,7 +147,7 @@ const Footer: React.FC = () => {
 
             {/* Ribbon Right */}
             <object
-              className='absolute h-[40px] w-[40px] -translate-y-4 translate-x-24 rotate-[30deg]'
+              className='absolute h-[40px] w-[40px] -translate-y-4 translate-x-32 rotate-[30deg]'
               data={`${config.cdnURL}/assets/homepage/ribbon.svg`}
               type='image/svg+xml'
             >
