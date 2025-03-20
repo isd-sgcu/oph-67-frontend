@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import WorkshopSmallCard from '@/components/workshop/workshop-small-card'
+import WorkshopCard from '@/components/workshop/workshop-card'
 import { allWorkshops } from '@/const/workshops'
 import {
   isWorkshopBookmarked,
@@ -35,11 +35,11 @@ const WorkshopBookmark: React.FC = () => {
       {bookmarkWorkshops.length === 0 ? (
         <div className='text-center'>No workshop💨🍃</div>
       ) : (
-        <div className='grid grid-cols-2 gap-6'>
+        <div className='flex w-5/6 flex-col gap-4'>
           {bookmarkWorkshops.map((workshop) => (
-            <WorkshopSmallCard
+            <WorkshopCard
               key={workshop.id}
-              toggleBookmark={_toggleWorkshopBookmark}
+              isBookmarked={isWorkshopBookmarked(workshop.id)}
               workshop={workshop}
             />
           ))}

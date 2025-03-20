@@ -154,3 +154,4 @@ const WorkshopDetailPage: React.FC = () => {
 }
 
 export default WorkshopDetailPage
+

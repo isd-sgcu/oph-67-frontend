@@ -53,6 +53,7 @@ export interface FacultyInterface {
   locationUrl?: string
   webUrl?: string
   fbUrl?: string
+  contact?: string
 }
 
 export const faculties: FacultyInterface[] = [
@@ -60,26 +61,31 @@ export const faculties: FacultyInterface[] = [
     id: FacultyId.Education,
     th: 'คณะครุศาสตร์',
     en: 'Faculty of Education',
+    contact: 'https://www.instagram.com/educu.openhouse/',
   },
   {
     id: FacultyId.Psychology,
     th: 'คณะจิตวิทยา',
     en: 'Faculty of Psychology',
+    contact: 'https://www.instagram.com/psychecu.openhouse/',
   },
   {
     id: FacultyId.Dentistry,
     th: 'คณะทันตแพทยศาสตร์',
     en: 'Faculty of Dentistry',
+    contact: 'https://www.instagram.com/dentcuopenhouse/',
   },
   {
     id: FacultyId.Law,
     th: 'คณะนิติศาสตร์',
     en: 'Faculty of Law',
+    contact: 'https://www.instagram.com/lawchulaopenhouse/',
   },
   {
     id: FacultyId.CommunicationArts,
     th: 'คณะนิเทศศาสตร์',
     en: 'Faculty of Communication Arts',
+    contact: 'https://www.instagram.com/nitadecuopenhouse/',
   },
   {
     id: FacultyId.Nursing,
@@ -90,6 +96,7 @@ export const faculties: FacultyInterface[] = [
     id: FacultyId.CommerceAndAccountancy,
     th: 'คณะพาณิชยศาสตร์และการบัญชี',
     en: 'Faculty of Commerce and Accountancy',
+    contact: 'https://www.instagram.com/cbs.openhouse/',
   },
   {
     id: FacultyId.Medicine,
@@ -100,16 +107,19 @@ export const faculties: FacultyInterface[] = [
     id: FacultyId.Pharmacy,
     th: 'คณะเภสัชศาสตร์',
     en: 'Faculty of Pharmacy',
+    contact: 'https://www.instagram.com/rxcu_openhouse/',
   },
   {
     id: FacultyId.PoliticalScience,
     th: 'คณะรัฐศาสตร์',
     en: 'Faculty of Political Science',
+    contact: 'https://www.instagram.com/polscicu.oph/',
   },
   {
     id: FacultyId.Science,
     th: 'คณะวิทยาศาสตร์',
     en: 'Faculty of Science',
+    contact: 'https://www.instagram.com/scichulaopenhouse/',
   },
   {
     id: FacultyId.SportScience,
@@ -120,31 +130,37 @@ export const faculties: FacultyInterface[] = [
     id: FacultyId.Engineering,
     th: 'คณะวิศวกรรมศาสตร์',
     en: 'Faculty of Engineering',
+    contact: 'https://www.instagram.com/cuintaniaopenhouse/',
   },
   {
     id: FacultyId.FineAndAppliedArts,
     th: 'คณะศิลปกรรมศาสตร์',
     en: 'Faculty of Fine and Applied Arts',
+    contact: 'https://www.instagram.com/smo.singum/',
   },
   {
     id: FacultyId.Economics,
     th: 'คณะเศรษฐศาสตร์',
     en: 'Faculty of Economics',
+    contact: 'https://www.instagram.com/econlab_cu/',
   },
   {
     id: FacultyId.Architecture,
     th: 'คณะสถาปัตยกรรมศาสตร์',
     en: 'Faculty of Architecture',
+    contact: 'https://www.instagram.com/arsc.chula/',
   },
   {
     id: FacultyId.AlliedHealthSciences,
     th: 'คณะสหเวชศาสตร์',
     en: 'Faculty of Allied Health Sciences',
+    contact: 'https://www.instagram.com/ahscuopenhouse/',
   },
   {
     id: FacultyId.VeterinaryScience,
     th: 'คณะสัตวแพทยศาสตร์',
     en: 'Faculty of Veterinary Science',
+    contact: 'https://www.instagram.com/cuvetopenhouse/',
   },
   {
     id: FacultyId.Arts,
@@ -162,107 +178,110 @@ export const faculties: FacultyInterface[] = [
     locationUrl: '',
     webUrl: 'Arts.Chulalongkorn.co.th',
     fbUrl: 'Art.Chulalongkorn',
+    contact: 'https://www.instagram.com/artsopenhouse/',
   },
   {
     id: FacultyId.IntegratedInnovation,
     th: 'สถาบันนวัตกรรมบูรณาการแห่งจุฬาลงกรณ์มหาวิทยาลัย',
     en: 'Chulalongkorn University Integrated Innovation Institute',
+    contact: 'https://www.instagram.com/basciiscofficial/',
   },
   {
     id: FacultyId.AgriculturalResources,
     th: 'สำนักวิชาทรัพยากรการเกษตร',
     en: 'School of Agricultural Resources',
+    contact: 'https://www.instagram.com/smosar.official/ ',
   },
-  {
-    id: FacultyId.GraduateSchool,
-    th: 'บัณฑิตวิทยาลัย',
-    en: 'Graduate School',
-  },
-  {
-    id: FacultyId.PopulationStudies,
-    th: 'วิทยาลัยประชากรศาสตร์',
-    en: 'College of Population Studies',
-  },
-  {
-    id: FacultyId.PetroleumEngineering,
-    th: 'วิทยาลัยปิโตรเลียมและปิโตรเคมี',
-    en: 'College of Petroleum and Petrochemical Engineering',
-  },
-  {
-    id: FacultyId.PublicHealth,
-    th: 'วิทยาลัยวิทยาศาสตร์สาธารณสุข',
-    en: 'College of Public Health Sciences',
-  },
-  {
-    id: FacultyId.Transport,
-    th: 'สถาบันการขนส่ง',
-    en: 'Institute of Transport',
-  },
-  {
-    id: FacultyId.ConfuciusInstitute,
-    th: 'สถาบันขงจื่อแห่งจุฬาลงกรณ์มหาวิทยาลัย',
-    en: 'Confucius Institute at Chulalongkorn University',
-  },
-  {
-    id: FacultyId.IntellectualProperty,
-    th: 'สถาบันทรัพย์สินทางปัญญาแห่งจุฬาลงกรณ์มหาวิทยาลัย',
-    en: 'Chulalongkorn University Intellectual Property Institute',
-  },
-  {
-    id: FacultyId.ThaiStudies,
-    th: 'สถาบันไทยศึกษา',
-    en: 'Thai Studies Institute',
-  },
-  {
-    id: FacultyId.Sasin,
-    th: 'สถาบันบัณฑิตบริหารธุรกิจศศินทร์แห่งจุฬาลงกรณ์มหาวิทยาลัย',
-    en: 'Sasin Graduate Institute of Business Administration',
-  },
-  {
-    id: FacultyId.LanguageInstitute,
-    th: 'สถาบันภาษาจุฬาฯ',
-    en: 'Language Institute',
-  },
-  {
-    id: FacultyId.SirindhornThaiLanguage,
-    th: 'สถาบันภาษาไทยสิรินธรแห่งจุฬาลงกรณ์มหาวิทยาลัย',
-    en: 'Sirindhorn Thai Language Institute',
-  },
-  {
-    id: FacultyId.WaterResources,
-    th: 'สถาบันวิจัยทรัพยากรทางน้ำ',
-    en: 'Research Institute for Water Resources',
-  },
-  {
-    id: FacultyId.Biotechnology,
-    th: 'สถาบันวิจัยเทคโนโลยีชีวภาพและวิศวกรรมพันธุศาสตร์',
-    en: 'Biotechnology and Genetic Engineering Research Unit',
-  },
-  {
-    id: FacultyId.Energy,
-    th: 'สถาบันวิจัยพลังงาน',
-    en: 'Energy Research Institute',
-  },
-  {
-    id: FacultyId.Materials,
-    th: 'สถาบันวิจัยโลหะและวัสดุ',
-    en: 'Metals and Materials Research Institute',
-  },
-  {
-    id: FacultyId.SustainableEnvironment,
-    th: 'สถาบันวิจัยสิ่งแวดล้อมเพื่อความยั่งยืน',
-    en: 'Research Institute for Sustainable Environment',
-  },
-  {
-    id: FacultyId.SocialResearch,
-    th: 'สถาบันวิจัยสังคม',
-    en: 'Social Research Institute',
-  },
-  {
-    id: FacultyId.AsianStudies,
-    th: 'สถาบันเอเชียศึกษา',
-    en: 'Institute of Asian Studies',
-  },
+  // {
+  //   id: FacultyId.GraduateSchool,
+  //   th: 'บัณฑิตวิทยาลัย',
+  //   en: 'Graduate School',
+  // },
+  // {
+  //   id: FacultyId.PopulationStudies,
+  //   th: 'วิทยาลัยประชากรศาสตร์',
+  //   en: 'College of Population Studies',
+  // },
+  // {
+  //   id: FacultyId.PetroleumEngineering,
+  //   th: 'วิทยาลัยปิโตรเลียมและปิโตรเคมี',
+  //   en: 'College of Petroleum and Petrochemical Engineering',
+  // },
+  // {
+  //   id: FacultyId.PublicHealth,
+  //   th: 'วิทยาลัยวิทยาศาสตร์สาธารณสุข',
+  //   en: 'College of Public Health Sciences',
+  // },
+  // {
+  //   id: FacultyId.Transport,
+  //   th: 'สถาบันการขนส่ง',
+  //   en: 'Institute of Transport',
+  // },
+  // {
+  //   id: FacultyId.ConfuciusInstitute,
+  //   th: 'สถาบันขงจื่อแห่งจุฬาลงกรณ์มหาวิทยาลัย',
+  //   en: 'Confucius Institute at Chulalongkorn University',
+  // },
+  // {
+  //   id: FacultyId.IntellectualProperty,
+  //   th: 'สถาบันทรัพย์สินทางปัญญาแห่งจุฬาลงกรณ์มหาวิทยาลัย',
+  //   en: 'Chulalongkorn University Intellectual Property Institute',
+  // },
+  // {
+  //   id: FacultyId.ThaiStudies,
+  //   th: 'สถาบันไทยศึกษา',
+  //   en: 'Thai Studies Institute',
+  // },
+  // {
+  //   id: FacultyId.Sasin,
+  //   th: 'สถาบันบัณฑิตบริหารธุรกิจศศินทร์แห่งจุฬาลงกรณ์มหาวิทยาลัย',
+  //   en: 'Sasin Graduate Institute of Business Administration',
+  // },
+  // {
+  //   id: FacultyId.LanguageInstitute,
+  //   th: 'สถาบันภาษาจุฬาฯ',
+  //   en: 'Language Institute',
+  // },
+  // {
+  //   id: FacultyId.SirindhornThaiLanguage,
+  //   th: 'สถาบันภาษาไทยสิรินธรแห่งจุฬาลงกรณ์มหาวิทยาลัย',
+  //   en: 'Sirindhorn Thai Language Institute',
+  // },
+  // {
+  //   id: FacultyId.WaterResources,
+  //   th: 'สถาบันวิจัยทรัพยากรทางน้ำ',
+  //   en: 'Research Institute for Water Resources',
+  // },
+  // {
+  //   id: FacultyId.Biotechnology,
+  //   th: 'สถาบันวิจัยเทคโนโลยีชีวภาพและวิศวกรรมพันธุศาสตร์',
+  //   en: 'Biotechnology and Genetic Engineering Research Unit',
+  // },
+  // {
+  //   id: FacultyId.Energy,
+  //   th: 'สถาบันวิจัยพลังงาน',
+  //   en: 'Energy Research Institute',
+  // },
+  // {
+  //   id: FacultyId.Materials,
+  //   th: 'สถาบันวิจัยโลหะและวัสดุ',
+  //   en: 'Metals and Materials Research Institute',
+  // },
+  // {
+  //   id: FacultyId.SustainableEnvironment,
+  //   th: 'สถาบันวิจัยสิ่งแวดล้อมเพื่อความยั่งยืน',
+  //   en: 'Research Institute for Sustainable Environment',
+  // },
+  // {
+  //   id: FacultyId.SocialResearch,
+  //   th: 'สถาบันวิจัยสังคม',
+  //   en: 'Social Research Institute',
+  // },
+  // {
+  //   id: FacultyId.AsianStudies,
+  //   th: 'สถาบันเอเชียศึกษา',
+  //   en: 'Institute of Asian Studies',
+  // },
 ] as const
 
 export const FacultyTH = faculties.map((faculty) => faculty.th) as [
