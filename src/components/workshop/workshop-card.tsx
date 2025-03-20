@@ -49,7 +49,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
               </p>
             </div>
             <div>
-              <Link href={workshop.registerUrl}>
+              <Link href=''>
                 <Button
                   className='mt-3 w-full bg-dark-pink font-mitr text-xs font-normal shadow-lg'
                   size='sm'

@@ -1,82 +1,57 @@
 import { z } from 'zod'
 
-import { config } from '@/app/config'
-
 import { FacultyId, facultyMap } from './faculties'
+import { workshopJson } from './workshop-json'
 
 // Define the Zod schema for a workshop
-const WorkshopSchema = z.object({
-  id: z.string().min(1, 'ID is required'),
-  facultyId: z.enum([...(Object.values(FacultyId) as [string, ...string[]])]),
-  faculty: z.string().min(1, 'Faculty is required'),
-  name: z.string().min(1, 'Name is required'),
-  description: z.string().min(1, 'Description is required'),
-  major: z.string().min(1, 'Major is required'),
-  thumbnail: z.string().min(1, 'Thumbnail is required'),
-  registerUrl: z.string().min(1, 'registerUrl is required'),
-})
+const WorkshopSchema = z
+  .object({
+    id: z.string().min(1, 'ID is required'),
+    facultyId: z.enum([...(Object.values(FacultyId) as [string, ...string[]])]),
+    faculty: z.string().optional(),
+    name: z.string().min(1, 'Name is required'),
+    description: z.string().min(1, 'Description is required'),
+    major: z.string().optional(),
+    thumbnail: z.string().optional(),
+    registerUrl: z.string().optional(),
+    organizer: z.string().optional(),
+    location: z.string().optional(),
+    numberOfRounds: z.string().optional(),
+    time: z.string().optional(),
+    participantsPerRound: z.string().optional(),
+    instagram: z.string().optional(),
+    facebook: z.string().optional(),
+  })
+  .superRefine((data, ctx) => {
+    // Update the faculty field based on facultyId
+    if (Object.hasOwn(facultyMap, data.facultyId)) {
+      data.faculty = facultyMap[data.facultyId].th
+    } else {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `Faculty ID ${data.facultyId} is not found in the faculty map`,
+      })
+    }
+    return data
+  })
 
 // TypeScript type inferred from the schema
 export type Workshop = z.infer<typeof WorkshopSchema>
 
 // Ensure all workshops have unique IDs across faculties
-const _allWorkshops: Workshop[] = [
-  {
-    id: 'workshop-1',
-    facultyId: FacultyId.Arts,
-    faculty: facultyMap[FacultyId.Arts].th,
-    name: 'Workshop 1',
-    description:
-      'Lorem ipsum dolor sit amet consectetur. Ultrices tortor egestas viverra placerat volutpat vulputate ',
-    major: 'เอกภาษาเกาหลี',
-    thumbnail: `${config.cdnURL}/assets/workshop/workshop.png`,
-    registerUrl: '/register1',
-  },
-  {
-    id: 'workshop-2',
-    facultyId: FacultyId.Arts,
-    faculty: facultyMap[FacultyId.Arts].th,
-    name: 'Workshop 2',
-    description:
-      'Lorem ipsum dolor sit amet consectetur. Ultrices tortor egestas viverra placerat volutpat vulputate ',
-    major: 'เอกภาษาญี่ปุ่น',
-    thumbnail: `${config.cdnURL}/assets/workshop/workshop.png`,
-    registerUrl: '/register2',
-  },
-  {
-    id: 'workshop-3',
-    facultyId: FacultyId.Arts,
-    faculty: facultyMap[FacultyId.Arts].th,
-    name: 'Workshop 3',
-    description:
-      'Lorem ipsum dolor sit amet consectetur. Ultrices tortor egestas viverra placerat volutpat vulputate ',
-    major: 'เอกภาษาจีน',
-    thumbnail: `${config.cdnURL}/assets/workshop/workshop.png`,
-    registerUrl: '/register3',
-  },
-  {
-    id: 'workshop-4',
-    facultyId: FacultyId.Arts,
-    faculty: facultyMap[FacultyId.Arts].th,
-    name: 'Workshop 4',
-    description:
-      'Lorem ipsum dolor sit amet consectetur. Ultrices tortor egestas viverra placerat volutpat vulputate ',
-    major: 'เอกภาษาอังกฤษ',
-    thumbnail: `${config.cdnURL}/assets/workshop/workshop.png`,
-    registerUrl: '/register4',
-  },
-  {
-    id: 'workshop-5',
-    facultyId: FacultyId.Arts,
-    faculty: facultyMap[FacultyId.Arts].th,
-    name: 'Workshop 5',
-    description:
-      'Lorem ipsum dolor sit amet consectetur. Ultrices tortor egestas viverra placerat volutpat vulputate ',
-    major: 'เอกภาษาฝรั่งเศส',
-    thumbnail: `${config.cdnURL}/assets/workshop/workshop.png`,
-    registerUrl: '/register5',
-  },
-]
+const _allWorkshops: Workshop[] = ((): Workshop[] => {
+  try {
+    const jsonData: unknown = JSON.parse(workshopJson)
+
+    const workshops = z.array(WorkshopSchema).parse(jsonData)
+
+    return workshops
+  } catch (err) {
+    console.error(err)
+    throw new Error('Error reading workshops.json')
+  }
+})()
+
 // Validate workshops with unique ID constraint
 const _workshops = z.array(WorkshopSchema).superRefine((workshops, ctx) => {
   const ids = new Set<string>()
