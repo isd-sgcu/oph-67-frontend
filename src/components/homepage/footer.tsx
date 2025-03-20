@@ -71,7 +71,7 @@ const Footer: React.FC = () => {
             <Image
               alt='star_left'
               height={20}
-              src="/assets/homepage/star_yellow_border.svg"
+              src='/assets/homepage/star_yellow_border.svg'
               width={20}
             />
 
@@ -93,7 +93,7 @@ const Footer: React.FC = () => {
               alt='star_right'
               className='rotate-[30deg]'
               height={20}
-              src="/assets/homepage/star_yellow_border.svg"
+              src='/assets/homepage/star_yellow_border.svg'
               width={20}
             />
           </div>
@@ -105,7 +105,7 @@ const Footer: React.FC = () => {
                 alt='tickets'
                 className='relative z-10'
                 height={60}
-                src="/assets/homepage/group_tickets.png"
+                src='/assets/homepage/group_tickets.png'
                 width={100}
               />
               <div className='absolute z-0 h-[70px] w-[70px] -translate-y-16 translate-x-4 rounded-full border border-white bg-white/50' />
@@ -129,10 +129,10 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Instagram */}
-          <div className='relative mt-3 flex w-auto items-center justify-center gap-6 rounded-xl border-2 border-white bg-[#FDF8F8] px-8 py-1 shadow-md'>
+          <div className='relative mt-3 flex w-auto items-center justify-center gap-3 rounded-xl border-2 border-white bg-[#FDF8F8] px-4 py-1 shadow-md'>
             {/* Ribbon Left */}
             <object
-              className='absolute h-[40px] w-[40px] -translate-x-28 -translate-y-4'
+              className='absolute h-[40px] w-[40px] -translate-x-24 -translate-y-4'
               data={`${config.cdnURL}/assets/homepage/ribbon.svg`}
               type='image/svg+xml'
             >
@@ -147,7 +147,7 @@ const Footer: React.FC = () => {
 
             {/* Ribbon Right */}
             <object
-              className='absolute h-[40px] w-[40px] -translate-y-4 translate-x-28 rotate-[30deg]'
+              className='absolute h-[40px] w-[40px] -translate-y-4 translate-x-24 rotate-[30deg]'
               data={`${config.cdnURL}/assets/homepage/ribbon.svg`}
               type='image/svg+xml'
             >
