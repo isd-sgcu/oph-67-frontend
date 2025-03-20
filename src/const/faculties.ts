@@ -91,6 +91,7 @@ export const faculties: FacultyInterface[] = [
     id: FacultyId.Nursing,
     th: 'คณะพยาบาลศาสตร์',
     en: 'Faculty of Nursing',
+    contact: 'noweb',
   },
   {
     id: FacultyId.CommerceAndAccountancy,
@@ -102,6 +103,7 @@ export const faculties: FacultyInterface[] = [
     id: FacultyId.Medicine,
     th: 'คณะแพทยศาสตร์',
     en: 'Faculty of Medicine',
+    contact: 'noweb',
   },
   {
     id: FacultyId.Pharmacy,
@@ -125,6 +127,7 @@ export const faculties: FacultyInterface[] = [
     id: FacultyId.SportScience,
     th: 'คณะวิทยาศาสตร์การกีฬา',
     en: 'Faculty of Sports Science',
+    contact: 'noweb',
   },
   {
     id: FacultyId.Engineering,
