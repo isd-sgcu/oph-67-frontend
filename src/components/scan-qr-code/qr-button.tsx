@@ -3,22 +3,23 @@
 import { ScanLine } from 'lucide-react'
 import { useState } from 'react'
 
+import { getUser } from '@/app/actions/get-profile/get-user'
 import { scanQRCode } from '@/app/actions/qr-code/scan-qr'
 import { useAuth } from '@/components/auth/auth-provider'
 import { useLiffContext } from '@/components/liff/liff-provider'
 import { Button } from '@/components/ui/button'
 
-import Modal from './modal'
-
-type ModalType = 'confirm' | 'invalid' | 'already'
+import { StatusModal, type StatusModalType } from './status-modal'
 
 const QrButton: React.FC = () => {
   const { liff, isInit } = useLiffContext()
   const { accessToken } = useAuth()
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [modalType, setModalType] = useState<ModalType>('invalid')
-  const [userInfo, setUserInfo] = useState<string>()
+  const [modalType, setModalType] = useState<StatusModalType>('failed')
+  const [userName, setUserName] = useState<string>()
+  const [staffType, setStaffType] = useState<string>()
   const [time, setTime] = useState<string>()
+  const [errorMessage, setErrorMessage] = useState<string>()
   const [isScanning, setIsScanning] = useState(false)
 
   const getButtonText = (): string => {
@@ -35,16 +36,16 @@ const QrButton: React.FC = () => {
     try {
       // Check if LIFF is initialized
       if (!isInit || !liff) {
-        setModalType('invalid')
-        setUserInfo('LIFF is not initialized')
+        setModalType('failed')
+        setErrorMessage('LIFF is not initialized')
         setIsModalOpen(true)
         return
       }
 
       // Check if running in LINE app
       if (!liff.isInClient()) {
-        setModalType('invalid')
-        setUserInfo('Please open this page in LINE app')
+        setModalType('failed')
+        setErrorMessage('Please open this page in LINE app')
         setIsModalOpen(true)
         return
       }
@@ -52,57 +53,80 @@ const QrButton: React.FC = () => {
       setIsScanning(true)
 
       try {
-        // Scan QR code using LIFF
         const scanResult = await liff.scanCodeV2()
-        const userId = scanResult.value
+        const scannedUserId = scanResult.value
 
-        if (!userId) {
-          setModalType('invalid')
-          setUserInfo('No QR code detected')
+        if (!scannedUserId) {
+          setModalType('failed')
+          setErrorMessage('No QR code detected')
           setIsModalOpen(true)
           return
         }
 
-        // Get auth token
         if (!accessToken) {
-          setModalType('invalid')
-          setUserInfo('Authentication failed. Please log in again.')
+          setModalType('failed')
+          setErrorMessage('Authentication failed. Please log in again.')
           setIsModalOpen(true)
           return
         }
 
-        const result = await scanQRCode(accessToken, userId)
+        try {
+          const userData = await getUser(scannedUserId, accessToken)
 
-        if (!result.success) {
-          if (result.error === 'User has already entered') {
-            setModalType('already')
-            setTime(result.lastEntered)
-            setUserInfo(userId)
-          } else {
-            setModalType('invalid')
-            setUserInfo(result.error ?? 'Invalid QR code')
+          if (userData.lastEntered) {
+            setModalType('already-taken')
+            setTime(userData.lastEntered)
+            setUserName(userData.name ?? scannedUserId)
+            setIsModalOpen(true)
+            return
           }
-          setIsModalOpen(true)
-          return
-        }
 
-        // Success case
-        if (result.data) {
-          setModalType('confirm')
-          setUserInfo(result.data.name)
-          setTime(result.data.lastEntered)
+          const result = await scanQRCode(accessToken, scannedUserId)
+
+          if (!result.success) {
+            if (result.error === 'User has already entered') {
+              setModalType('already-taken')
+              setTime(result.lastEntered)
+            } else {
+              setModalType('failed')
+              setErrorMessage(result.error ?? 'Invalid QR code')
+            }
+            setIsModalOpen(true)
+            return
+          }
+
+          if (result.data) {
+            setModalType('success')
+            setUserName(result.data.name)
+
+            // Determine staff type based on role
+            let type: string | undefined
+            if (userData.role === 'central_staff') {
+              type = 'ส่วนกลาง'
+            } else if (userData.role === 'faculty_staff') {
+              type = 'คณะ'
+            }
+
+            setStaffType(type)
+            setTime(result.data.lastEntered)
+            setIsModalOpen(true)
+          }
+        } catch (userError) {
+          console.error('Error getting user data:', userError)
+          setModalType('failed')
+          setErrorMessage('Failed to get user information')
           setIsModalOpen(true)
         }
       } catch (scanError) {
         console.error('QR Scan Error:', scanError)
-        setModalType('invalid')
-        setUserInfo('Failed to scan QR code')
+        setModalType('failed')
+        setErrorMessage('Failed to scan QR code')
         setIsModalOpen(true)
       }
     } catch (error) {
       console.error('General Error:', error)
-      setModalType('invalid')
-      setUserInfo('An unexpected error occurred')
+      setModalType('failed')
+      setErrorMessage('An unexpected error occurred')
       setIsModalOpen(true)
     } finally {
       setIsScanning(false)
@@ -121,15 +145,16 @@ const QrButton: React.FC = () => {
         <span>{getButtonText()}</span>
       </Button>
 
-      {isModalOpen ? (
-        <Modal
-          closeFn={() => setIsModalOpen(false)}
-          modalType={modalType}
-          scanAgain={() => void handleScan()}
-          time={time}
-          userInfo={userInfo}
-        />
-      ) : null}
+      <StatusModal
+        errorMessage={errorMessage}
+        open={isModalOpen}
+        staffType={staffType}
+        time={time}
+        type={modalType}
+        userId={userName}
+        onClose={() => setIsModalOpen(false)}
+        onScanAgain={() => void handleScan()}
+      />
     </div>
   )
 }
