@@ -10,11 +10,13 @@ import { toggleWorkshopBookmark } from '@/utils/local-storage'
 interface WorkshopCardProps {
   workshop: Workshop
   isBookmarked: boolean
+  onToggleBookmark?: (workshopId: string) => void
 }
 
 const WorkshopCard: React.FC<WorkshopCardProps> = ({
   workshop,
   isBookmarked,
+  onToggleBookmark,
 }) => {
   const [isSet, setIsSet] = useState(isBookmarked)
 
@@ -75,6 +77,9 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
         onClick={() => {
           toggleWorkshopBookmark(workshop.id)
           setIsSet(!isSet)
+          if (onToggleBookmark) {
+            onToggleBookmark(workshop.id)
+          }
         }}
       >
         {isSet ? (

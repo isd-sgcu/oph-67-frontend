@@ -41,6 +41,7 @@ const WorkshopBookmark: React.FC = () => {
               key={workshop.id}
               isBookmarked={isWorkshopBookmarked(workshop.id)}
               workshop={workshop}
+              onToggleBookmark={_toggleWorkshopBookmark}
             />
           ))}
         </div>
