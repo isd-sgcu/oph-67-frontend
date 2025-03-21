@@ -363,6 +363,7 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
                   name='status'
                   render={({ field }) => (
                     <Select
+                      disabled
                       defaultValue=''
                       value={field.value}
                       onValueChange={(value) => {
@@ -413,6 +414,7 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
                     name='faculty'
                     render={({ field }) => (
                       <Select
+                        disabled
                         defaultValue=''
                         value={
                           typeof field.value === 'string' ? field.value : ''
