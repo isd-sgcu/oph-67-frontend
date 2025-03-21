@@ -1,34 +1,68 @@
 'use client'
 
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import type React from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { config } from '@/app/config'
 import { ImageSliderImages } from '@/const/imageslider'
 
 const Imageslider: React.FC = () => {
+  const MAX_DOTS = 18
+
+  const calculateDotGroup = (index: number): number => {
+    return Math.floor(index / MAX_DOTS) * MAX_DOTS
+  }
+
+  const [startDotIndex, setStartDotIndex] = useState(calculateDotGroup(0))
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  const nextSlide = (): void => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % ImageSliderImages.length)
-  }
+  const updateDotVisibility = useCallback(
+    (index: number): void => {
+      if (ImageSliderImages.length <= MAX_DOTS) return
 
-  const prevSlide = (): void => {
-    setCurrentIndex(
-      (prevIndex) =>
-        (prevIndex - 1 + ImageSliderImages.length) % ImageSliderImages.length
-    )
-  }
+      const newStartIndex = calculateDotGroup(index)
 
-  const goToSlide = (index: number): void => {
-    setCurrentIndex(index)
-  }
+      if (newStartIndex !== startDotIndex) {
+        setStartDotIndex(newStartIndex)
+      }
+    },
+    [startDotIndex, MAX_DOTS]
+  )
+
+  const nextSlide = useCallback((): void => {
+    const newIndex = (currentIndex + 1) % ImageSliderImages.length
+    setCurrentIndex(newIndex)
+    updateDotVisibility(newIndex)
+  }, [currentIndex, updateDotVisibility])
+
+  const prevSlide = useCallback((): void => {
+    const newIndex =
+      (currentIndex - 1 + ImageSliderImages.length) % ImageSliderImages.length
+    setCurrentIndex(newIndex)
+    updateDotVisibility(newIndex)
+  }, [currentIndex, updateDotVisibility])
+
+  const goToSlide = useCallback(
+    (index: number): void => {
+      setCurrentIndex(index)
+      updateDotVisibility(index)
+    },
+    [updateDotVisibility]
+  )
 
   useEffect(() => {
     const interval = setInterval(nextSlide, 3000)
-
     return () => clearInterval(interval)
-  }, [currentIndex])
+  }, [nextSlide])
+
+  const getVisibleDots = (): string[] => {
+    if (ImageSliderImages.length <= MAX_DOTS) {
+      return ImageSliderImages
+    }
+
+    return ImageSliderImages.slice(startDotIndex, startDotIndex + MAX_DOTS)
+  }
 
   return (
     <div className='relative flex w-full items-center justify-center overflow-hidden py-2 sm:py-6'>
@@ -42,7 +76,7 @@ const Imageslider: React.FC = () => {
               className={`relative flex w-full bg-[#CCB9C4] transition-opacity duration-700 ease-in-out ${index === currentIndex ? 'opacity-100' : 'opacity-0'}`}
               layout='fill'
               objectFit='cover'
-              src={`${config.cdnURL}/assets/homepage/${img}`}
+              src={`/assets/homepage/${img}`}
             />
           ))
         ) : (
@@ -82,17 +116,21 @@ const Imageslider: React.FC = () => {
 
           {/* Dots */}
           <div className='absolute bottom-3 left-1/2 flex -translate-x-1/2 justify-center space-x-2 sm:bottom-7'>
-            {ImageSliderImages.map((img, index) => (
-              <Image
-                key={img}
-                alt={img}
-                className='cursor-pointer'
-                height={12}
-                src={`${config.cdnURL}/assets/homepage/flower_icon${index === currentIndex ? '_selected' : ''}.svg`}
-                width={12}
-                onClick={() => goToSlide(index)}
-              />
-            ))}
+            {getVisibleDots().map((img, index) => {
+              const actualIndex = startDotIndex + index
+
+              return (
+                <Image
+                  key={`dot-${actualIndex}`}
+                  alt={`Navigation dot ${actualIndex + 1}`}
+                  className='cursor-pointer'
+                  height={12}
+                  src={`${config.cdnURL}/assets/homepage/flower_icon${actualIndex === currentIndex ? '_selected' : ''}.svg`}
+                  width={12}
+                  onClick={() => goToSlide(actualIndex)}
+                />
+              )
+            })}
           </div>
         </>
       )}
