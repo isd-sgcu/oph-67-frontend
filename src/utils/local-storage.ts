@@ -1,4 +1,8 @@
 export const getWorkshopsBookmarked = (): string[] => {
+  if (typeof window === 'undefined') {
+    return []
+  }
+
   const workshops = localStorage.getItem('workshops')
   if (!workshops) {
     localStorage.setItem('workshops', JSON.stringify([]))
@@ -8,21 +12,22 @@ export const getWorkshopsBookmarked = (): string[] => {
 }
 
 const setWorkshopsBookmarked = (workshops: string[]): void => {
+  if (typeof window === 'undefined') return
   localStorage.setItem('workshops', JSON.stringify(workshops))
-}
-
-export const isWorkshopBookmarked = (workshopId: string): boolean => {
-  const workshops = getWorkshopsBookmarked()
-  return workshops.some((workshop) => workshop === workshopId)
 }
 
 export const toggleWorkshopBookmark = (workshopId: string): void => {
   const workshops = getWorkshopsBookmarked()
   const index = workshops.findIndex((w) => w === workshopId)
-  if (index === -1) {
-    workshops.push(workshopId)
-  } else {
-    workshops.splice(index, 1)
-  }
-  setWorkshopsBookmarked(workshops)
+
+  const newWorkshops =
+    index === -1
+      ? [...workshops, workshopId]
+      : workshops.filter((_, i) => i !== index)
+  setWorkshopsBookmarked(newWorkshops)
+}
+
+export const isWorkshopBookmarked = (workshopId: string): boolean => {
+  const workshops = getWorkshopsBookmarked()
+  return workshops.includes(workshopId)
 }

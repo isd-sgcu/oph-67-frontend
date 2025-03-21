@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import WorkshopCard from '@/components/workshop/workshop-card'
 import { allWorkshops } from '@/const/workshops'
@@ -10,17 +10,31 @@ import {
 } from '@/utils/local-storage'
 
 const WorkshopBookmark: React.FC = () => {
-  const _bookmarkWorkshops = allWorkshops.filter((workshop) =>
-    isWorkshopBookmarked(workshop.id)
-  )
+  const [bookmarkWorkshops, setBookmarkWorkshops] = useState<
+    typeof allWorkshops
+  >([])
 
-  const [bookmarkWorkshops, setBookmarkWorkshops] = useState(_bookmarkWorkshops)
+  useEffect(() => {
+    const _bookmarkWorkshops = allWorkshops.filter((workshop) =>
+      isWorkshopBookmarked(workshop.id)
+    )
+    setBookmarkWorkshops(_bookmarkWorkshops)
+  }, [])
 
   const _toggleWorkshopBookmark = (workshopId: string): void => {
-    toggleWorkshopBookmark(workshopId)
-    setBookmarkWorkshops(
-      bookmarkWorkshops.filter((workshop) => workshop.id !== workshopId)
-    )
+    if (typeof window !== 'undefined') {
+      setBookmarkWorkshops((currentWorkshops) => {
+        const workshopExists = currentWorkshops.some(
+          (workshop) => workshop.id === workshopId
+        )
+        if (!workshopExists) return currentWorkshops
+        return currentWorkshops.filter((workshop) => workshop.id !== workshopId)
+      })
+
+      if (isWorkshopBookmarked(workshopId)) {
+        toggleWorkshopBookmark(workshopId)
+      }
+    }
   }
 
   return (
@@ -39,7 +53,7 @@ const WorkshopBookmark: React.FC = () => {
           {bookmarkWorkshops.map((workshop) => (
             <WorkshopCard
               key={workshop.id}
-              isBookmarked={isWorkshopBookmarked(workshop.id)}
+              isBookmarked
               workshop={workshop}
               onToggleBookmark={_toggleWorkshopBookmark}
             />
