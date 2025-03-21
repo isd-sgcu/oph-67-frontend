@@ -211,21 +211,28 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
       />
       <div className='flex flex-col items-center justify-center gap-4 bg-[#FAE9F3] py-6'>
         <div className='flex flex-col items-center justify-center gap-0 font-mitr tracking-tight text-[#064E41]'>
-          <div className='flex gap-1 text-xl font-medium'>
-            <object
-              className='h-[125px] w-[125px]'
-              data={`${config.cdnURL}/assets/register/oph-logo.svg`}
-              type='image/svg+xml'
-            >
-              <Image
-                alt='logo'
-                height={125}
-                src={`${config.cdnURL}/assets/register/oph-logo.svg`}
-                width={125}
-              />
-            </object>
+          <object
+            className='h-[125px] w-[125px]'
+            data={`${config.cdnURL}/assets/register/oph-logo.svg`}
+            type='image/svg+xml'
+          >
+            <Image
+              alt='logo'
+              height={125}
+              src={`${config.cdnURL}/assets/register/oph-logo.svg`}
+              width={125}
+            />
+          </object>
+          <div className='mt-2 flex gap-1 text-xl font-medium'>
+            <Image
+              alt='edit'
+              height={16}
+              src={`${config.cdnURL}/assets/register/edit.svg`}
+              width={16}
+            />
             <div>แก้ไขข้อมูล</div>
           </div>
+          <div className='text-base font-light'>Registration Form</div>
         </div>
       </div>
       <div className='flex flex-col gap-4 px-3 py-3 font-mitr'>
