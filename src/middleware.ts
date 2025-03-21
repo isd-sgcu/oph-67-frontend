@@ -2,13 +2,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 // TODO: remove this when full version available
-const blockedPaths = [
-  '/navigator',
-  '/event',
-  '/faculties',
-  '/workshop',
-  '/suchibat',
-]
+const blockedPaths = ['/navigator', '/event', '/faculties', '/suchibat']
 
 export function middleware(request: NextRequest): NextResponse {
   const path = request.nextUrl.pathname
@@ -45,7 +39,6 @@ export const config = {
     '/navigator',
     '/event',
     '/faculties',
-    '/workshop',
     '/suchibat',
   ],
 }

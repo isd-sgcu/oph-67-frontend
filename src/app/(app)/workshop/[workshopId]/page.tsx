@@ -5,7 +5,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 
-import { config } from '@/app/config'
 import Bookmark from '@/components/svg/bookmark'
 import { Button } from '@/components/ui/button'
 import Notfound from '@/components/ui/notfound'
@@ -42,7 +41,7 @@ const WorkshopDetailPage: React.FC = () => {
             <Image
               alt='school'
               height={20}
-              src={`${config.cdnURL}/assets/workshop/details/school.svg`}
+              src="/assets/workshop/details/school.svg"
               width={20}
             />{' '}
             คณะ
@@ -55,7 +54,7 @@ const WorkshopDetailPage: React.FC = () => {
             <Image
               alt='shape'
               height={20}
-              src={`${config.cdnURL}/assets/workshop/details/shape.svg`}
+              src="/assets/workshop/details/shape.svg"
               width={20}
             />
             ผู้จัดกิจกรรม
@@ -68,7 +67,7 @@ const WorkshopDetailPage: React.FC = () => {
             <Image
               alt='schedule'
               height={20}
-              src={`${config.cdnURL}/assets/workshop/details/schedule.svg`}
+              src="/assets/workshop/details/schedule.svg"
               width={20}
             />
             เวลา
@@ -81,7 +80,7 @@ const WorkshopDetailPage: React.FC = () => {
             <Image
               alt='location'
               height={20}
-              src={`${config.cdnURL}/assets/workshop/details/location.svg`}
+              src="/assets/workshop/details/location.svg"
               width={20}
             />{' '}
             สถานที่จัด
@@ -94,7 +93,7 @@ const WorkshopDetailPage: React.FC = () => {
             <Image
               alt='calendar-clock'
               height={20}
-              src={`${config.cdnURL}/assets/workshop/details/calendar-clock.svg`}
+              src="/assets/workshop/details/calendar-clock.svg"
               width={20}
             />
             จำนวนรอบที่่จัด
@@ -107,7 +106,7 @@ const WorkshopDetailPage: React.FC = () => {
             <Image
               alt='person'
               height={20}
-              src={`${config.cdnURL}/assets/workshop/details/person.svg`}
+              src="/assets/workshop/details/person.svg"
               width={20}
             />{' '}
             จำนวนผู้เข้าร่วมในแต่ละรอบ
@@ -122,7 +121,7 @@ const WorkshopDetailPage: React.FC = () => {
             <Image
               alt='call'
               height={20}
-              src={`${config.cdnURL}/assets/workshop/details/call.svg`}
+              src="/assets/workshop/details/call.svg"
               width={20}
             />{' '}
             ช่องทางการติดต่อ
@@ -132,7 +131,7 @@ const WorkshopDetailPage: React.FC = () => {
               <Image
                 alt='instagram'
                 height={24}
-                src={`${config.cdnURL}/assets/workshop/details/instagram.svg`}
+                src="/assets/workshop/details/instagram.svg"
                 width={24}
               />{' '}
               @{_workshop.instagram}
@@ -141,7 +140,7 @@ const WorkshopDetailPage: React.FC = () => {
               <Image
                 alt='facebook'
                 height={24}
-                src={`${config.cdnURL}/assets/workshop/details/facebook.svg`}
+                src="/assets/workshop/details/facebook.svg"
                 width={24}
               />{' '}
               {_workshop.facebook}

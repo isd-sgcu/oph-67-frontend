@@ -16,7 +16,7 @@ const FacultyInfo: React.FC<FacultyInfoProps> = ({ faculty, setStep }) => {
   return (
     <>
       <Button
-        className='w-[18rem] bg-dark-pink font-mitr text-lg font-light shadow-lg'
+        className='w-[18rem] bg-dark-pink font-mitr text-lg font-light shadow-[0_4px_4px_rgba(0,0,0,0.2)]'
         size='lg'
         onClick={() => setStep(2)}
       >

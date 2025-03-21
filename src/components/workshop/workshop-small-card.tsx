@@ -1,4 +1,4 @@
-import { ImageIcon } from 'lucide-react'
+// import { ImageIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -38,31 +38,65 @@ const WorkshopSmallCard: React.FC<WorkshopSmallCardProps> = ({
           />
         ) : null}
       </Button>
-      <Link href=''>
-        <div className='workshop-small-card-gradient relative flex h-[13rem] w-[10rem] flex-col items-start justify-between gap-1 rounded-md border border-dark-pink p-2 shadow-lg'>
-          <div className='relative h-full w-full'>
-            {workshop.thumbnail ? (
+      <div className='flex h-auto w-[330px] justify-between rounded-lg border border-[#FBDAED] bg-white p-3 font-mitr shadow-[0_2px_8px_0_rgba(0,0,0,0.1)]'>
+        <div className='flex h-full w-auto flex-col gap-2'>
+          <div className='text-base font-normal leading-5 tracking-tight'>
+            <p className='truncate'>{workshop.name}</p>
+            <p>{workshop.faculty}</p>
+          </div>
+          <div className='flex flex-col gap-1'>
+            <div className='flex items-start gap-1 text-xs font-light tracking-tight'>
               <Image
-                fill
-                alt='faculty-logo'
-                className='rounded-md border border-dark-pink object-cover'
-                src={workshop.thumbnail}
+                alt='major'
+                className='mt-0.5'
+                height={12}
+                src='/assets/workshop/school.svg'
+                width={12}
               />
-            ) : (
-              <div className='flex h-full w-full items-center justify-center'>
-                <ImageIcon opacity={0.5} size={48} />
-              </div>
-            )}
+              <p>
+                <strong>เอก/สาขา :</strong> {workshop.organizer}
+              </p>
+            </div>
+            <div className='flex items-start gap-1 text-xs font-light tracking-tight'>
+              <Image
+                alt='major'
+                className='mt-0.5'
+                height={12}
+                src='/assets/workshop/location.svg'
+                width={12}
+              />
+              <p>
+                <strong>สถานที่จัด :</strong> {workshop.location}
+              </p>
+            </div>
+            <div className='flex items-start gap-1 text-xs font-light tracking-tight'>
+              <Image
+                alt='major'
+                className='mt-0.5'
+                height={12}
+                src='/assets/workshop/schedule.svg'
+                width={12}
+              />
+              <p>
+                <strong>เวลา :</strong> {workshop.time}
+              </p>
+            </div>
           </div>
-          <div className='relative w-full text-nowrap'>
-            <p className='w-full truncate'>{workshop.name}</p>
-            <p className='truncate text-xs font-light'>{workshop.faculty}</p>
-            <p className='truncate text-xs font-light'>
-              {workshop.description}
-            </p>
-          </div>
+          <Link href=''>
+            <div className='flex h-6 w-40 items-center justify-center rounded bg-[#EA88BD] px-2 py-0.5 font-mitr text-xs font-light text-white'>
+              ดูรายละเอียดเพิ่มเติม
+            </div>
+          </Link>
         </div>
-      </Link>
+        <div>
+          <Image
+            alt='heart'
+            height={18}
+            src='/assets/workshop/heartless.svg'
+            width={20}
+          />
+        </div>
+      </div>
     </div>
   )
 }

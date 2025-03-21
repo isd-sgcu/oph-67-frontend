@@ -1,9 +1,12 @@
 'use client'
 
+import { Heart } from 'lucide-react'
+import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { type ReactNode, useEffect, useState } from 'react'
 
 import FacultyInfo from '@/components/faculties/faculty-info'
+import { Button } from '@/components/ui/button'
 import Notfound from '@/components/ui/notfound'
 import WorkshopList from '@/components/workshop/workshop-list'
 import { faculties } from '@/const/faculties'
@@ -46,7 +49,19 @@ const FacultyPage: React.FC = () => {
   }
 
   return (
-    <div className='flex h-full w-full grow flex-col items-center gap-3 overflow-hidden py-8'>
+    <div className='flex h-full w-full grow flex-col items-center gap-3 overflow-hidden pb-20 pt-5'>
+      {step === 2 && (
+        <Link className='' href='/workshop/bookmark'>
+          <Button
+            className='gap-2 border font-normal'
+            size='sm'
+            variant='outline'
+          >
+            <Heart />
+            My Workshop
+          </Button>
+        </Link>
+      )}
       <div className='text-center'>
         <h1 className='text-2xl font-normal tracking-tight text-primary-green'>
           {_faculty.th}
