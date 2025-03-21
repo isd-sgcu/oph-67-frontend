@@ -195,12 +195,6 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
         }}
       />
       <div className='flex flex-col items-center justify-center gap-4 bg-[#FAE9F3] py-6'>
-        <Image
-          alt='logo'
-          height={125}
-          src={`${config.cdnURL}/assets/register/oph-logo.svg`}
-          width={125}
-        />
         <div className='flex flex-col items-center justify-center gap-0 font-mitr tracking-tight text-[#064E41]'>
           <div className='flex gap-1 text-xl font-medium'>
             <object
@@ -215,7 +209,6 @@ const UserForm: React.FC<UserFormProps> = ({ form }) => {
                 width={125}
               />
             </object>
-            <div>แก้ไขข้อมูล</div>
           </div>
           <div className='text-base font-light'>Registration Form</div>
         </div>
