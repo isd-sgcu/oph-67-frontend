@@ -42,6 +42,10 @@ export const config = {
     '/',
     '/register',
     // TODO: remove this when full version available
-    ...blockedPaths,
+    '/navigator',
+    '/event',
+    '/faculties',
+    '/suchibat',
+    '/profile/certificate',
   ],
 }
