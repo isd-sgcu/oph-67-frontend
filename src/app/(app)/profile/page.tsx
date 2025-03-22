@@ -92,13 +92,6 @@ const Profile: React.FC = () => {
         </Button>
       </Link>
       <div className='relative'>
-        {/* <Image
-          alt='mascot'
-          className='absolute bottom-[-15px] left-[-30px]'
-          height={86}
-          src={`${config.cdnURL}/assets/profile/girl_mascot.png`}
-          width={57}
-        /> */}
         <div className='flex flex-col items-center overflow-hidden rounded-lg border-2 border-dark-pink bg-white p-1'>
           <QRCode className='bg-white p-5' value={profile.userId} />
           <p className='font-light'>ID: {profile.userId.substring(0, 6)}</p>
