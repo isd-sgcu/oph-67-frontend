@@ -87,19 +87,6 @@ const FlowerResult: React.FC<FlowerResultProps> = ({
           src={`${config.cdnURL}/assets/pick-your-flower/flower-w-leaf.svg`}
           width={70}
         />
-        <object
-          className='absolute bottom-[-25px] right-[-45px] z-10'
-          data={`${config.cdnURL}/assets/pick-your-flower/flower-girl.svg`}
-          type='image/svg+xml'
-        >
-          <Image
-            alt='girl with flower'
-            className='absolute bottom-[-17px] right-[-45px] z-10'
-            height={104}
-            src={`${config.cdnURL}/assets/pick-your-flower/flower-girl.svg`}
-            width={66}
-          />
-        </object>
       </div>
       <div className='z-10 mt-4 flex w-full items-center justify-center gap-2'>
         <Button
