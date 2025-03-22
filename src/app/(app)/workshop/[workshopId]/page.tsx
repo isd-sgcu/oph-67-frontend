@@ -147,6 +147,15 @@ const WorkshopDetailPage: React.FC = () => {
             </p>
           </div>
         </div>
+        <Link href='https://www.instagram.com/chulaforall'>
+          <Image
+            alt='workshop-help-banner'
+            className='mt-5 max-w-full'
+            height={200}
+            src='/assets/workshop/details/banner.png'
+            width={600}
+          />
+        </Link>
       </div>
     </div>
   )
