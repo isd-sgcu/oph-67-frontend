@@ -117,13 +117,13 @@ const Footer: React.FC = () => {
             <div className='relative w-fit'>
               <div className='absolute z-0 h-8 w-full -translate-y-2 rounded-full bg-white blur-sm' />
               <p className='relative z-10 text-[9px] font-medium text-[#ED338C]'>
-                ลุ้นรับโอกาสในการคุยกับ<b>พี่จุฬาฯตัวจริง</b>
+                <b>ทุกกล่อง</b>มีตั๋วเพื่อคุยกับ<b>พี่จุฬาฯตัวจริง!</b>
               </p>
             </div>
             <div className='relative w-fit'>
               <div className='absolute z-0 h-5 w-full -translate-y-1 bg-white blur-sm' />
               <p className='relative z-10 text-[9px] font-medium text-[#ED338C]'>
-                โดย <b>#ที่1บัญชี (TCAS66)</b> และ <b>#ที่1แพทย์ฯ (TCAS67)</b>
+                โดย <b>#ที่1 บัญชี (TCAS66)</b> และ <b>#ที่1 แพทย์ฯ (TCAS67)</b>
               </p>
             </div>
           </div>

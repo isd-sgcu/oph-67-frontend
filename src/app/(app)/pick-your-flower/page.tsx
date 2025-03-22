@@ -4,6 +4,7 @@ import { type ReactNode, useCallback, useMemo, useState } from 'react'
 
 import Footer from '@/components/homepage/footer'
 import Navbar from '@/components/homepage/navbar'
+import Popup from '@/components/homepage/popup'
 import FlowerResult from '@/components/pick-your-flower/subpages/flower-result'
 import SelectCard from '@/components/pick-your-flower/subpages/select-card'
 import FlowerDatas from '@/const/flower-data'
@@ -57,6 +58,7 @@ const FlowerPage: React.FC = () => {
 
   return (
     <div>
+      <Popup />
       <Navbar />
       {getPage()}
       <Footer />

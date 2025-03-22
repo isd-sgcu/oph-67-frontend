@@ -1,5 +1,10 @@
 export const ImageSliderImages: string[] = [
   'first_banner.png',
+  'anywheel.png',
+  'camphub.png',
+  'loreal.jpg',
+  'major.jpg',
+  'charmiss.jpg',
   'bascii.png',
   'sar.png',
   'edu.JPG',
