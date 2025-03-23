@@ -73,15 +73,15 @@ const Pdpa: React.FC<PdpaProps> = ({
         toast.dismiss(loadingToastId)
         setStep(3)
       } catch (error) {
-        if (error instanceof Error) {
-          console.error(error.message)
-        } else {
-          console.error('An unknown error occurred')
-        }
-        console.log(`Failed to register ${isStaff ? 'staff 1' : 'user 1'}`)
+        const errorMessage =
+          error instanceof Error ? error.message : 'An unknown error occurred'
+
+        console.error(
+          `Failed to register ${isStaff ? 'staff' : 'user'}: ${errorMessage}`
+        )
         toast.dismiss(loadingToastId)
         setStep(1)
-        toast.error('This phone number is already taken.')
+        toast.error(errorMessage)
       }
     }
   }
