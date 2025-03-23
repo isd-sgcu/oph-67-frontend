@@ -11,7 +11,6 @@ faculties = [
     {"id": "faculty-of-dentistry", "th": "คณะทันตแพทยศาสตร์", "en": "Faculty of Dentistry"},
     {"id": "faculty-of-law", "th": "คณะนิติศาสตร์", "en": "Faculty of Law"},
     {"id": "faculty-of-communication-arts", "th": "คณะนิเทศศาสตร์", "en": "Faculty of Communication Arts"},
-    {"id": "faculty-of-nursing", "th": "คณะพยาบาลศาสตร์", "en": "Faculty of Nursing"},
     {"id": "faculty-of-commerce-and-accountancy", "th": "คณะพาณิชยศาสตร์และการบัญชี", "en": "Faculty of Commerce and Accountancy"},
     {"id": "faculty-of-medicine", "th": "คณะแพทยศาสตร์", "en": "Faculty of Medicine"},
     {"id": "faculty-of-pharmacy", "th": "คณะเภสัชศาสตร์", "en": "Faculty of Pharmacy"},
@@ -27,24 +26,6 @@ faculties = [
     {"id": "faculty-of-arts", "th": "คณะอักษรศาสตร์", "en": "Faculty of Arts"},
     {"id": "chulalongkorn-university-integrated-innovation-institute", "th": "สถาบันนวัตกรรมบูรณาการแห่งจุฬาลงกรณ์มหาวิทยาลัย", "en": "Chulalongkorn University Integrated Innovation Institute"},
     {"id": "school-of-agricultural-resources", "th": "สำนักวิชาทรัพยากรการเกษตร", "en": "School of Agricultural Resources"},
-    {"id": "graduate-school", "th": "บัณฑิตวิทยาลัย", "en": "Graduate School"},
-    {"id": "college-of-population-studies", "th": "วิทยาลัยประชากรศาสตร์", "en": "College of Population Studies"},
-    {"id": "college-of-petroleum-and-petrochemical-engineering", "th": "วิทยาลัยปิโตรเลียมและปิโตรเคมี", "en": "College of Petroleum and Petrochemical Engineering"},
-    {"id": "college-of-public-health-sciences", "th": "วิทยาลัยวิทยาศาสตร์สาธารณสุข", "en": "College of Public Health Sciences"},
-    {"id": "institute-of-transport", "th": "สถาบันการขนส่ง", "en": "Institute of Transport"},
-    {"id": "confucius-institute-at-chulalongkorn-university", "th": "สถาบันขงจื่อแห่งจุฬาลงกรณ์มหาวิทยาลัย", "en": "Confucius Institute at Chulalongkorn University"},
-    {"id": "chulalongkorn-university-intellectual-property-institute", "th": "สถาบันทรัพย์สินทางปัญญาแห่งจุฬาลงกรณ์มหาวิทยาลัย", "en": "Chulalongkorn University Intellectual Property Institute"},
-    {"id": "thai-studies-institute", "th": "สถาบันไทยศึกษา", "en": "Thai Studies Institute"},
-    {"id": "sasin-graduate-institute-of-business-administration", "th": "สถาบันบัณฑิตบริหารธุรกิจศศินทร์แห่งจุฬาลงกรณ์มหาวิทยาลัย", "en": "Sasin Graduate Institute of Business Administration"},
-    {"id": "language-institute", "th": "สถาบันภาษาจุฬาฯ", "en": "Language Institute"},
-    {"id": "sirindhorn-thai-language-institute", "th": "สถาบันภาษาไทยสิรินธรแห่งจุฬาลงกรณ์มหาวิทยาลัย", "en": "Sirindhorn Thai Language Institute"},
-    {"id": "research-institute-for-water-resources", "th": "สถาบันวิจัยทรัพยากรทางน้ำ", "en": "Research Institute for Water Resources"},
-    {"id": "biotechnology-and-genetic-engineering-research-unit", "th": "สถาบันวิจัยเทคโนโลยีชีวภาพและวิศวกรรมพันธุศาสตร์", "en": "Biotechnology and Genetic Engineering Research Unit"},
-    {"id": "energy-research-institute", "th": "สถาบันวิจัยพลังงาน", "en": "Energy Research Institute"},
-    {"id": "metals-and-materials-research-institute", "th": "สถาบันวิจัยโลหะและวัสดุ", "en": "Metals and Materials Research Institute"},
-    {"id": "research-institute-for-sustainable-environment", "th": "สถาบันวิจัยสิ่งแวดล้อมเพื่อความยั่งยืน", "en": "Research Institute for Sustainable Environment"},
-    {"id": "social-research-institute", "th": "สถาบันวิจัยสังคม", "en": "Social Research Institute"},
-    {"id": "institute-of-asian-studies", "th": "สถาบันเอเชียศึกษา", "en": "Institute of Asian Studies"}
 ]
 
 # Faculty to short name mapping

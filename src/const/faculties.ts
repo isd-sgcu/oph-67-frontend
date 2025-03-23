@@ -53,7 +53,7 @@ export interface FacultyInterface {
   locationUrl?: string
   webUrl?: string
   fbUrl?: string
-  contact?: string
+  contact: string
 }
 
 export const faculties: FacultyInterface[] = [
@@ -88,12 +88,6 @@ export const faculties: FacultyInterface[] = [
     contact: 'https://www.instagram.com/nitadecuopenhouse/',
   },
   {
-    id: FacultyId.Nursing,
-    th: 'คณะพยาบาลศาสตร์',
-    en: 'Faculty of Nursing',
-    contact: 'noweb',
-  },
-  {
     id: FacultyId.CommerceAndAccountancy,
     th: 'คณะพาณิชยศาสตร์และการบัญชี',
     en: 'Faculty of Commerce and Accountancy',
@@ -103,7 +97,7 @@ export const faculties: FacultyInterface[] = [
     id: FacultyId.Medicine,
     th: 'คณะแพทยศาสตร์',
     en: 'Faculty of Medicine',
-    contact: 'noweb',
+    contact: 'https://www.instagram.com/smcuformdcu/',
   },
   {
     id: FacultyId.Pharmacy,
@@ -127,7 +121,7 @@ export const faculties: FacultyInterface[] = [
     id: FacultyId.SportScience,
     th: 'คณะวิทยาศาสตร์การกีฬา',
     en: 'Faculty of Sports Science',
-    contact: 'noweb',
+    contact: 'https://www.instagram.com/spsc_chula/',
   },
   {
     id: FacultyId.Engineering,
@@ -195,96 +189,6 @@ export const faculties: FacultyInterface[] = [
     en: 'School of Agricultural Resources',
     contact: 'https://www.instagram.com/smosar.official/ ',
   },
-  // {
-  //   id: FacultyId.GraduateSchool,
-  //   th: 'บัณฑิตวิทยาลัย',
-  //   en: 'Graduate School',
-  // },
-  // {
-  //   id: FacultyId.PopulationStudies,
-  //   th: 'วิทยาลัยประชากรศาสตร์',
-  //   en: 'College of Population Studies',
-  // },
-  // {
-  //   id: FacultyId.PetroleumEngineering,
-  //   th: 'วิทยาลัยปิโตรเลียมและปิโตรเคมี',
-  //   en: 'College of Petroleum and Petrochemical Engineering',
-  // },
-  // {
-  //   id: FacultyId.PublicHealth,
-  //   th: 'วิทยาลัยวิทยาศาสตร์สาธารณสุข',
-  //   en: 'College of Public Health Sciences',
-  // },
-  // {
-  //   id: FacultyId.Transport,
-  //   th: 'สถาบันการขนส่ง',
-  //   en: 'Institute of Transport',
-  // },
-  // {
-  //   id: FacultyId.ConfuciusInstitute,
-  //   th: 'สถาบันขงจื่อแห่งจุฬาลงกรณ์มหาวิทยาลัย',
-  //   en: 'Confucius Institute at Chulalongkorn University',
-  // },
-  // {
-  //   id: FacultyId.IntellectualProperty,
-  //   th: 'สถาบันทรัพย์สินทางปัญญาแห่งจุฬาลงกรณ์มหาวิทยาลัย',
-  //   en: 'Chulalongkorn University Intellectual Property Institute',
-  // },
-  // {
-  //   id: FacultyId.ThaiStudies,
-  //   th: 'สถาบันไทยศึกษา',
-  //   en: 'Thai Studies Institute',
-  // },
-  // {
-  //   id: FacultyId.Sasin,
-  //   th: 'สถาบันบัณฑิตบริหารธุรกิจศศินทร์แห่งจุฬาลงกรณ์มหาวิทยาลัย',
-  //   en: 'Sasin Graduate Institute of Business Administration',
-  // },
-  // {
-  //   id: FacultyId.LanguageInstitute,
-  //   th: 'สถาบันภาษาจุฬาฯ',
-  //   en: 'Language Institute',
-  // },
-  // {
-  //   id: FacultyId.SirindhornThaiLanguage,
-  //   th: 'สถาบันภาษาไทยสิรินธรแห่งจุฬาลงกรณ์มหาวิทยาลัย',
-  //   en: 'Sirindhorn Thai Language Institute',
-  // },
-  // {
-  //   id: FacultyId.WaterResources,
-  //   th: 'สถาบันวิจัยทรัพยากรทางน้ำ',
-  //   en: 'Research Institute for Water Resources',
-  // },
-  // {
-  //   id: FacultyId.Biotechnology,
-  //   th: 'สถาบันวิจัยเทคโนโลยีชีวภาพและวิศวกรรมพันธุศาสตร์',
-  //   en: 'Biotechnology and Genetic Engineering Research Unit',
-  // },
-  // {
-  //   id: FacultyId.Energy,
-  //   th: 'สถาบันวิจัยพลังงาน',
-  //   en: 'Energy Research Institute',
-  // },
-  // {
-  //   id: FacultyId.Materials,
-  //   th: 'สถาบันวิจัยโลหะและวัสดุ',
-  //   en: 'Metals and Materials Research Institute',
-  // },
-  // {
-  //   id: FacultyId.SustainableEnvironment,
-  //   th: 'สถาบันวิจัยสิ่งแวดล้อมเพื่อความยั่งยืน',
-  //   en: 'Research Institute for Sustainable Environment',
-  // },
-  // {
-  //   id: FacultyId.SocialResearch,
-  //   th: 'สถาบันวิจัยสังคม',
-  //   en: 'Social Research Institute',
-  // },
-  // {
-  //   id: FacultyId.AsianStudies,
-  //   th: 'สถาบันเอเชียศึกษา',
-  //   en: 'Institute of Asian Studies',
-  // },
 ] as const
 
 export const FacultyTH = faculties.map((faculty) => faculty.th) as [
