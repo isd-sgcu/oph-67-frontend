@@ -96,7 +96,7 @@ export const workshopJson = `
         "facultyId": "faculty-of-psychology",
         "name": "Workshop Cognitive ",
         "organizer": "คณะ",
-        "location": "จุฬาพัฒน์ 2 ชั้น 3",
+        "location": "จุฬาพัฒน์ 5 ชั้น 3",
         "numberOfRounds": "สามารถเข้าชมได้ทั้งวัน",
         "time": "9:00-16:30",
         "description": "ให้น้องเล่นเกม โดยเกมที่เล่นเชื่อมโยงกับหลักการเกี่ยวกับกระบวนการแก้ปัญหาของ Cognitive Psychology",
