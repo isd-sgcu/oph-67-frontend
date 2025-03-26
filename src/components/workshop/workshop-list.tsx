@@ -19,16 +19,9 @@ const WorkshopList: React.FC<WorkshopListProps> = ({ faculty }) => {
 
   return (
     <>
-      <Link
-        href={
-          faculty.contact === 'noweb' || !faculty.contact
-            ? '#'
-            : faculty.contact
-        }
-      >
+      <Link href={faculty.contact}>
         <Button
           className='w-[18rem] bg-dark-pink font-mitr text-lg font-light shadow-[0_4px_4px_rgba(0,0,0,0.2)]'
-          disabled={faculty.contact === 'noweb'}
           size='lg'
         >
           ช่องทางติดต่อกับคณะ
