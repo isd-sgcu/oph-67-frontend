@@ -23,10 +23,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { faculties } from '@/const/faculties'
 import translations from '@/const/register-title'
 import { years } from '@/const/staff-year'
-import { status } from '@/const/status-staff'
 import { type AdminRegisterForm } from '@/types/admin-register'
 import { type StaffData } from '@/types/staff-data'
 import { validateEmail } from '@/utils/email-validation'
@@ -41,7 +39,6 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
   const router = useRouter()
   const { profile, isInit } = useLiffContext()
   const { accessToken } = useAuth()
-  const [showFaculty, setShowFaculty] = useState(false)
   const [isCorrectEmail, setIsCorrectEmail] = useState(true)
   const [isCorrectPhone, setIsCorrectPhone] = useState(true)
   const userId = profile?.userId
@@ -63,21 +60,11 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
 
           const [name, surname] = staffData.name.split(' ')
 
-          let status: 'Staff ส่วนกลาง' | 'Staff ประจำคณะ' | undefined
-          if (staffData.isCentralStaff) {
-            setShowFaculty(false)
-            status = 'Staff ส่วนกลาง'
-          } else {
-            setShowFaculty(true)
-            status = 'Staff ประจำคณะ'
-          }
-
           form.reset({
             name,
             surname,
             nickname: staffData.nickname,
             studentId: staffData.studentId,
-            status,
             email: staffData.email,
             phone: staffData.phone,
             year: staffData.year?.toString() as
@@ -360,108 +347,6 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
                 />
               </div>
             </div>
-            <div className='flex gap-2'>
-              <div className='flex w-full flex-col gap-1'>
-                <div className='text-xs font-normal text-[#064E41]'>
-                  สถานภาพ Staff<span className='text-[#FF0000]'>*</span>
-                </div>
-                <Controller
-                  control={form.control}
-                  name='status'
-                  render={({ field }) => (
-                    <Select
-                      disabled
-                      defaultValue=''
-                      value={field.value}
-                      onValueChange={(value) => {
-                        field.onChange(value)
-                        if (value === 'Staff ประจำคณะ') {
-                          setShowFaculty(true)
-                        } else {
-                          setShowFaculty(false)
-                        }
-                        // Remove red border when user selects value
-                        const inputElement =
-                          document.querySelector(`[name="status"]`)
-                        if (inputElement) {
-                          inputElement.classList.remove('border-red-500')
-                        }
-                      }}
-                    >
-                      <SelectTrigger
-                        className='h-9 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'
-                        name='status'
-                      >
-                        <SelectValue placeholder='Staff' />
-                      </SelectTrigger>
-                      <SelectContent
-                        className='w-[var(--radix-select-trigger-width)]'
-                        position='popper'
-                        side='bottom'
-                      >
-                        {status.map((st) => (
-                          <SelectItem key={st} value={st}>
-                            {st}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  )}
-                />
-              </div>
-            </div>
-            {showFaculty ? (
-              <div className='flex gap-2'>
-                <div className='flex w-full flex-col gap-1'>
-                  <div className='text-xs font-normal text-[#064E41]'>
-                    คณะ<span className='text-[#FF0000]'>*</span>
-                  </div>
-                  <Controller
-                    control={form.control}
-                    name='faculty'
-                    render={({ field }) => (
-                      <Select
-                        disabled
-                        defaultValue=''
-                        value={
-                          typeof field.value === 'string' ? field.value : ''
-                        }
-                        onValueChange={(value) => {
-                          field.onChange(value)
-                          if (value === 'Staff ประจำคณะ') {
-                            setShowFaculty(true)
-                          }
-                          // Remove red border when user selects value
-                          const inputElement =
-                            document.querySelector(`[name="faculty"]`)
-                          if (inputElement) {
-                            inputElement.classList.remove('border-red-500')
-                          }
-                        }}
-                      >
-                        <SelectTrigger
-                          className='h-9 border-[#064E41] text-sm font-light text-[#064E41] focus:ring-[#064E41]'
-                          name='faculty'
-                        >
-                          <SelectValue placeholder='เลือกคณะ' />
-                        </SelectTrigger>
-                        <SelectContent
-                          className='w-[var(--radix-select-trigger-width)]'
-                          position='popper'
-                          side='bottom'
-                        >
-                          {faculties.map((f) => (
-                            <SelectItem key={f.th} value={f.th}>
-                              {f.th}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    )}
-                  />
-                </div>
-              </div>
-            ) : null}
             <div className='flex gap-2'>
               <div className='flex w-full flex-col gap-1'>
                 <div className='text-xs font-normal text-[#064E41]'>
