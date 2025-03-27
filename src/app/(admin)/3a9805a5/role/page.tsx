@@ -8,7 +8,7 @@ import { Toaster, toast } from 'react-hot-toast'
 import { addStaff } from '@/app/actions/staff/add-staff'
 import { changeRole } from '@/app/actions/staff/change-role'
 import { deleteStaff } from '@/app/actions/staff/delete-staff'
-import { getStaff } from '@/app/actions/staff/get-staff'
+import { getAdmin, getStaff } from '@/app/actions/staff/get-staff'
 import { config } from '@/app/config'
 import AdminProtect from '@/components/admin/admin-protect'
 import { useAuth } from '@/components/auth/auth-provider'
@@ -57,7 +57,7 @@ const Adminrole: React.FC = () => {
     async (authToken: string, name?: string): Promise<void> => {
       try {
         const staffData = await getStaff(authToken, name)
-
+        const adminData = await getAdmin(authToken)
         const formattedStaff: StaffItem[] = staffData.map((staff) => ({
           uid: staff.id || Math.floor(Math.random() * 1000) + 100,
           name: staff.name || 'Unknown',
@@ -66,7 +66,15 @@ const Adminrole: React.FC = () => {
           phone: staff.phone,
         }))
 
-        setItems(formattedStaff)
+        const formattedAdmin: StaffItem[] = adminData.map((admin) => ({
+          uid: admin.id || Math.floor(Math.random() * 1000) + 100,
+          name: admin.name || 'Unknown',
+          role: admin.role || 'admin',
+          faculty: admin.school || 'ส่วนกลาง',
+          phone: admin.phone,
+        }))
+
+        setItems([...formattedStaff, ...formattedAdmin])
 
         if (!name) {
           toast.success('Staff data loaded successfully')

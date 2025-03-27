@@ -30,3 +30,18 @@ export async function getStaff(
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- We are confident that the response is JSON
   return response.json()
 }
+
+export async function getAdmin(token: string): Promise<StaffApiResponse[]> {
+  const response = await fetch(`${config.baseURL}/api/users?role=admin`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch admin: ${response.status}`)
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- We are confident that the response is JSON
+  return response.json()
+}
