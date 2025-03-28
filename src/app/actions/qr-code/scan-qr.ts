@@ -26,7 +26,10 @@ export async function scanQRCode(
     })
 
     if (!response.ok) {
-      throw new Error(`Failed to scan QR code: ${response.status}`)
+      const errorText = await response.text().catch(() => 'No response body')
+      throw new Error(
+        `Failed to scan QR code: ${response.status} ${response.statusText} - ${errorText}`
+      )
     }
 
     const data = (await response.json()) as ScanQRResponse['data']
