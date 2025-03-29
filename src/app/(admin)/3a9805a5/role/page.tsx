@@ -7,7 +7,6 @@ import { Toaster, toast } from 'react-hot-toast'
 
 import { addStaff } from '@/app/actions/staff/add-staff'
 import { changeRole } from '@/app/actions/staff/change-role'
-import { deleteStaff } from '@/app/actions/staff/delete-staff'
 import { getAdmin, getStaff } from '@/app/actions/staff/get-staff'
 import { config } from '@/app/config'
 import AdminProtect from '@/components/admin/admin-protect'
@@ -48,7 +47,6 @@ const Adminrole: React.FC = () => {
   const [isAddingRole, setIsAddingRole] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [isSearching, setIsSearching] = useState(false)
-  const [isRemovingStaff, setIsRemovingStaff] = useState<number | null>(null)
   const [isChangingRole, setIsChangingRole] = useState<{
     uid: number
     role: string
@@ -163,29 +161,6 @@ const Adminrole: React.FC = () => {
 
   if (!profile) {
     return <LiffError error='Failed to load profile' />
-  }
-
-  const handleRemove = async (uid: number): Promise<void> => {
-    if (!accessToken) {
-      toast.error('Authentication failed. Please log in again.')
-      return
-    }
-
-    try {
-      setIsRemovingStaff(uid)
-
-      await deleteStaff(accessToken, uid.toString())
-
-      const updatedItems = items.filter((item) => item.uid !== uid)
-      setItems(updatedItems)
-
-      toast.success('Staff member removed successfully')
-    } catch (error) {
-      console.error('Error removing staff:', error)
-      toast.error('Failed to remove staff member. Please try again.')
-    } finally {
-      setIsRemovingStaff(null)
-    }
   }
 
   const handleRoleChange = async (
@@ -438,29 +413,6 @@ const Adminrole: React.FC = () => {
                                         width={16}
                                       />
                                       Make Staff
-                                    </>
-                                  )}
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                  className='bg-red-500 text-white'
-                                  disabled={isRemovingStaff === item.uid}
-                                  onClick={() => void handleRemove(item.uid)}
-                                >
-                                  {isRemovingStaff === item.uid ? (
-                                    <>
-                                      <div className='mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent' />
-                                      Removing...
-                                    </>
-                                  ) : (
-                                    <>
-                                      <Image
-                                        alt='remove'
-                                        className='mr-2'
-                                        height={16}
-                                        src={`${config.cdnURL}/assets/admin/remove.svg`}
-                                        width={16}
-                                      />
-                                      Remove
                                     </>
                                   )}
                                 </DropdownMenuItem>
