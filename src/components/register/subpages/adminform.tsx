@@ -64,14 +64,19 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
       }
     })
 
-    if (values.status === 'Staff ประจำคณะ' && !values.faculty) {
-      isFormValid = false
-      const facultyInput = document.querySelector(`[name="faculty"]`)
-      if (facultyInput) {
-        facultyInput.classList.add('border-red-500')
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- เหตุผล: ค่า someVariable อาจมีการเปลี่ยนแปลงแบบ asynchronous ที่ไม่สามารถตรวจจับได้
-        if (!firstInvalidField) {
+    // Check faculty field if status is "Staff ประจำคณะ"
+    if (values.status === 'Staff ประจำคณะ') {
+      if (!values.faculty) {
+        isFormValid = false
+        const facultyInput = document.querySelector(`[name="faculty"]`)
+        if (facultyInput) {
+          facultyInput.classList.add('border-red-500')
           firstInvalidField = facultyInput as HTMLElement
+        }
+      } else {
+        const facultyInput = document.querySelector(`[name="faculty"]`)
+        if (facultyInput) {
+          facultyInput.classList.remove('border-red-500')
         }
       }
     }
@@ -103,7 +108,8 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
       })
       console.log('Form is invalid')
     } else {
-      console.log(form.getValues())
+      const formData = form.getValues()
+      console.log('Form values:', formData)
       setStep(2)
     }
   }
@@ -320,14 +326,9 @@ const AdminForm: React.FC<UserFormProps> = ({ setStep, form }) => {
                     render={({ field }) => (
                       <Select
                         defaultValue=''
-                        value={
-                          typeof field.value === 'string' ? field.value : ''
-                        }
+                        value={field.value}
                         onValueChange={(value) => {
                           field.onChange(value)
-                          if (value === 'Staff ประจำคณะ') {
-                            setShowFaculty(true)
-                          }
                           // Remove red border when user selects value
                           const inputElement =
                             document.querySelector(`[name="faculty"]`)
