@@ -10,10 +10,13 @@ export async function deleteStaff(
   id: string
 ): Promise<DeleteResponse> {
   const response = await fetch(`${config.baseURL}/api/admin/${id}`, {
-    method: 'DELETE',
+    method: 'PATCH',
     headers: {
       Authorization: `Bearer ${token}`,
     },
+    body: JSON.stringify({
+      role: 'student',
+    }),
   })
 
   if (!response.ok) {
