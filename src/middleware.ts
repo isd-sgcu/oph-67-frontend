@@ -6,7 +6,6 @@ const blockedPaths = [
   '/navigator',
   '/event',
   '/faculties',
-  '/suchibat',
   '/profile/certificate',
 ]
 
@@ -45,7 +44,6 @@ export const config = {
     '/navigator',
     '/event',
     '/faculties',
-    '/suchibat',
     '/profile/certificate',
   ],
 }
