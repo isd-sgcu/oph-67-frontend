@@ -38,7 +38,7 @@ interface StaffFormProps {
 const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
   const router = useRouter()
   const { profile, isInit } = useLiffContext()
-  const { accessToken } = useAuth()
+  const { accessToken, isLoading } = useAuth()
   const [isCorrectEmail, setIsCorrectEmail] = useState(true)
   const [isCorrectPhone, setIsCorrectPhone] = useState(true)
   const userId = profile?.userId
@@ -50,14 +50,17 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
           throw new Error('User ID is undefined')
         }
 
+        if (isLoading) {
+          return
+        }
+
         if (!accessToken) {
           throw new Error('Not authenticated')
         }
 
         const data = await getUser(userId, accessToken)
-        if (data.role === 'staff') {
+        if (data.role === 'staff' || data.role === 'admin') {
           const staffData = data as StaffData
-
           const [name, surname] = staffData.name.split(' ')
 
           form.reset({
@@ -78,10 +81,11 @@ const AdminFormEdit: React.FC<StaffFormProps> = ({ form }) => {
             faculty: staffData.faculty,
           })
         } else {
-          console.error('User is not a staff member')
+          console.error('User is not a staff member', data)
         }
       } catch (error) {
         console.error('Error fetching user data:', error)
+        toast.error('Failed to load user data')
       }
     }
 

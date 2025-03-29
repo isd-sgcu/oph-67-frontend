@@ -12,6 +12,9 @@ import { getAdmin, getStaff } from '@/app/actions/staff/get-staff'
 import { config } from '@/app/config'
 import AdminProtect from '@/components/admin/admin-protect'
 import { useAuth } from '@/components/auth/auth-provider'
+import { LiffError } from '@/components/liff/liff-error'
+import { LiffLoading } from '@/components/liff/liff-loading'
+import { useLiffContext } from '@/components/liff/liff-provider'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -50,7 +53,8 @@ const Adminrole: React.FC = () => {
     uid: number
     role: string
   } | null>(null)
-  const { accessToken } = useAuth()
+  const { accessToken, isLoading: isAuthLoading } = useAuth()
+  const { isInit, profile } = useLiffContext()
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const fetchStaffData = useCallback(
@@ -111,8 +115,10 @@ const Adminrole: React.FC = () => {
   }, [accessToken, fetchStaffData])
 
   useEffect(() => {
-    void fetchInitialData()
-  }, [fetchInitialData])
+    if (!isAuthLoading && isInit && profile) {
+      void fetchInitialData()
+    }
+  }, [fetchInitialData, isAuthLoading, isInit, profile])
 
   useEffect(() => {
     if (!accessToken) return
@@ -150,6 +156,14 @@ const Adminrole: React.FC = () => {
       }
     }
   }, [searchInput, accessToken, fetchStaffData])
+
+  if (!isInit) {
+    return <LiffLoading />
+  }
+
+  if (!profile) {
+    return <LiffError error='Failed to load profile' />
+  }
 
   const handleRemove = async (uid: number): Promise<void> => {
     if (!accessToken) {
