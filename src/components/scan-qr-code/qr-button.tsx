@@ -65,7 +65,7 @@ const QrButton: React.FC = () => {
 
         if (!accessToken) {
           setModalType('failed')
-          setErrorMessage('Authentication failed. Please log in again.')
+          setErrorMessage('Authentication failed. Please try again.')
           setIsModalOpen(true)
           return
         }
