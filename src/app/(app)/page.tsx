@@ -4,9 +4,9 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 import Actionbutton from '@/components/homepage/actionbutton'
+import ContentSlider from '@/components/homepage/contentslider'
 import Faq from '@/components/homepage/faq'
 import Footer from '@/components/homepage/footer'
-import Imageslider from '@/components/homepage/imageslider'
 import Navbar from '@/components/homepage/navbar'
 import Popup from '@/components/homepage/popup'
 import Timer from '@/components/homepage/timer'
@@ -43,7 +43,7 @@ const Home: React.FC = () => {
     <div className='flex flex-col justify-center bg-[#FCF3F8]'>
       <Popup />
       <Navbar />
-      <Imageslider />
+      <ContentSlider />
       <Timer />
       <div className='flex flex-col items-center justify-center gap-4 p-[20px]'>
         {/* Register Button */}
@@ -56,9 +56,11 @@ const Home: React.FC = () => {
                 </p>
               </Link>
             </Button>
-            {timeLeft && timeLeft.nowDate < openRegisteredDate ? <p className='font-mitr text-[15px] font-normal text-[#064E41]'>
+            {timeLeft && timeLeft.nowDate < openRegisteredDate ? (
+              <p className='font-mitr text-[15px] font-normal text-[#064E41]'>
                 พร้อมลงทะเบียนวันที่ 14 มีนาคมนี้
-              </p> : null}
+              </p>
+            ) : null}
           </>
         )}
         <div className='grid w-full grid-cols-2 gap-2'>
