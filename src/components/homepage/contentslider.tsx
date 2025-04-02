@@ -205,6 +205,7 @@ const ContentSlider: React.FC = () => {
                     videoRefs.current[Slider.indexOf(item)] = ref
                   }
                 }}
+                playsInline
                 controls={!videoPlaying}
                 poster='/assets/homepage/video_placeholder.png'
                 style={{ objectFit: 'cover', width: '100%', height: '100%' }}
@@ -214,11 +215,14 @@ const ContentSlider: React.FC = () => {
                 onCanPlayThrough={handleVideoCanPlayThrough}
                 onError={handleVideoError}
               >
-                <source src={`/assets/homepage/${item.src}`} type='video/mp4' />
+                <source
+                  src={`${config.cdnURL}/assets/homepage/${item.src}`}
+                  type='video/mp4'
+                />
                 <track
                   kind='captions'
                   label='English'
-                  src={`/assets/homepage/${item.src.replace('.mp4', '.vtt')}`}
+                  src={`${config.cdnURL}/assets/homepage/${item.src.replace('.mp4', '.vtt')}`}
                 />
                 Your browser does not support the video tag.
               </video>
