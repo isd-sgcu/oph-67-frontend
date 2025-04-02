@@ -176,9 +176,11 @@ const ContentSlider: React.FC = () => {
       {/* Images and Videos */}
       <div className='relative flex aspect-[120/63] w-full justify-center'>
         {/* Show loading indicator when video is loading */}
-        {isVideoLoading ? <div className='absolute inset-0 z-10 flex items-center justify-center bg-black/10'>
+        {isVideoLoading ? (
+          <div className='absolute inset-0 z-10 flex items-center justify-center bg-black/10'>
             <div className='h-8 w-8 animate-spin rounded-full border-4 border-white border-t-transparent' />
-          </div> : null}
+          </div>
+        ) : null}
 
         {Slider.length > 0 ? (
           Slider.map((item) =>
@@ -188,7 +190,7 @@ const ContentSlider: React.FC = () => {
                 alt={`Slide ${item.id || item.src}`}
                 layout='fill'
                 objectFit='cover'
-                src={`/assets/homepage/${item.src}`}
+                src={`${config.cdnURL}/assets/homepage/${item.src}`}
                 className={`relative flex w-full bg-[#CCB9C4] transition-opacity duration-700 ease-in-out ${
                   Slider.indexOf(item) === currentIndex
                     ? 'opacity-100'
