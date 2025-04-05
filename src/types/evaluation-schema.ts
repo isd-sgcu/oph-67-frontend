@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { news } from '@/const/evalution-news'
 
 // Main schema for the evaluation form
-const EvaluationSchema = z.object({
+export const EvaluationSchema = z.object({
   // ส่วนที่ 1: ความพึงพอใจต่อกิจกรรม
   part1: z.object({
     1_1: z.array(z.enum(news)).optional(),
