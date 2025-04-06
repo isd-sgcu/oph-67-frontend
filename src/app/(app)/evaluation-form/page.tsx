@@ -44,24 +44,26 @@ const Register: React.FC = () => {
   return (
     <div>
       <Navbar />
-      <div className='flex flex-col items-center justify-center gap-4 bg-[#FAE9F3] py-6'>
-        <object
-          className='h-[125px] w-[125px]'
-          data={`${config.cdnURL}/assets/register/oph-logo.svg`}
-          type='image/svg+xml'
-        >
-          <Image
-            alt='logo'
-            height={125}
-            src={`${config.cdnURL}/assets/register/oph-logo.svg`}
-            width={125}
-          />
-        </object>
-        <div className='flex flex-col items-center justify-center gap-0 font-mitr text-xl font-medium tracking-tight text-[#064E41]'>
-          <div>แบบประเมิน</div>
-          <div>Chula Open House 2025</div>
+      {[1, 2, 3].includes(step) && (
+        <div className='flex flex-col items-center justify-center gap-4 bg-[#FAE9F3] py-6'>
+          <object
+            className='h-[125px] w-[125px]'
+            data={`${config.cdnURL}/assets/register/oph-logo.svg`}
+            type='image/svg+xml'
+          >
+            <Image
+              alt='logo'
+              height={125}
+              src={`${config.cdnURL}/assets/register/oph-logo.svg`}
+              width={125}
+            />
+          </object>
+          <div className='flex flex-col items-center justify-center gap-0 font-mitr text-xl font-medium tracking-tight text-[#064E41]'>
+            <div>แบบประเมิน</div>
+            <div>Chula Open House 2025</div>
+          </div>
         </div>
-      </div>
+      )}
       {getPage()}
       <Footer />
     </div>
