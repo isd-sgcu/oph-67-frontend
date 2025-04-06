@@ -7,6 +7,8 @@ import { useForm } from 'react-hook-form'
 
 import { config } from '@/app/config'
 import EvaluationForm1 from '@/components/evaluation-form/subpages/form1'
+import EvaluationForm2 from '@/components/evaluation-form/subpages/form2'
+import EvaluationForm3 from '@/components/evaluation-form/subpages/form3'
 import Footer from '@/components/homepage/footer'
 import Navbar from '@/components/homepage/navbar'
 import {
@@ -15,7 +17,6 @@ import {
 } from '@/types/evaluation-schema'
 
 import Success from '../../../components/register/subpages/success'
-
 
 const Register: React.FC = () => {
   const [step, setStep] = useState(1)
@@ -30,9 +31,9 @@ const Register: React.FC = () => {
       case 1:
         return <EvaluationForm1 form={form} setStep={setStep} />
       case 2:
-        return <EvaluationForm1 form={form} setStep={setStep} />
+        return <EvaluationForm2 form={form} setStep={setStep} />
       case 3:
-        return <EvaluationForm1 form={form} setStep={setStep} />
+        return <EvaluationForm3 form={form} setStep={setStep} />
       case 4:
         return <Success />
       default:
