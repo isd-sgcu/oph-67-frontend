@@ -82,7 +82,7 @@ const EvaluationForm2: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
         <Image
           alt='write-icon'
           height={20}
-          src="/assets/evaluation-form/write-icon.svg"
+          src='/assets/evaluation-form/write-icon.svg'
           width={20}
         />
         <div className='text-base font-medium text-[#064E41]'>
@@ -100,14 +100,16 @@ const EvaluationForm2: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
         ))}
         <div className='mt-6 flex w-full items-center justify-center gap-4'>
           <Button
-            className='mb-32 w-1/3 font-cloud-soft text-2xl font-medium'
+            className='mb-20 w-1/4 font-cloud-soft text-xl font-normal'
+            size='sm'
             variant='filled'
             onClick={onBack}
           >
             กลับ
           </Button>
           <Button
-            className='mb-32 w-1/3 font-cloud-soft text-2xl font-medium'
+            className='mb-20 w-1/4 font-cloud-soft text-xl font-normal'
+            size='sm'
             variant='filled'
             onClick={onNext}
           >
