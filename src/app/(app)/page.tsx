@@ -18,7 +18,10 @@ import {
 import { useAuth } from '@/hooks/use-auth'
 import { getTimer } from '@/utils/timer'
 
+import EvaluationCheck from './evaluation/page'
+
 const Home: React.FC = () => {
+  const isEvaluated = true
   const { isAuthenticated } = useAuth()
   const isRegistered = isAuthenticated
   const openRegisteredDate = new Date('2025-03-14T00:00:00').getTime()
@@ -31,13 +34,15 @@ const Home: React.FC = () => {
     const interval = setInterval(() => {
       setTimeLeft(getTimer())
     }, 1000)
-
     return () => clearInterval(interval)
   }, [])
 
   const actionButtonsDetail = isRegistered
     ? actionButtonsRegistered
     : actionButtonsNotRegistered
+
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (isEvaluated) return <EvaluationCheck />
 
   return (
     <div className='flex flex-col justify-center bg-[#FCF3F8]'>
@@ -56,11 +61,9 @@ const Home: React.FC = () => {
                 </p>
               </Link>
             </Button>
-            {timeLeft && timeLeft.nowDate < openRegisteredDate ? (
-              <p className='font-mitr text-[15px] font-normal text-[#064E41]'>
+            {timeLeft && timeLeft.nowDate < openRegisteredDate ? <p className='font-mitr text-[15px] font-normal text-[#064E41]'>
                 พร้อมลงทะเบียนวันที่ 14 มีนาคมนี้
-              </p>
-            ) : null}
+              </p> : null}
           </>
         )}
         <div className='grid w-full grid-cols-2 gap-2'>

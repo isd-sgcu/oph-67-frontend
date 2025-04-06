@@ -16,11 +16,13 @@ import {
   type EvaluationForm,
   EvaluationSchema,
 } from '@/types/evaluation-schema'
-
+import EvaluationFail from './fail'
+import EvaluationRegister from './register'
 import Success from '../../../components/register/subpages/success'
 
-const Register: React.FC = () => {
-  const [step, setStep] = useState(1)
+const EvaluationCheck: React.FC = () => {
+  const [step, setStep] = useState<number>(1)
+  const [foundUser, setFoundUser] = useState<boolean>(false)
 
   const form = useForm<EvaluationForm>({
     resolver: zodResolver(EvaluationSchema),
@@ -30,12 +32,19 @@ const Register: React.FC = () => {
   const getPage = (): ReactNode => {
     switch (step) {
       case 1:
-        return <EvaluationForm1 form={form} setStep={setStep} />
+        return (
+          <EvaluationRegister setFoundUser={setFoundUser} setStep={setStep} />
+        )
       case 2:
-        return <EvaluationForm2 form={form} setStep={setStep} />
+        if (foundUser) {
+          return <EvaluationForm1 form={form} setStep={setStep} />
+        }
+        return <EvaluationFail />
       case 3:
-        return <EvaluationForm3 form={form} setStep={setStep} />
+        return <EvaluationForm2 form={form} setStep={setStep} />
       case 4:
+        return <EvaluationForm3 form={form} setStep={setStep} />
+      case 5:
         return <Success />
       default:
         return <div>404</div>
@@ -46,7 +55,7 @@ const Register: React.FC = () => {
     <div>
       <Toaster position='top-center' />
       <Navbar />
-      {[1, 2, 3].includes(step) && (
+      {[2, 3, 4].includes(step) && (
         <div className='flex flex-col items-center justify-center gap-4 bg-[#FAE9F3] py-6'>
           <object
             className='h-[125px] w-[125px]'
@@ -72,4 +81,4 @@ const Register: React.FC = () => {
   )
 }
 
-export default Register
+export default EvaluationCheck
