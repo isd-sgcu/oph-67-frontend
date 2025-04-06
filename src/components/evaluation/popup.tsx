@@ -1,6 +1,5 @@
 'use client'
 
-import { DialogTitle } from '@radix-ui/react-dialog'
 import { X } from 'lucide-react'
 
 import {
@@ -9,6 +8,7 @@ import {
   DialogContent,
   DialogFooter,
   DialogHeader,
+  DialogTitle,
 } from '@/components/ui/dialog'
 
 import { Button } from '../ui/button'
