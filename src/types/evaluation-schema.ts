@@ -25,6 +25,7 @@ export const EvaluationSchema = z.object({
   q31: z.number().min(1).max(5),
   q32: z.number().min(1).max(5),
   q33: z.string(),
+  igusername: z.string(),
 })
 
 export type EvaluationForm = z.infer<typeof EvaluationSchema>

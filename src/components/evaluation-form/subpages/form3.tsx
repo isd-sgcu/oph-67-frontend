@@ -1,9 +1,11 @@
 'use client'
 import Image from 'next/image'
+import Link from 'next/link'
 import { type UseFormReturn } from 'react-hook-form'
 
 import FaceRating from '@/components/evaluation-form/face-rating'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { evaluationQuestions } from '@/types/evaluation-questions'
 import { type EvaluationForm } from '@/types/evaluation-schema'
@@ -83,7 +85,7 @@ const EvaluationForm3: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
         <Image
           alt='write-icon'
           height={20}
-          src="/assets/evaluation-form/write-icon.svg"
+          src='/assets/evaluation-form/write-icon.svg'
           width={20}
         />
         <div className='text-base font-medium text-[#064E41]'>
@@ -99,7 +101,7 @@ const EvaluationForm3: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
             question={question.label}
           />
         ))}
-        <div className='mb-8 flex flex-col gap-2 pt-2 font-mitr text-[#064E41]'>
+        <div className='mb-4 flex flex-col gap-2 pt-2 font-mitr text-[#064E41]'>
           <div className='text-sm font-normal text-[#064E41]'>
             {evaluationQuestions.part3.questions[2].label}
             <span className='text-[#FF0000]'>*</span>
@@ -115,16 +117,55 @@ const EvaluationForm3: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
             }}
           />
         </div>
+        <div className='flex flex-col items-center justify-center gap-2.5 font-mitr font-normal text-[#064E41]'>
+          <div className='flex items-center justify-center gap-2'>
+            <p className='text-xs'>ติดตาม Instagram :</p>
+            <Link href='https://www.instagram.com/chulaforall/'>
+              <div className='flex items-center justify-center gap-1 rounded-lg bg-[#076855] px-1.5 py-1'>
+                <Image
+                  alt='link'
+                  height={16}
+                  src='/assets/evaluation-form/link.svg'
+                  width={16}
+                />
+                <p className='text-[8px] font-light text-white'>
+                  https://www.instagram.com/chulaforall/
+                </p>
+              </div>
+            </Link>
+          </div>
+          <p className='text-xs'>โปรดกรอก Instagram Username ที่ใช้ติดตาม </p>
+          <div className='flex w-2/3 items-center justify-center gap-2'>
+            <p className='aspect-square h-10 w-10 rounded-lg border border-[#064E41] pt-0.5 text-center text-2xl'>
+              @
+            </p>
+            <Input
+              className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
+              placeholder='your_username'
+              {...form.register('igusername')}
+              name='igusername'
+              onInput={(e) => {
+                const inputElement = e.currentTarget
+                inputElement.classList.remove('border-red-500')
+              }}
+            />
+          </div>
+          <p className='text-xs font-light text-[#FF0000]'>
+            *ระบบจะตรวจสอบอัตโนมัติ โปรดกรอกให้ถูกต้อง
+          </p>
+        </div>
         <div className='mt-6 flex w-full items-center justify-center gap-4'>
           <Button
-            className='mb-32 w-1/3 font-cloud-soft text-2xl font-medium'
+            className='mb-20 w-1/4 font-cloud-soft text-xl font-normal'
+            size='sm'
             variant='filled'
             onClick={onBack}
           >
             กลับ
           </Button>
           <Button
-            className='mb-32 w-1/3 font-cloud-soft text-2xl font-medium'
+            className='mb-20 w-1/4 font-cloud-soft text-xl font-normal'
+            size='sm'
             variant='filled'
             onClick={onNext}
           >
