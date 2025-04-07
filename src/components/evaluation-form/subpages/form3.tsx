@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { type UseFormReturn } from 'react-hook-form'
+import { toast } from 'react-hot-toast'
 
 import FaceRating from '@/components/evaluation-form/face-rating'
 import { Button } from '@/components/ui/button'
@@ -17,66 +18,44 @@ interface EvaluationFormProps {
 
 const EvaluationForm3: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
   function onBack(): void {
-    console.log('Back button clicked')
+    setStep(2)
   }
 
   function onNext(): void {
     const values = form.getValues()
-    const requiredFields: (keyof EvaluationForm)[] = [
-      'q21',
-      'q22',
-      'q23',
-      'q24',
-      'q25',
-      'q26',
-    ]
-    // let isFormValid = true
+
+    const requiredFields: (keyof EvaluationForm)[] =
+      evaluationQuestions.part3.questions
+        .slice(0, 4)
+        .map((question) => question.id) as (keyof EvaluationForm)[]
+
+    let isFormValid = true
     let firstInvalidField: HTMLElement | null = null
     requiredFields.forEach((field) => {
-      const inputElement = document.querySelector(`[name="${field}"]`)
+      const inputElement = document.querySelector(`[data-name="${field}"]`)
       if (!values[field]) {
-        // isFormValid = false
+        isFormValid = false
         if (inputElement) {
-          inputElement.classList.add('border-red-500')
           if (!firstInvalidField) {
             firstInvalidField = inputElement as HTMLElement
           }
         }
-      } else if (inputElement) {
-        inputElement.classList.remove('border-red-500')
       }
     })
-    // Check if the email is valid
-    // if (!isCorrectEmail) {
-    //   isFormValid = false
-    //   const emailElement = document.querySelector(`[name="email"]`)
-    //   if (emailElement) {
-    //     emailElement.classList.add('border-red-500')
-    //     firstInvalidField = emailElement as HTMLElement
-    //   }
-    // }
-    // // Check if the phone number is valid
-    // if (!isCorrectPhone) {
-    //   isFormValid = false
-    //   const phoneElement = document.querySelector(`[name="phone"]`)
-    //   if (phoneElement) {
-    //     phoneElement.classList.add('border-red-500')
-    //     firstInvalidField = phoneElement as HTMLElement
-    //   }
-    // }
-    // if (!isFormValid && firstInvalidField) {
-    //   firstInvalidField.scrollIntoView({
-    //     behavior: 'smooth',
-    //     block: 'center',
-    //   })
-    //   console.log('Form is invalid')
-    // } else {
-    //   console.log(form.getValues())
-    //   setStep(2)
-    // }
-    console.log(form.getValues())
-    console.log('eiei3555555555555555')
-    setStep(4)
+
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- Reason: This is a necessary check to ensure the form is valid before proceeding.
+    if (!isFormValid && firstInvalidField) {
+      ;(firstInvalidField as HTMLElement).scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
+      toast.error('กรุณากรอกแบบประเมินให้ครบถ้วน')
+      console.log('Form is invalid')
+    } else {
+      console.log(form.getValues())
+      setStep(4)
+      sessionStorage.clear()
+    }
   }
 
   return (
@@ -89,17 +68,18 @@ const EvaluationForm3: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
           width={20}
         />
         <div className='text-base font-medium text-[#064E41]'>
-          {evaluationQuestions.part2.title}
+          {evaluationQuestions.part3.title}
         </div>
       </div>
       <div className='flex flex-col gap-2 p-2'>
         {evaluationQuestions.part3.questions.slice(0, 2).map((question) => (
-          <FaceRating
-            key={question.id}
-            field={question.id}
-            form={form}
-            question={question.label}
-          />
+          <div key={question.id} data-name={question.id}>
+            <FaceRating
+              field={question.id}
+              form={form}
+              question={question.label}
+            />
+          </div>
         ))}
         <div className='mb-4 flex flex-col gap-2 pt-2 font-mitr text-[#064E41]'>
           <div className='text-sm font-normal text-[#064E41]'>
@@ -110,10 +90,10 @@ const EvaluationForm3: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
             className='h-32 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
             placeholder='กรอกข้อเสนอแนะ'
             {...form.register('q33')}
-            name='q33'
+            data-name='q33'
+            defaultValue={sessionStorage.getItem('q33') ?? ''}
             onInput={(e) => {
-              const inputElement = e.currentTarget
-              inputElement.classList.remove('border-red-500')
+              sessionStorage.setItem('q33', e.currentTarget.value)
             }}
           />
         </div>
@@ -134,7 +114,9 @@ const EvaluationForm3: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
               </div>
             </Link>
           </div>
-          <p className='text-xs'>โปรดกรอก Instagram Username ที่ใช้ติดตาม </p>
+          <p className='text-xs'>
+            {evaluationQuestions.part3.questions[3].label}
+          </p>
           <div className='flex w-2/3 items-center justify-center gap-2'>
             <p className='aspect-square h-10 w-10 rounded-lg border border-[#064E41] pt-0.5 text-center text-2xl'>
               @
@@ -143,10 +125,10 @@ const EvaluationForm3: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
               className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
               placeholder='your_username'
               {...form.register('igusername')}
-              name='igusername'
+              data-name='igusername'
+              defaultValue={sessionStorage.getItem('igusername') ?? ''}
               onInput={(e) => {
-                const inputElement = e.currentTarget
-                inputElement.classList.remove('border-red-500')
+                sessionStorage.setItem('igusername', e.currentTarget.value)
               }}
             />
           </div>

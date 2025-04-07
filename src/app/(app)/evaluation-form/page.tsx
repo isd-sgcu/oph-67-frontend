@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
 import { type ReactNode, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { Toaster } from 'react-hot-toast'
 
 import { config } from '@/app/config'
 import EvaluationForm1 from '@/components/evaluation-form/subpages/form1'
@@ -43,6 +44,7 @@ const Register: React.FC = () => {
 
   return (
     <div>
+      <Toaster position='top-center' />
       <Navbar />
       {[1, 2, 3].includes(step) && (
         <div className='flex flex-col items-center justify-center gap-4 bg-[#FAE9F3] py-6'>

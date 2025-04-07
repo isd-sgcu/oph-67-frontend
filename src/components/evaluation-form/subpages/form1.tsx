@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
+import { toast } from 'react-hot-toast'
 
 import FaceRating from '@/components/evaluation-form/face-rating'
 import CheckBox from '@/components/register/policy/checkbox'
@@ -25,61 +26,38 @@ const EvaluationForm1: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
 
   function onNext(): void {
     const values = form.getValues()
-    const requiredFields: (keyof EvaluationForm)[] = [
-      'q11',
-      'q12',
-      'q13',
-      'q14',
-      'q15',
-    ]
-    // let isFormValid = true
+
+    const requiredFields: (keyof EvaluationForm)[] =
+      evaluationQuestions.part1.questions
+        .slice(0, 5)
+        .map((question) => question.id) as (keyof EvaluationForm)[]
+
+    let isFormValid = true
     let firstInvalidField: HTMLElement | null = null
     requiredFields.forEach((field) => {
-      const inputElement = document.querySelector(`[name="${field}"]`)
+      const inputElement = document.querySelector(`[data-name="${field}"]`)
       if (!values[field]) {
-        // isFormValid = false
+        isFormValid = false
         if (inputElement) {
-          inputElement.classList.add('border-red-500')
           if (!firstInvalidField) {
             firstInvalidField = inputElement as HTMLElement
           }
         }
-      } else if (inputElement) {
-        inputElement.classList.remove('border-red-500')
       }
     })
-    // Check if the email is valid
-    // if (!isCorrectEmail) {
-    //   isFormValid = false
-    //   const emailElement = document.querySelector(`[name="email"]`)
-    //   if (emailElement) {
-    //     emailElement.classList.add('border-red-500')
-    //     firstInvalidField = emailElement as HTMLElement
-    //   }
-    // }
-    // // Check if the phone number is valid
-    // if (!isCorrectPhone) {
-    //   isFormValid = false
-    //   const phoneElement = document.querySelector(`[name="phone"]`)
-    //   if (phoneElement) {
-    //     phoneElement.classList.add('border-red-500')
-    //     firstInvalidField = phoneElement as HTMLElement
-    //   }
-    // }
-    // if (!isFormValid && firstInvalidField) {
-    //   firstInvalidField.scrollIntoView({
-    //     behavior: 'smooth',
-    //     block: 'center',
-    //   })
-    //   console.log('Form is invalid')
-    // } else {
-    //   console.log(form.getValues())
-    //   setStep(2)
-    // }
-    console.log('eiei1')
-    console.log(form.getValues())
-    setStep(2)
-    console.log('eiei2')
+
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- Reason: This is a necessary check to ensure the form is valid before proceeding.
+    if (!isFormValid && firstInvalidField) {
+      ;(firstInvalidField as HTMLElement).scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
+      toast.error('กรุณากรอกแบบประเมินให้ครบถ้วน')
+      console.log('Form is invalid')
+    } else {
+      console.log(form.getValues())
+      setStep(2)
+    }
   }
 
   return (
@@ -109,6 +87,7 @@ const EvaluationForm1: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
                     <label
                       key={option}
                       className='mb-1.5 flex items-center gap-1.5'
+                      data-name='q11'
                     >
                       <CheckBox
                         isChecked={(form.watch('q11') ?? []).includes(option)}
@@ -116,10 +95,18 @@ const EvaluationForm1: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
                           const currentNews = form.getValues('q11') ?? []
                           if (checked) {
                             form.setValue('q11', [...currentNews, option])
-                          } else {
-                            form.setValue(
+                            sessionStorage.setItem(
                               'q11',
-                              currentNews.filter((item) => item !== option)
+                              JSON.stringify([...currentNews, option])
+                            )
+                          } else {
+                            const updatedNews = currentNews.filter(
+                              (item) => item !== option
+                            )
+                            form.setValue('q11', updatedNews)
+                            sessionStorage.setItem(
+                              'q11',
+                              JSON.stringify(updatedNews)
                             )
                           }
                         }}
@@ -137,6 +124,7 @@ const EvaluationForm1: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
                     <label
                       key={option}
                       className='mb-1.5 flex items-center gap-1.5'
+                      data-name='q11'
                     >
                       <CheckBox
                         isChecked={(form.watch('q11') ?? []).includes(option)}
@@ -144,10 +132,18 @@ const EvaluationForm1: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
                           const currentNews = form.getValues('q11') ?? []
                           if (checked) {
                             form.setValue('q11', [...currentNews, option])
-                          } else {
-                            form.setValue(
+                            sessionStorage.setItem(
                               'q11',
-                              currentNews.filter((item) => item !== option)
+                              JSON.stringify([...currentNews, option])
+                            )
+                          } else {
+                            const updatedNews = currentNews.filter(
+                              (item) => item !== option
+                            )
+                            form.setValue('q11', updatedNews)
+                            sessionStorage.setItem(
+                              'q11',
+                              JSON.stringify(updatedNews)
                             )
                           }
                           if (option === 'อื่น ๆ (โปรดระบุ)') {
@@ -176,12 +172,13 @@ const EvaluationForm1: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
         </table>
         <div className='w-full border-b border-[#064E41]' />
         {evaluationQuestions.part1.questions.slice(1, 5).map((question) => (
-          <FaceRating
-            key={question.id}
-            field={question.id}
-            form={form}
-            question={question.label}
-          />
+          <div key={question.id} data-name={question.id}>
+            <FaceRating
+              field={question.id}
+              form={form}
+              question={question.label}
+            />
+          </div>
         ))}
         <div className='mb-8 flex flex-col gap-2 pt-2 font-mitr text-[#064E41]'>
           {evaluationQuestions.part1.questions[5].label}
@@ -189,10 +186,10 @@ const EvaluationForm1: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
             className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
             placeholder='กรอก'
             {...form.register('q16')}
+            defaultValue={sessionStorage.getItem('q16') ?? ''}
             name='q16'
             onInput={(e) => {
-              const inputElement = e.currentTarget
-              inputElement.classList.remove('border-red-500')
+              sessionStorage.setItem('q16', e.currentTarget.value)
             }}
           />
         </div>
