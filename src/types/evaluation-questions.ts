@@ -74,6 +74,10 @@ export const evaluationQuestions = {
         id: 'q33',
         label: '3. สิ่งที่ต้องการให้ปรับปรุงในเว็บไซต์',
       },
+      {
+        id: 'igusername',
+        label: 'โปรดกรอก Instagram Username ที่ใช้ติดตาม',
+      },
     ],
   },
 }
