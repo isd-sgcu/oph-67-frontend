@@ -18,7 +18,7 @@ import {
 import { useAuth } from '@/hooks/use-auth'
 import { getTimer } from '@/utils/timer'
 
-import EvaluationCheck from './evaluation/page'
+import EvaluationCheck from '../../components/evaluation-form'
 
 const Home: React.FC = () => {
   const isEvaluated = true
@@ -61,9 +61,11 @@ const Home: React.FC = () => {
                 </p>
               </Link>
             </Button>
-            {timeLeft && timeLeft.nowDate < openRegisteredDate ? <p className='font-mitr text-[15px] font-normal text-[#064E41]'>
+            {timeLeft && timeLeft.nowDate < openRegisteredDate ? (
+              <p className='font-mitr text-[15px] font-normal text-[#064E41]'>
                 พร้อมลงทะเบียนวันที่ 14 มีนาคมนี้
-              </p> : null}
+              </p>
+            ) : null}
           </>
         )}
         <div className='grid w-full grid-cols-2 gap-2'>

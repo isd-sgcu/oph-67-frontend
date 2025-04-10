@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-
 // TODO: remove this when full version available
 const blockedPaths = [
   '/navigator',
