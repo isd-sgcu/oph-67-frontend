@@ -1,57 +1,23 @@
+'use client'
+
+import { PDFDownloadLink } from '@react-pdf/renderer'
 import NextImage from 'next/image'
-import React, { useEffect, useRef, useState } from 'react'
+import React from 'react'
 
 import { config } from '@/app/config'
 
+import CertificatePDF from '../certificate/certificate-pdf'
 import { Button } from '../ui/button'
 
 interface CertificateGeneratorProps {
   userName: string
+  token: string
 }
 
 const CertificateGenerator: React.FC<CertificateGeneratorProps> = ({
   userName,
+  token,
 }) => {
-  const [imageUrl, setImageUrl] = useState<string | null>(null)
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-
-  useEffect(() => {
-    const handleGenerate = (): void => {
-      const canvas = canvasRef.current
-      if (!canvas) return
-
-      const ctx = canvas.getContext('2d')
-      if (!ctx) return
-
-      const image = new Image()
-      image.crossOrigin = 'anonymous' // This is important
-      image.src = `${config.cdnURL}/assets/certificate/template.jpg` // Ensure this file is in your public folder
-
-      image.onload = () => {
-        canvas.width = image.width
-        canvas.height = image.height
-
-        // Draw certificate template
-        ctx.drawImage(image, 0, 0, canvas.width, canvas.height)
-
-        // Set text properties
-        ctx.font = 'bold 50px Mitr'
-        ctx.fillStyle = 'black'
-        ctx.textAlign = 'center'
-
-        // Position text in the middle
-        const x = canvas.width / 2
-        const y = 400 // Adjust as needed for your template
-        ctx.fillText(userName, x, y)
-
-        // Convert to image URL
-        setImageUrl(canvas.toDataURL('image/png'))
-      }
-    }
-
-    handleGenerate()
-  }, [userName, canvasRef])
-
   return (
     <div className='flex flex-col items-center gap-2 p-5'>
       <h1 className='text-2xl font-normal text-primary-green'>Certification</h1>
@@ -79,33 +45,47 @@ const CertificateGenerator: React.FC<CertificateGeneratorProps> = ({
           see you soon in Chula
         </p>
       </div>
-      <canvas ref={canvasRef} className='hidden' />
-      {imageUrl ? (
-        <>
-          <div className='mt-4'>
+      <div className='relative aspect-[1123/794] w-full font-thSaraban'>
+        <NextImage
+          fill
+          alt='cert'
+          className='absolute'
+          objectFit='contain'
+          src={`${config.cdnURL}/assets/certificate/template.png`}
+        />
+        <div className='absolute flex h-full w-full items-center justify-center'>
+          <div className='text-center text-xl text-black'>{userName}</div>
+        </div>
+        <div className='absolute left-1/2 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2 -rotate-45 text-center text-5xl font-extrabold tracking-wider text-black/10'>
+          PREVIEW
+        </div>
+        <div className='absolute left-1/4 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2 -rotate-45 text-center text-5xl font-extrabold tracking-wider text-black/10'>
+          PREVIEW
+        </div>
+        <div className='absolute left-3/4 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2 -rotate-45 text-center text-5xl font-extrabold tracking-wider text-black/10'>
+          PREVIEW
+        </div>
+      </div>
+      <PDFDownloadLink
+        document={<CertificatePDF token={token} userName={userName} />}
+        fileName='certificate.pdf'
+      >
+        {({ loading }) => (
+          <Button
+            className='mt-8 w-[20rem] font-cloud-soft text-2xl font-bold'
+            disabled={loading}
+          >
             <NextImage
-              alt='Generated Certificate'
-              className='mt-2 border'
-              height={300}
-              src={imageUrl}
-              width={400}
+              alt='download'
+              className='mb-1'
+              height={24}
+              src={`${config.cdnURL}/assets/icons/download.svg`}
+              width={24}
             />
-          </div>
-
-          <a download='certificate.png' href={imageUrl}>
-            <Button className='mt-8 w-[20rem] font-cloud-soft text-2xl font-bold'>
-              <NextImage
-                alt='download'
-                className='mb-1'
-                height={24}
-                src={`${config.cdnURL}/assets/icons/download.svg`}
-                width={24}
-              />
-              ดาวน์โหลด
-            </Button>
-          </a>
-        </>
-      ) : null}
+            {loading ? 'กำลังโหลด...' : 'ดาวน์โหลด'}
+          </Button>
+        )}
+      </PDFDownloadLink>
     </div>
   )
 }
