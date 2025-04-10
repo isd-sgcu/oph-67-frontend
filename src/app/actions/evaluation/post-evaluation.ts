@@ -35,7 +35,7 @@ export async function submitEvaluation(formData: EvaluationData): Promise<{
       }
     }
 
-    const response = await fetch(`${config.baseURL}/api/evaluation`, {
+    const response = await fetch(`${config.baseURL}/api/student-evaluation`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
