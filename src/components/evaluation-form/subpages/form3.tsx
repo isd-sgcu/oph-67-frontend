@@ -1,10 +1,14 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 
+import {
+  type EvaluationData,
+  submitEvaluation,
+} from '@/app/actions/evaluation/post-evaluation'
 import FaceRating from '@/components/evaluation-form/face-rating'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -20,6 +24,7 @@ interface EvaluationFormProps {
 
 const EvaluationForm3: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
   const { formData, setFormValue, clearForm } = useEvaluationStore()
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   // Initialize form with data from store
   useEffect(() => {
@@ -38,10 +43,10 @@ const EvaluationForm3: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
   }, [formData, form])
 
   function onBack(): void {
-    setStep(2)
+    setStep(3)
   }
 
-  function onNext(): void {
+  async function onNext(): Promise<void> {
     const values = form.getValues()
 
     const requiredFields: (keyof EvaluationForm)[] =
@@ -72,9 +77,45 @@ const EvaluationForm3: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
       toast.error('กรุณากรอกแบบประเมินให้ครบถ้วน')
       console.log('Form is invalid')
     } else {
-      console.log(form.getValues())
-      setStep(4)
-      clearForm()
+      try {
+        setIsSubmitting(true)
+        const formValues = form.getValues()
+
+        // Map form values to API expected format
+        const mappedFormData: EvaluationData = {
+          newSources: formValues.q11 ?? [],
+          overallActivity: formValues.q12,
+          interestActivity: formValues.q13,
+          receivedFacultyInfoClearly: formValues.q14,
+          wouldRecommendCUOpenHouseNextTime: formValues.q15,
+          favoriteBooth: formValues.q16 ?? '',
+          activityDiversity: formValues.q21,
+          perceivedCrowdDensity: formValues.q22,
+          hasFullBoothAccess: formValues.q23,
+          facilityConvenienceRating: formValues.q24,
+          campusNavigationRating: formValues.q25,
+          hesitationLevelAfterDisaster: formValues.q26,
+          lineOASignupRating: formValues.q31,
+          designBeautyRating: formValues.q32,
+          websiteImprovementSuggestions: formValues.q33,
+          igusername: formValues.igusername,
+        }
+
+        const result = await submitEvaluation(mappedFormData)
+
+        if (result.success) {
+          toast.success(result.message)
+          setStep(5)
+          clearForm()
+        } else {
+          toast.error(result.message)
+        }
+      } catch (error) {
+        console.error('Error submitting evaluation:', error)
+        toast.error('เกิดข้อผิดพลาดในการส่งแบบประเมิน โปรดลองอีกครั้ง')
+      } finally {
+        setIsSubmitting(false)
+      }
     }
   }
 
@@ -160,6 +201,7 @@ const EvaluationForm3: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
         <div className='mt-6 flex w-full items-center justify-center gap-4'>
           <Button
             className='mb-20 w-1/4 font-cloud-soft text-xl font-normal'
+            disabled={isSubmitting}
             size='sm'
             variant='filled'
             onClick={onBack}
@@ -168,11 +210,12 @@ const EvaluationForm3: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
           </Button>
           <Button
             className='mb-20 w-1/4 font-cloud-soft text-xl font-normal'
+            disabled={isSubmitting}
             size='sm'
             variant='filled'
             onClick={onNext}
           >
-            ส่ง
+            {isSubmitting ? 'กำลังส่ง...' : 'ส่ง'}
           </Button>
         </div>
       </div>

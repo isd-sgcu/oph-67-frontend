@@ -2,41 +2,70 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
-import { useState } from 'react'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { getAuthToken } from '@/app/actions/auth'
+import { getUser } from '@/app/actions/get-profile/get-user'
 import { config } from '@/app/config'
-import Popup from '@/components/evaluation/popup'
+import Popup from '@/components/evaluation-form/popup'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { useAuth } from '@/hooks/use-auth'
 import { type RegisterForm, RegisterSchema } from '@/types/register'
 
 interface EvaluationRegisterProps {
   setStep: (step: number) => void
-  setFoundUser: (found: boolean) => void
+  setIsUserAttended: (isUserAttended: boolean) => void
 }
 
 const EvaluationRegister: React.FC<EvaluationRegisterProps> = ({
   setStep,
-  setFoundUser: _setFoundUser, // marked unused
+  setIsUserAttended,
 }) => {
   const [showPopup, setShowPopup] = useState<boolean>(false)
-
+  const { user } = useAuth()
   const form = useForm<RegisterForm>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {},
   })
 
-  const goBack = (): void => {
-    console.log('Go Back')
-  }
+  useEffect(() => {
+    const fetchUserProfile = async (): Promise<void> => {
+      if (!user?.id) return
 
-  const onConfirm = (): void => {
-    const values = form.getValues()
-    console.log('Confirmed:', values)
+      const token = await getAuthToken()
+      if (!token) return
 
-    // Implement setFoundUser later
+      const userProfile = await getUser(user.id, token)
 
+      if (userProfile.name) {
+        const nameParts = userProfile.name.split(/\s+/)
+        if (nameParts.length >= 2) {
+          const firstName = nameParts[0]
+          const surname = nameParts.slice(1).join(' ')
+
+          form.setValue('name', firstName)
+          form.setValue('surname', surname)
+        } else if (nameParts.length === 1) {
+          form.setValue('name', nameParts[0])
+        }
+      }
+    }
+
+    void fetchUserProfile()
+  }, [user, form])
+
+  const onConfirm = async (): Promise<void> => {
+    const token = await getAuthToken()
+    if (!token) return
+
+    if (!user?.id) return
+    const userProfile = await getUser(user.id, token)
+    if (userProfile.lastEntered) {
+      setIsUserAttended(true)
+    }
     setShowPopup(false)
     setStep(2)
   }
@@ -63,11 +92,13 @@ const EvaluationRegister: React.FC<EvaluationRegisterProps> = ({
 
   return (
     <div className='flex flex-col justify-center bg-[#FAE9F3] font-mitr'>
-      {showPopup ? <Popup
+      {showPopup ? (
+        <Popup
           fullName={`${form.watch('name')} ${form.watch('surname')}`}
           setShowPopup={setShowPopup}
           onConfirm={onConfirm}
-        /> : null}
+        />
+      ) : null}
 
       {/* Logo */}
       <div className='flex flex-col items-center justify-center gap-4 py-6'>
@@ -123,8 +154,10 @@ const EvaluationRegister: React.FC<EvaluationRegisterProps> = ({
 
         {/* Buttons */}
         <div className='flex gap-4'>
-          <Button className='px-10 shadow-xl' onClick={goBack}>
-            <p className='text-xl text-white'>กลับ</p>
+          <Button className='px-10 shadow-xl'>
+            <Link href='/'>
+              <p className='text-xl text-white'>กลับ</p>
+            </Link>
           </Button>
           <Button className='px-10 shadow-xl' onClick={openPopup}>
             <p className='text-xl text-white'>ยืนยัน</p>

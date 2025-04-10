@@ -7,10 +7,6 @@ import { config } from '@/app/config'
 import { Button } from '@/components/ui/button'
 
 const EvaluationFail: React.FC = () => {
-  const goBack = (): void => {
-    console.log('Go Back')
-  }
-
   return (
     <div className='flex flex-col justify-center bg-white font-mitr'>
       {/* Header */}
@@ -48,18 +44,13 @@ const EvaluationFail: React.FC = () => {
 
       {/* Footer */}
       <div className='flex flex-col items-center justify-center gap-8 bg-white pb-6'>
-        <div>
-          <p className='text-center text-base font-light text-[#064E41]'>
-            หากมีข้อผิดพลาด สามารถกรอกข้อมูลได้ที่:
-          </p>
+        <p className='text-center text-base font-light text-[#064E41]'>
+          หากมีข้อผิดพลาด สามารถกรอกข้อมูลได้ที่:
+        </p>
+        <Button className='px-10 shadow-xl'>
           <Link href='/'>
-            <p className='text-center text-base font-medium text-[#064E41] underline'>
-              ขอรับเกียรติบัตร
-            </p>
+            <p className='text-xl text-white'>กลับ</p>
           </Link>
-        </div>
-        <Button className='px-10 shadow-xl' onClick={goBack}>
-          <p className='text-xl text-white'>กลับ</p>
         </Button>
       </div>
     </div>

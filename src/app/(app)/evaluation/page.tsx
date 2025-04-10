@@ -7,23 +7,22 @@ import { useForm } from 'react-hook-form'
 import { Toaster } from 'react-hot-toast'
 
 import { config } from '@/app/config'
+import EvaluationFail from '@/components/evaluation-form/fail'
+import EvaluationRegister from '@/components/evaluation-form/home'
 import EvaluationForm1 from '@/components/evaluation-form/subpages/form1'
 import EvaluationForm2 from '@/components/evaluation-form/subpages/form2'
 import EvaluationForm3 from '@/components/evaluation-form/subpages/form3'
+import EvaluationSuccess from '@/components/evaluation-form/success'
 import Footer from '@/components/homepage/footer'
 import Navbar from '@/components/homepage/navbar'
 import {
   type EvaluationForm,
   EvaluationSchema,
 } from '@/types/evaluation-schema'
-import EvaluationFail from './fail'
-import EvaluationRegister from './register'
-import Success from '../../../components/register/subpages/success'
 
 const EvaluationCheck: React.FC = () => {
   const [step, setStep] = useState<number>(1)
-  const [foundUser, setFoundUser] = useState<boolean>(false)
-
+  const [isUserAttended, setIsUserAttended] = useState<boolean>(false)
   const form = useForm<EvaluationForm>({
     resolver: zodResolver(EvaluationSchema),
     defaultValues: {},
@@ -33,10 +32,13 @@ const EvaluationCheck: React.FC = () => {
     switch (step) {
       case 1:
         return (
-          <EvaluationRegister setFoundUser={setFoundUser} setStep={setStep} />
+          <EvaluationRegister
+            setIsUserAttended={setIsUserAttended}
+            setStep={setStep}
+          />
         )
       case 2:
-        if (foundUser) {
+        if (isUserAttended) {
           return <EvaluationForm1 form={form} setStep={setStep} />
         }
         return <EvaluationFail />
@@ -45,7 +47,7 @@ const EvaluationCheck: React.FC = () => {
       case 4:
         return <EvaluationForm3 form={form} setStep={setStep} />
       case 5:
-        return <Success />
+        return <EvaluationSuccess />
       default:
         return <div>404</div>
     }

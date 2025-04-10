@@ -30,7 +30,7 @@ const EvaluationForm2: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
   }, [formData, form])
 
   function onBack(): void {
-    setStep(1)
+    setStep(2)
   }
 
   function onNext(): void {
@@ -65,7 +65,7 @@ const EvaluationForm2: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
       console.log('Form is invalid')
     } else {
       console.log(form.getValues())
-      setStep(3)
+      setStep(4)
     }
   }
 
