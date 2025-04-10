@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 
@@ -9,6 +9,7 @@ import CheckBox from '@/components/register/policy/checkbox'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { news } from '@/const/evalution-news'
+import { useEvaluationStore } from '@/hooks/use-eval'
 import { evaluationQuestions } from '@/types/evaluation-questions'
 import { type EvaluationForm } from '@/types/evaluation-schema'
 
@@ -19,9 +20,25 @@ interface EvaluationFormProps {
 
 const EvaluationForm1: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
   const [showOtherInput, setShowOtherInput] = useState(false)
+  const { formData, setFormValue } = useEvaluationStore()
+
+  useEffect(() => {
+    if (Object.keys(formData).length > 0) {
+      if (formData.q11) form.setValue('q11', formData.q11)
+      if (formData.q11_other) form.setValue('q11_other', formData.q11_other)
+      if (formData.q12) form.setValue('q12', formData.q12)
+      if (formData.q13) form.setValue('q13', formData.q13)
+      if (formData.q14) form.setValue('q14', formData.q14)
+      if (formData.q15) form.setValue('q15', formData.q15)
+      if (formData.q16) form.setValue('q16', formData.q16)
+      if (formData.q11?.includes('อื่น ๆ (โปรดระบุ)')) {
+        setShowOtherInput(true)
+      }
+    }
+  }, [formData, form])
 
   function onBack(): void {
-    console.log('Back button clicked')
+    // TODO: implement onback function
   }
 
   function onNext(): void {
@@ -94,20 +111,15 @@ const EvaluationForm1: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
                         setIsChecked={(checked) => {
                           const currentNews = form.getValues('q11') ?? []
                           if (checked) {
-                            form.setValue('q11', [...currentNews, option])
-                            sessionStorage.setItem(
-                              'q11',
-                              JSON.stringify([...currentNews, option])
-                            )
+                            const updatedNews = [...currentNews, option]
+                            form.setValue('q11', updatedNews)
+                            setFormValue('q11', updatedNews)
                           } else {
                             const updatedNews = currentNews.filter(
                               (item) => item !== option
                             )
                             form.setValue('q11', updatedNews)
-                            sessionStorage.setItem(
-                              'q11',
-                              JSON.stringify(updatedNews)
-                            )
+                            setFormValue('q11', updatedNews)
                           }
                         }}
                       />
@@ -131,20 +143,15 @@ const EvaluationForm1: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
                         setIsChecked={(checked) => {
                           const currentNews = form.getValues('q11') ?? []
                           if (checked) {
-                            form.setValue('q11', [...currentNews, option])
-                            sessionStorage.setItem(
-                              'q11',
-                              JSON.stringify([...currentNews, option])
-                            )
+                            const updatedNews = [...currentNews, option]
+                            form.setValue('q11', updatedNews)
+                            setFormValue('q11', updatedNews)
                           } else {
                             const updatedNews = currentNews.filter(
                               (item) => item !== option
                             )
                             form.setValue('q11', updatedNews)
-                            sessionStorage.setItem(
-                              'q11',
-                              JSON.stringify(updatedNews)
-                            )
+                            setFormValue('q11', updatedNews)
                           }
                           if (option === 'อื่น ๆ (โปรดระบุ)') {
                             setShowOtherInput(checked)
@@ -162,7 +169,10 @@ const EvaluationForm1: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
                       className={`h-4 w-9/12 rounded-none border-x-0 border-b border-t-0 border-[#064E41] bg-transparent px-1 text-xs font-light text-[#064E41] shadow-none placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:border-b focus-visible:ring-0 ${showOtherInput ? 'visible' : 'invisible'}`}
                       placeholder='โปรดระบุ'
                       type='text'
-                      {...form.register('q11_other')}
+                      {...form.register('q11_other', {
+                        onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                          setFormValue('q11_other', e.target.value),
+                      })}
                     />
                   </div>
                 </div>
@@ -177,6 +187,9 @@ const EvaluationForm1: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
               field={question.id}
               form={form}
               question={question.label}
+              onRatingChange={(rating) => {
+                setFormValue(question.id as keyof EvaluationForm, rating)
+              }}
             />
           </div>
         ))}
@@ -185,12 +198,11 @@ const EvaluationForm1: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
           <Input
             className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
             placeholder='กรอก'
-            {...form.register('q16')}
-            defaultValue={sessionStorage.getItem('q16') ?? ''}
+            {...form.register('q16', {
+              onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                setFormValue('q16', e.target.value),
+            })}
             name='q16'
-            onInput={(e) => {
-              sessionStorage.setItem('q16', e.currentTarget.value)
-            }}
           />
         </div>
         <div className='flex w-full items-center justify-center gap-4'>

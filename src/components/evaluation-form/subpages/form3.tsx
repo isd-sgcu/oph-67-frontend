@@ -1,6 +1,7 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useEffect } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 
@@ -8,6 +9,7 @@ import FaceRating from '@/components/evaluation-form/face-rating'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { useEvaluationStore } from '@/hooks/use-eval'
 import { evaluationQuestions } from '@/types/evaluation-questions'
 import { type EvaluationForm } from '@/types/evaluation-schema'
 
@@ -17,6 +19,24 @@ interface EvaluationFormProps {
 }
 
 const EvaluationForm3: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
+  const { formData, setFormValue, clearForm } = useEvaluationStore()
+
+  // Initialize form with data from store
+  useEffect(() => {
+    if (Object.keys(formData).length > 0) {
+      // Set form values from store
+      evaluationQuestions.part3.questions.slice(0, 2).forEach((question) => {
+        const fieldId = question.id as keyof EvaluationForm
+        if (formData[fieldId]) {
+          form.setValue(fieldId, formData[fieldId])
+        }
+      })
+
+      if (formData.q33) form.setValue('q33', formData.q33)
+      if (formData.igusername) form.setValue('igusername', formData.igusername)
+    }
+  }, [formData, form])
+
   function onBack(): void {
     setStep(2)
   }
@@ -54,7 +74,7 @@ const EvaluationForm3: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
     } else {
       console.log(form.getValues())
       setStep(4)
-      sessionStorage.clear()
+      clearForm()
     }
   }
 
@@ -78,6 +98,9 @@ const EvaluationForm3: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
               field={question.id}
               form={form}
               question={question.label}
+              onRatingChange={(rating) => {
+                setFormValue(question.id as keyof EvaluationForm, rating)
+              }}
             />
           </div>
         ))}
@@ -89,12 +112,11 @@ const EvaluationForm3: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
           <Textarea
             className='h-32 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
             placeholder='กรอกข้อเสนอแนะ'
-            {...form.register('q33')}
+            {...form.register('q33', {
+              onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                setFormValue('q33', e.target.value),
+            })}
             data-name='q33'
-            defaultValue={sessionStorage.getItem('q33') ?? ''}
-            onInput={(e) => {
-              sessionStorage.setItem('q33', e.currentTarget.value)
-            }}
           />
         </div>
         <div className='flex flex-col items-center justify-center gap-2.5 font-mitr font-normal text-[#064E41]'>
@@ -124,12 +146,11 @@ const EvaluationForm3: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
             <Input
               className='h-9 border-[#064E41] text-sm font-light text-[#064E41] placeholder:text-[#064E41] placeholder:opacity-50 focus-visible:ring-[#064E41]'
               placeholder='your_username'
-              {...form.register('igusername')}
+              {...form.register('igusername', {
+                onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                  setFormValue('igusername', e.target.value),
+              })}
               data-name='igusername'
-              defaultValue={sessionStorage.getItem('igusername') ?? ''}
-              onInput={(e) => {
-                sessionStorage.setItem('igusername', e.currentTarget.value)
-              }}
             />
           </div>
           <p className='text-xs font-light text-[#FF0000]'>

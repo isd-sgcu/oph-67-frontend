@@ -1,10 +1,12 @@
 'use client'
 import Image from 'next/image'
+import { useEffect } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 
 import FaceRating from '@/components/evaluation-form/face-rating'
 import { Button } from '@/components/ui/button'
+import { useEvaluationStore } from '@/hooks/use-eval'
 import { evaluationQuestions } from '@/types/evaluation-questions'
 import { type EvaluationForm } from '@/types/evaluation-schema'
 
@@ -14,6 +16,19 @@ interface EvaluationFormProps {
 }
 
 const EvaluationForm2: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
+  const { formData, setFormValue } = useEvaluationStore()
+
+  useEffect(() => {
+    if (Object.keys(formData).length > 0) {
+      evaluationQuestions.part2.questions.forEach((question) => {
+        const fieldId = question.id as keyof EvaluationForm
+        if (formData[fieldId]) {
+          form.setValue(fieldId, formData[fieldId])
+        }
+      })
+    }
+  }, [formData, form])
+
   function onBack(): void {
     setStep(1)
   }
@@ -74,6 +89,9 @@ const EvaluationForm2: React.FC<EvaluationFormProps> = ({ setStep, form }) => {
               field={question.id}
               form={form}
               question={question.label}
+              onRatingChange={(rating) => {
+                setFormValue(question.id as keyof EvaluationForm, rating)
+              }}
             />
           </div>
         ))}

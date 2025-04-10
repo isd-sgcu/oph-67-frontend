@@ -11,26 +11,30 @@ interface FaceRatingProps {
   form: UseFormReturn<EvaluationForm>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Reason: The type is dynamically determined at runtime and cannot be strictly typed.
   field: any
+  onRatingChange?: (value: number) => void
 }
 
-const FaceRating: React.FC<FaceRatingProps> = ({ question, form, field }) => {
+const FaceRating: React.FC<FaceRatingProps> = ({
+  question,
+  form,
+  field,
+  onRatingChange,
+}) => {
   const [selectedValue, setSelectedValue] = useState<number | null>(null)
 
   useEffect((): void => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- Reason: The type is dynamically determined at runtime and cannot be strictly typed.
-    const savedValue = sessionStorage.getItem(field)
-    if (savedValue) {
-      const parsedValue = parseInt(savedValue, 10)
-      setSelectedValue(parsedValue)
-      form.setValue(field, parsedValue)
+    const value = form.getValues(field) as number | undefined
+    if (value) {
+      setSelectedValue(value)
     }
   }, [field, form])
 
   const handleSelect = (value: number): void => {
     form.setValue(field, value)
     setSelectedValue(value)
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- Reason: The type is dynamically determined at runtime and cannot be strictly typed.
-    sessionStorage.setItem(field, value.toString())
+    if (onRatingChange) {
+      onRatingChange(value)
+    }
   }
 
   return (
