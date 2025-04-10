@@ -2,25 +2,7 @@
 
 import { getAuthToken } from '@/app/actions/auth'
 import { config } from '@/app/config'
-
-export interface EvaluationData {
-  newSources: string[]
-  overallActivity: number
-  interestActivity: number
-  receivedFacultyInfoClearly: number
-  wouldRecommendCUOpenHouseNextTime: number
-  favoriteBooth: string
-  activityDiversity: number
-  perceivedCrowdDensity: number
-  hasFullBoothAccess: number
-  facilityConvenienceRating: number
-  campusNavigationRating: number
-  hesitationLevelAfterDisaster: number
-  lineOASignupRating: number
-  designBeautyRating: number
-  websiteImprovementSuggestions: string
-  igusername: string
-}
+import { type EvaluationData } from '@/types/evaluation-backed-interface'
 
 export async function submitEvaluation(formData: EvaluationData): Promise<{
   success: boolean
