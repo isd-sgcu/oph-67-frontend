@@ -12,6 +12,8 @@ const EvaluationSuccess: React.FC = () => {
 
   const onNext = (): void => {
     router.push('/')
+    // force reload
+    window.location.reload()
   }
 
   return (
