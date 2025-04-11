@@ -10,9 +10,6 @@ import Footer from '@/components/homepage/footer'
 import Navbar from '@/components/homepage/navbar'
 import Popup from '@/components/homepage/popup'
 import Timer from '@/components/homepage/timer'
-import { LiffError } from '@/components/liff/liff-error'
-import { LiffLoading } from '@/components/liff/liff-loading'
-import { useLiffContext } from '@/components/liff/liff-provider'
 import { Button } from '@/components/ui/button'
 import {
   actionButtonsNotRegistered,
@@ -25,9 +22,7 @@ import EvaluationCheck from '../../components/evaluation-form'
 import { CheckEvaluation } from '../actions/evaluation/get-evaluation'
 
 const Home: React.FC = () => {
-  const { profile, isInit } = useLiffContext()
-  const userId = profile?.userId
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, user } = useAuth()
   const isRegistered = isAuthenticated
   const openRegisteredDate = new Date('2025-03-14T00:00:00').getTime()
   const [timeLeft, setTimeLeft] = useState<ReturnType<typeof getTimer> | null>(
@@ -38,7 +33,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     const fetchEvaluation = async (): Promise<void> => {
       try {
-        const res = await CheckEvaluation(userId ? userId : '')
+        const res = await CheckEvaluation(user?.id ? user.id : '')
         if (res.message === 'Student evaluation not found') {
           setIsEvaluated(false)
         }
@@ -47,29 +42,17 @@ const Home: React.FC = () => {
       }
     }
 
-    void fetchEvaluation() // ใช้ void เพื่อบอก TypeScript ว่าเราตั้งใจไม่จัดการ promise ที่คืนค่า
+    void fetchEvaluation()
     setTimeLeft(getTimer())
     const interval = setInterval(() => {
       setTimeLeft(getTimer())
     }, 1000)
     return () => clearInterval(interval)
-  }, [userId])
+  }, [user?.id])
 
   const actionButtonsDetail = isRegistered
     ? actionButtonsRegistered
     : actionButtonsNotRegistered
-
-  if (!isInit) {
-    return <LiffLoading />
-  }
-
-  if (!profile) {
-    return <LiffError error='Failed to load profile' />
-  }
-
-  if (!userId) {
-    return <LiffError error='Failed to load user ID' />
-  }
 
   if (!isEvaluated) return <EvaluationCheck />
 
