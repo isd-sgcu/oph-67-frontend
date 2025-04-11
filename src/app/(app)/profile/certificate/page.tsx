@@ -1,60 +1,92 @@
 'use client'
 
-import { type ReactNode, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { Toaster, toast } from 'react-hot-toast'
 
-import { LiffError } from '@/components/liff/liff-error'
+import { CheckEvaluation } from '@/app/actions/evaluation/get-evaluation'
+import { getCertToken } from '@/app/actions/get-cert-token/get-cert-token'
+import { getUser } from '@/app/actions/get-profile/get-user'
+import { useAuth } from '@/components/auth/auth-provider'
 import { LiffLoading } from '@/components/liff/liff-loading'
-import { useLiffContext } from '@/components/liff/liff-provider'
 import CertificateGenerator from '@/components/profile/certificate-generator'
-import { Button } from '@/components/ui/button'
-import Notfound from '@/components/ui/notfound'
 
 const Certificate: React.FC = () => {
-  const [step, setStep] = useState(1)
-  const { profile, isInit } = useLiffContext()
+  const [userName, setUserName] = useState<string>('')
+  const [certToken, setCertToken] = useState<string>('')
+  const { userId, accessToken, isLoading } = useAuth()
+  const [isFetched, setIsFetched] = useState(false)
+  const [isEvaluated, setIsEvaluated] = useState(true)
+  const router = useRouter()
 
-  if (!isInit) {
+  useEffect(() => {
+    const checkEvaluation = async (): Promise<void> => {
+      try {
+        if (!userId || !accessToken) {
+          throw new Error('User ID or access token is not available')
+        }
+        const res = await CheckEvaluation(userId)
+        if (res.eval === null) {
+          setIsEvaluated(false)
+          toast.error('โปรดทำแบบประเมินก่อนทำรายการ')
+          return
+        }
+        void fetchData()
+      } catch (error) {
+        if (error instanceof Error) {
+          toast.error(error.message)
+        } else {
+          toast.error('An unexpected error occurred')
+        }
+        console.error('Failed to fetch user data', error)
+      }
+    }
+
+    const fetchData = async (): Promise<void> => {
+      try {
+        if (!userId || !accessToken) {
+          throw new Error('User ID or access token is not available')
+        }
+
+        const data = await getUser(userId, accessToken)
+        if (!data.name) {
+          toast.error("Failed to fetch user's name")
+          return
+        }
+        setUserName(data.name)
+        const res = await getCertToken(userId, accessToken)
+        setCertToken(res.certToken)
+        setIsFetched(true)
+      } catch (error) {
+        if (error instanceof Error) {
+          toast.error(error.message)
+        } else {
+          toast.error('An unexpected error occurred')
+        }
+        console.error('Failed to fetch user data', error)
+      }
+    }
+    if (userId && accessToken) {
+      void checkEvaluation()
+    }
+  }, [userId, accessToken]) // Ensure effect runs only when userId is available
+
+  if (isLoading) {
     return <LiffLoading />
   }
-
-  if (!profile) {
-    return <LiffError error='Failed to load profile' />
-  }
-
-  const { displayName } = profile
-
-  const getPage = (): ReactNode => {
-    switch (step) {
-      case 1:
-        return (
-          <div className='flex h-full flex-col items-center gap-2'>
-            <h1 className='text-2xl font-normal text-primary-green'>
-              แบบประเมิน
-            </h1>
-            <p className='text-base font-normal text-primary-green'>
-              Evaluation
-            </p>
-            <p className='-mt-2 text-base font-light text-primary-green'>
-              *จะได้รับเกียรติบัตรเมื่อทำแบบประเมินเสร็จสิ้น
-            </p>
-            <Button
-              className='mt-10 w-[20rem] font-cloud-soft text-2xl font-bold'
-              onClick={() => setStep(2)}
-            >
-              FINISH
-            </Button>
-          </div>
-        )
-      case 2:
-        return <CertificateGenerator userName={displayName} />
-      default:
-        return <Notfound />
-    }
+  if (!isEvaluated) {
+    // redirect to home if not evaluated
+    router.push('/')
   }
 
   return (
     <div className='flex h-full w-full grow flex-col items-center gap-3 bg-light-pink pt-8 font-mitr'>
-      {getPage()}
+      <Toaster position='top-center' />
+      {isFetched ? (
+        <CertificateGenerator token={certToken} userName={userName} />
+      ) : (
+        <>Loading...</>
+      )}
     </div>
   )
 }

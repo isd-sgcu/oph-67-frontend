@@ -10,6 +10,7 @@ const config: Config = {
         'cloud-soft': ['var(--font-cloud-soft)'],
         mitr: ['var(--font-mitr)'],
         ubuntu: ['var(--font-ubuntu)'],
+        thSaraban: ['var(--font-thSaraban)'],
       },
       borderRadius: {
         lg: 'var(--radius)',
