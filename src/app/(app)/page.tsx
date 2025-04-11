@@ -33,14 +33,14 @@ const Home: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState<ReturnType<typeof getTimer> | null>(
     null
   )
-  const [isEvaluated, setIsEvaluated] = useState<boolean>(false)
+  const [isEvaluated, setIsEvaluated] = useState<boolean>(true)
 
   useEffect(() => {
     const fetchEvaluation = async (): Promise<void> => {
       try {
         const res = await CheckEvaluation(userId ? userId : '')
         if (res.message === 'Student evaluation not found') {
-          setIsEvaluated(true)
+          setIsEvaluated(false)
         }
       } catch (error) {
         console.error('Error fetching evaluation:', error)
@@ -71,8 +71,7 @@ const Home: React.FC = () => {
     return <LiffError error='Failed to load user ID' />
   }
 
-   
-  if (isEvaluated) return <EvaluationCheck />
+  if (!isEvaluated) return <EvaluationCheck />
 
   return (
     <div className='flex flex-col justify-center bg-[#FCF3F8]'>
