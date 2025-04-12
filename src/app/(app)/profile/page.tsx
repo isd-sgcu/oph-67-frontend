@@ -2,12 +2,14 @@
 import { EditSolid } from '@mynaui/icons-react'
 import { IconFlowerFilled } from '@tabler/icons-react'
 import { Heart } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import QRCode from 'react-qr-code'
 
 import { getAuthToken } from '@/app/actions/auth'
 import { getUser } from '@/app/actions/get-profile/get-user'
+import { config } from '@/app/config'
 import { LiffError } from '@/components/liff/liff-error'
 import { LiffLoading } from '@/components/liff/liff-loading'
 import { useLiffContext } from '@/components/liff/liff-provider'
@@ -110,7 +112,7 @@ const Profile: React.FC = () => {
         </>
       ) : null}
       <div className='my-2 w-[20rem] border border-b-0 border-primary-green' />
-      {/* <Link href='/profile/certificate'>
+      <Link href='/profile/certificate'>
         <Button className='w-[20rem] font-cloud-soft text-2xl font-bold'>
           <Image
             alt='cert'
@@ -121,7 +123,7 @@ const Profile: React.FC = () => {
           />
           รับเกียรติบัตร
         </Button>
-      </Link> */}
+      </Link>
     </div>
   )
 }
