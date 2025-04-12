@@ -115,14 +115,16 @@ const CertificatePDF: React.FC<{
       >
         <View style={styles.container}>
           <PDFImage
-            src='/assets/certificate/template.png'
+            src={`${config.cdnURL}/assets/certificate/template.png`}
             style={styles.image}
           />
           <View style={styles.overlay}>
             <Text style={styles.nameText}>{userName}</Text>
             <Text style={styles.tokenText}>ID: {token}</Text>
             {/* Render the QR code as an image */}
-            {qr && qrCodeBase64 ? <PDFImage src={qrCodeBase64} style={styles.qrCode} /> : null}
+            {qr && qrCodeBase64 ? (
+              <PDFImage src={qrCodeBase64} style={styles.qrCode} />
+            ) : null}
           </View>
         </View>
       </Page>
