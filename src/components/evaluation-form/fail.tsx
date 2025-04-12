@@ -8,15 +8,9 @@ import { Button } from '@/components/ui/button'
 
 const EvaluationFail: React.FC = () => {
   return (
-    <div className='flex flex-col justify-center bg-white font-mitr'>
+    <div className='flex flex-col justify-center bg-[#FAE9F3] font-mitr'>
       {/* Header */}
       <div className='flex flex-col items-center justify-center gap-4 py-6'>
-        {/* Text */}
-        <div className='flex flex-col items-center text-[#064E41]'>
-          <div className='text-xl font-medium'>แบบประเมิน</div>
-          <div className='text-xl font-medium'>Chula Open House 2025</div>
-        </div>
-
         {/* Logo */}
         <object
           className='h-[220px] w-[220px]'
