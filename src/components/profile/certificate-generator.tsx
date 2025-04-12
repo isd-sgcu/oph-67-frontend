@@ -2,9 +2,7 @@
 
 import { PDFDownloadLink } from '@react-pdf/renderer'
 import NextImage from 'next/image'
-import React from 'react'
-
-import { config } from '@/app/config'
+import React, { useState } from 'react'
 
 import CertificatePDF from '../certificate/certificate-pdf'
 import { Button } from '../ui/button'
@@ -18,6 +16,13 @@ const CertificateGenerator: React.FC<CertificateGeneratorProps> = ({
   userName,
   token,
 }) => {
+  const [error, setError] = useState<string | null>(null)
+
+  const handleGenerateError = (err: Error): void => {
+    console.error('Error generating PDF:', err)
+    setError('ไม่สามารถสร้างเอกสารได้ โปรดลองอีกครั้ง')
+  }
+
   return (
     <div className='flex flex-col items-center gap-2 p-5'>
       <h1 className='text-2xl font-normal text-primary-green'>Certification</h1>
@@ -28,7 +33,7 @@ const CertificateGenerator: React.FC<CertificateGeneratorProps> = ({
           <NextImage
             alt='cert'
             height={24}
-            src={`${config.cdnURL}/assets/icons/flower-vase.svg`}
+            src='/assets/icons/flower-vase.svg'
             width={24}
           />
           <h1 className='header-green-gradient clip-text text-3xl'>
@@ -37,7 +42,7 @@ const CertificateGenerator: React.FC<CertificateGeneratorProps> = ({
           <NextImage
             alt='cert'
             height={24}
-            src={`${config.cdnURL}/assets/icons/flower-vase.svg`}
+            src='/assets/icons/flower-vase.svg'
             width={24}
           />
         </div>
@@ -51,7 +56,7 @@ const CertificateGenerator: React.FC<CertificateGeneratorProps> = ({
           alt='cert'
           className='absolute'
           objectFit='contain'
-          src={`${config.cdnURL}/assets/certificate/template.png`}
+          src='/assets/certificate/template.png'
         />
         <div className='absolute flex h-full w-full items-center justify-center'>
           <div className='text-center text-xl text-black'>{userName}</div>
@@ -69,6 +74,7 @@ const CertificateGenerator: React.FC<CertificateGeneratorProps> = ({
       <PDFDownloadLink
         document={<CertificatePDF token={token} userName={userName} />}
         fileName='certificate.pdf'
+        onError={(event) => handleGenerateError(event as unknown as Error)}
       >
         {({ loading }) => (
           <Button
@@ -79,13 +85,14 @@ const CertificateGenerator: React.FC<CertificateGeneratorProps> = ({
               alt='download'
               className='mb-1'
               height={24}
-              src={`${config.cdnURL}/assets/icons/download.svg`}
+              src='/assets/icons/download.svg'
               width={24}
             />
             {loading ? 'กำลังโหลด...' : 'ดาวน์โหลด'}
           </Button>
         )}
       </PDFDownloadLink>
+      {error ? <p className='mt-2 text-red-500'>{error}</p> : null}
     </div>
   )
 }

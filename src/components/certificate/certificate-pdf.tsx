@@ -11,11 +11,10 @@ import React, { useEffect, useState } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import QRCode from 'react-qr-code'
 
-import { config } from '@/app/config'
-
+// Register font with local path
 Font.register({
   family: 'THSarabunNew',
-  src: `${config.cdnURL}/fonts/THSarabunNew.ttf`,
+  src: '/fonts/THSarabunNew.ttf',
 })
 
 const styles = StyleSheet.create({
@@ -115,7 +114,7 @@ const CertificatePDF: React.FC<{
       >
         <View style={styles.container}>
           <PDFImage
-            src={`${config.cdnURL}/assets/certificate/template.png`}
+            src='/assets/certificate/template.png'
             style={styles.image}
           />
           <View style={styles.overlay}>
