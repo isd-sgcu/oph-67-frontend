@@ -24,3 +24,9 @@ export const ubuntu = Ubuntu({
   weight: ['300', '400', '500', '700'],
   variable: '--font-ubuntu',
 })
+
+export const thSaraban = localFont({
+  src: '../../public/fonts/THSarabunNew.ttf',
+  display: 'swap',
+  variable: '--font-thSaraban',
+})

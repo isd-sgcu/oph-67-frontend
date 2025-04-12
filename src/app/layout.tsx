@@ -1,6 +1,6 @@
 import './globals.css'
 import { cn } from '../lib/cn'
-import { anuphan, cloudSoft, mitr, ubuntu } from '../lib/fonts'
+import { anuphan, cloudSoft, mitr, thSaraban, ubuntu } from '../lib/fonts'
 
 const RootLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({
   children,
@@ -12,7 +12,8 @@ const RootLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({
         cloudSoft.variable,
         anuphan.variable,
         mitr.variable,
-        ubuntu.variable
+        ubuntu.variable,
+        thSaraban.variable
       )}
     >
       <body>{children}</body>
