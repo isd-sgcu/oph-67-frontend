@@ -13,13 +13,10 @@ import { config } from '@/app/config'
 import { LiffError } from '@/components/liff/liff-error'
 import { LiffLoading } from '@/components/liff/liff-loading'
 import { useLiffContext } from '@/components/liff/liff-provider'
-import InterestedItem from '@/components/profile/interested-item'
 import { Button } from '@/components/ui/button'
-import { type Faculty, faculties } from '@/const/faculties'
 import { type UserData } from '@/types/user-data'
 
 const Profile: React.FC = () => {
-  const [favFaculties, setFavFaculties] = useState<Faculty[]>([])
   const [profileInfo, setProfileInfo] = useState<UserData | null>(null)
   const { profile, isInit } = useLiffContext()
 
@@ -34,19 +31,7 @@ const Profile: React.FC = () => {
           throw new Error('Profile is not available')
         }
         const data = await getUser(profile.userId, token)
-        setFavFaculties([])
         setProfileInfo(data)
-        if (data.role === 'student') {
-          const interests = [
-            data.firstInterest,
-            data.secondInterest,
-            data.thirdInterest,
-          ]
-          const matchedFaculties = faculties
-            .filter((faculty) => interests.includes(faculty.th))
-            .sort((a, b) => interests.indexOf(a.th) - interests.indexOf(b.th))
-          setFavFaculties(matchedFaculties)
-        }
       } catch (error) {
         console.error('Failed to fetch user data', error)
       }
@@ -99,18 +84,6 @@ const Profile: React.FC = () => {
           <p className='font-light'>ID: {profile.userId.substring(0, 6)}</p>
         </div>
       </div>
-      {favFaculties.length > 0 ? (
-        <>
-          <h2 className='mt-2 text-lg font-normal text-dark-pink'>
-            คณะที่สนใจที่สุด / Faculties interested
-          </h2>
-          <div className='auto-number flex w-[20rem] flex-col flex-wrap items-center justify-center gap-y-5'>
-            {favFaculties.map((faculty) => (
-              <InterestedItem key={faculty.en} faculty={faculty} />
-            ))}
-          </div>
-        </>
-      ) : null}
       <div className='my-2 w-[20rem] border border-b-0 border-primary-green' />
       <Link href='/profile/certificate'>
         <Button className='w-[20rem] font-cloud-soft text-2xl font-bold'>
