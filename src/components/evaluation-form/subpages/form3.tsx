@@ -1,19 +1,18 @@
 'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 
-import {
-  type EvaluationData,
-  submitEvaluation,
-} from '@/app/actions/evaluation/post-evaluation'
+import { submitEvaluation } from '@/app/actions/evaluation/post-evaluation'
 import FaceRating from '@/components/evaluation-form/face-rating'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { useEvaluationStore } from '@/hooks/use-eval'
+import { type EvaluationData } from '@/types/evaluation-backed-interface'
 import { evaluationQuestions } from '@/types/evaluation-questions'
 import { type EvaluationForm } from '@/types/evaluation-schema'
 

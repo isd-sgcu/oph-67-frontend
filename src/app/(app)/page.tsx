@@ -19,30 +19,42 @@ import { useAuth } from '@/hooks/use-auth'
 import { getTimer } from '@/utils/timer'
 
 import EvaluationCheck from '../../components/evaluation-form'
+import { CheckEvaluation } from '../actions/evaluation/get-evaluation'
 
 const Home: React.FC = () => {
-  const isEvaluated = true
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, user } = useAuth()
   const isRegistered = isAuthenticated
   const openRegisteredDate = new Date('2025-03-14T00:00:00').getTime()
   const [timeLeft, setTimeLeft] = useState<ReturnType<typeof getTimer> | null>(
     null
   )
+  const [isEvaluated, setIsEvaluated] = useState<boolean>(true)
 
   useEffect(() => {
+    const fetchEvaluation = async (): Promise<void> => {
+      try {
+        const res = await CheckEvaluation(user?.id ? user.id : '')
+        if (res.message === 'Student evaluation not found') {
+          setIsEvaluated(false)
+        }
+      } catch (error) {
+        console.error('Error fetching evaluation:', error)
+      }
+    }
+
+    void fetchEvaluation()
     setTimeLeft(getTimer())
     const interval = setInterval(() => {
       setTimeLeft(getTimer())
     }, 1000)
     return () => clearInterval(interval)
-  }, [])
+  }, [user?.id])
 
   const actionButtonsDetail = isRegistered
     ? actionButtonsRegistered
     : actionButtonsNotRegistered
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (isEvaluated) return <EvaluationCheck />
+  if (!isEvaluated) return <EvaluationCheck />
 
   return (
     <div className='flex flex-col justify-center bg-[#FCF3F8]'>
