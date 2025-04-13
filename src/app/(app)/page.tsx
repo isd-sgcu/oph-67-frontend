@@ -18,8 +18,8 @@ import {
 import { useAuth } from '@/hooks/use-auth'
 import { getTimer } from '@/utils/timer'
 
-import EvaluationCheck from '../../components/evaluation-form'
-import { CheckEvaluation } from '../actions/evaluation/get-evaluation'
+// import EvaluationCheck from '../../components/evaluation-form'
+// import { CheckEvaluation } from '../actions/evaluation/get-evaluation'
 
 const Home: React.FC = () => {
   const { isAuthenticated, user } = useAuth()
@@ -28,21 +28,8 @@ const Home: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState<ReturnType<typeof getTimer> | null>(
     null
   )
-  const [isEvaluated, setIsEvaluated] = useState<boolean>(true)
 
   useEffect(() => {
-    const fetchEvaluation = async (): Promise<void> => {
-      try {
-        const res = await CheckEvaluation(user?.id ? user.id : '')
-        if (res.message === 'Student evaluation not found') {
-          setIsEvaluated(false)
-        }
-      } catch (error) {
-        console.error('Error fetching evaluation:', error)
-      }
-    }
-
-    void fetchEvaluation()
     setTimeLeft(getTimer())
     const interval = setInterval(() => {
       setTimeLeft(getTimer())
@@ -53,8 +40,6 @@ const Home: React.FC = () => {
   const actionButtonsDetail = isRegistered
     ? actionButtonsRegistered
     : actionButtonsNotRegistered
-
-  if (!isEvaluated) return <EvaluationCheck />
 
   return (
     <div className='flex flex-col justify-center bg-[#FCF3F8]'>
