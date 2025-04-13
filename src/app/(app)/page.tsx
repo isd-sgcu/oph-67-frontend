@@ -18,9 +18,6 @@ import {
 import { useAuth } from '@/hooks/use-auth'
 import { getTimer } from '@/utils/timer'
 
-// import EvaluationCheck from '../../components/evaluation-form'
-// import { CheckEvaluation } from '../actions/evaluation/get-evaluation'
-
 const Home: React.FC = () => {
   const { isAuthenticated, user } = useAuth()
   const isRegistered = isAuthenticated
