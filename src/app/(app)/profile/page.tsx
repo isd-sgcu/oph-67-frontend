@@ -119,7 +119,7 @@ const Profile: React.FC = () => {
                   src={`${config.cdnURL}/assets/pick-your-flower/link.svg`}
                   width={16}
                 />
-                <p> Google form</p>
+                <p>Google form</p>
               </Link>
             </div>
             <p>
@@ -149,8 +149,26 @@ const Profile: React.FC = () => {
               house คุณต้อง “กรอกฟอร์มยืนยัน” การเข้าร่วมงาน ซึ่งปิดรับในวันที่
               8 เมษายน 2568
             </p>
-            <p>• หากกรอกฟอร์มแล้ว จะได้รับเกียรติบัตรผ่านอีเมล</p>
             <p>• หากไม่ได้กรอกฟอร์ม จะไม่ได้รับเกียรติบัตร</p>
+            <p>
+              • หากกรอกแบบฟอร์มแล้ว จะต้องทำแบบประเมินให้เสร็จภายในวันที่ 30
+              เมษายน 2568 จากนั้นจะได้รับเกียรติบัตรทางอีเมลภายใน 1-2 วัน
+            </p>
+            <div className='flex justify-center'>
+              <Link
+                className='flex w-[140px] items-center justify-center gap-1.5 rounded-lg bg-[#6D3E08] px-2 py-0.5 text-base text-white drop-shadow-xl'
+                href='https://docs.google.com/forms/d/e/1FAIpQLSdAvKO_NgDkhmNQHWmJTQFbLsvdg6_MDYeGlokjHKKFmYSlUQ/viewform'
+              >
+                <Image
+                  alt='link icon'
+                  className=''
+                  height={16}
+                  src={`${config.cdnURL}/assets/pick-your-flower/link.svg`}
+                  width={16}
+                />
+                <p>Google form</p>
+              </Link>
+            </div>
           </div>
         </div>
       )}
