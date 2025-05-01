@@ -7,9 +7,7 @@ import {
   Text,
   View,
 } from '@react-pdf/renderer'
-import React, { useEffect, useState } from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
-import QRCode from 'react-qr-code'
+import React from 'react'
 
 // Register font with local path
 Font.register({
@@ -41,16 +39,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   nameText: {
-    fontSize: 48,
+    fontSize: 35,
     color: 'black',
     textAlign: 'center',
     fontFamily: 'THSarabunNew',
   },
   tokenText: {
     position: 'absolute',
-    bottom: 10,
-    right: 15,
-    fontSize: 12,
+    bottom: 7.8,
+    right: 11.5,
+    fontSize: 7,
     color: 'black',
     textAlign: 'center',
     fontFamily: 'THSarabunNew',
@@ -71,59 +69,28 @@ const styles = StyleSheet.create({
   },
 })
 
-// Custom hook to generate base64 from QR Code component
-const useQRCodeBase64 = (value: string, size: number): string | null => {
-  const [qrCodeBase64, setQrCodeBase64] = useState<string | null>(null)
-
-  useEffect(() => {
-    const canvas = document.createElement('canvas')
-    const qrCode = <QRCode size={size} value={value} />
-    const svg = renderToStaticMarkup(qrCode)
-    const img = new Image()
-
-    img.onload = () => {
-      canvas.width = img.width
-      canvas.height = img.height
-      const context = canvas.getContext('2d')
-      if (context) {
-        context.drawImage(img, 0, 0)
-        setQrCodeBase64(canvas.toDataURL())
-      }
-    }
-
-    img.src = `data:image/svg+xml;base64,${btoa(svg)}`
-  }, [value, size])
-
-  return qrCodeBase64
-}
-
 const CertificatePDF: React.FC<{
   userName: string
   token: string
-  qr?: boolean
-}> = ({ userName, token, qr = false }) => {
-  // render qr to image
-  const qrCodeBase64 = useQRCodeBase64('https://www.example.com', 100) // Size 100 for the QR Code
-
+  qr?: string
+}> = ({ userName, token, qr }) => {
   return (
     <Document>
       <Page
         orientation='landscape'
-        size={{ width: 794, height: 1123 }}
+        size={{ width: 594.9179, height: 842.25 }}
         style={styles.page}
       >
         <View style={styles.container}>
           <PDFImage
-            src='/assets/certificate/template.png'
+            src='./public/assets/certificate/template.png'
             style={styles.image}
           />
           <View style={styles.overlay}>
             <Text style={styles.nameText}>{userName}</Text>
             <Text style={styles.tokenText}>ID: {token}</Text>
             {/* Render the QR code as an image */}
-            {qr && qrCodeBase64 ? (
-              <PDFImage src={qrCodeBase64} style={styles.qrCode} />
-            ) : null}
+            {qr ? <PDFImage src={qr} style={styles.qrCode} /> : null}
           </View>
         </View>
       </Page>
